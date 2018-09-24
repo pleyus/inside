@@ -1,0 +1,41 @@
+@media print {
+	#printer.psv .top {
+		margin-bottom: 10px; 
+	}
+	#printer.psv .top .logo{
+		width: 100%;
+		height: auto;
+	}
+	#printer.psv .top b {
+		display: block; 
+		font-weight: 600;
+		font-size: 1.5rem;
+		margin-bottom: 1rem;
+		line-height: 1.5rem;
+	}
+
+	#printer.psv .header{
+		background-color: #125379;
+		color: #FFF;
+	}
+
+	#printer.psv .body {
+		font-size: .8rem;
+		border: solid 1px #EEE;
+	}
+	#printer.psv .body [class^="col-"]{ padding: 2px 5px;}
+
+	#printer.psv .body .row:not(:first-of-type){
+		margin-bottom: 3px;
+		padding-top: 3px;
+		border-top: solid 1px #EEE;
+	}
+	#printer.psv .body h1{ font-weight: 600; }
+	#printer.psv .body h1,
+	#printer.psv .body p{
+		line-height: 1rem;
+		margin: 0;
+		padding: 0;
+		font-size: inherit;
+	}
+}

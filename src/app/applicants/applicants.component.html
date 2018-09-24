@@ -1,0 +1,25 @@
+<div class="row" id="header">
+	<div class="title row">
+		<h1>Aspirantes</h1>
+	</div>
+</div>
+
+<div class="tabs">
+	<header>
+		<a class="item"
+			[class.active]="$.isActive(['/applicants']) && !$.isActive(['/applicants/stats'])" routerLink="/applicants/list">
+			<span class="icon-database"></span>
+			Registrados
+			<span *ngIf="S.News.Applicants > 0" class="bullet pull-right">
+				{{S.News.Applicants > 9 ? '+9' : S.News.Applicants}}
+			</span>
+		</a>
+		<a class="item" routerLinkActive="active" routerLink="/applicants/stats">
+			<span class="icon-chart"></span>
+			Estadisticas
+		</a>
+	</header>
+	<div class="tab-body">
+		<router-outlet></router-outlet>
+	</div>
+</div>

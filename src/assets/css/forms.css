@@ -1,0 +1,127 @@
+/* Estilos base de los forms con grupos dentro */
+textarea, input:not(.button), select { padding: 10px; width: fit-content; width: stretch; margin-bottom: 10px; border-radius: 5px; border: solid 1px #DDD; background-color: #FFF; }
+textarea { height: 100px; }
+
+.group > h1 { border-bottom: solid 2px #1F7BB1; margin: 0; padding: 5px 0; font-size: 1rem; color: #333; }
+.group > h1 ~ .row, .group > p { padding: 10px; margin: 5px 0; }
+.group label { text-transform: uppercase; display: block; margin-bottom: 10px; color: #1f526b; font-size: .9rem; font-weight: 600; }
+label.normal { text-transform: inherit; display: inline; }
+input[type="text"].required, textarea.required { border-left: 7px solid #3E667C; }
+input[type="text"], textarea { border-left: 7px solid #AAA; outline: none; }
+
+/* searchbox o utilizada para poner icono a un input */
+.sbox { position: relative; }
+.sbox::after { content: ''; display: block; clear: both; }
+.sbox > span
+{
+	font-size: 1rem;
+	color: #999;
+	display: block;
+	position: absolute;
+	top: 0.5rem;
+	left: .7rem;
+	border-right: solid 1px #DDD;
+	padding-right: .2rem;
+  height: 1.5rem;
+  padding-top: 0.1rem;
+}
+.sbox > input { padding-left: 40px; }
+
+.file-upload-field
+{
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+.file-upload
+{
+	padding: .3rem 1rem;
+	font-weight: 600;
+	background-color: #1F7BB1;
+	color: #FFF;
+	text-transform: initial !important;
+	margin-bottom: initial !important;
+	cursor: pointer;
+}
+
+.tabs { display: block; padding: 1rem 0; }
+.tabs > header::after {
+	display: block;
+	content: '';
+	clear: both;
+}
+.tabs .item { float: left; padding: 1rem; text-decoration: none; cursor: pointer; border-top-left-radius: .2rem; border-top-right-radius: .2rem; font-weight: 600; color: #333; }
+.tabs .item:hover { color: #1f7bb1; background-color: #F1F1F1; }
+.tabs .item.active { color: #FFF; background-color: #1f7bb1; }
+.tabs .item span.bullet { margin-left: .5rem; }
+.tab-body { display: block; border: solid 1px #F1F1F1; min-height: 12rem; padding: 1rem; }
+.tab-body::after { display: block; content: ''; clear: both; }
+
+ul.listy {
+	display: block;
+    margin: -10px 0 1rem 0;
+    max-height: 10rem;
+    padding: 0;
+	overflow: auto;
+	list-style: none;
+}
+ul.listy.big{
+	max-height: 20rem;
+}
+ul.listy > li {
+	padding: .8rem;
+}
+ul.listy > li.link{
+	text-decoration: none;
+	color: #333;
+}
+ul.listy > li.link:hover{
+	background-color: #F8F8F8;
+}
+ul.listy > li > b {
+	font-weight: 600;
+    display: block;
+    margin-bottom: .5rem;
+}
+ul.listy > li > i {
+	font-style: normal;
+    color: #1f7bb1;
+    font-size: .8rem;
+    display: block;
+    padding-left: 1rem;
+}
+ul.listy > li > span {
+	font-size: .8rem;
+    display: block;
+    color: #AAA;
+	padding-left: 1rem;
+	cursor: pointer;
+}
+ul.listy > li > [class^="icon-"]:hover {
+	color: #1f7bb1;
+}
+
+
+/* Filters */
+	.filter {
+		display: block;
+		max-height: 600px;
+		-webkit-transition: max-height 500ms ease-in-out;
+		transition: max-height 500ms ease-in-out;
+	}
+	.filter::after { display: block; content:''; clear: both; }
+	.sub.filter { overflow: hidden; }
+
+	.filter [class^="col-"] { float: none; display: inline-block; }
+	.filter > .not-labeled { padding: 2.1rem 0 0 0; }
+
+
+	.filter > div > label {
+		display: block;
+		font-weight: 600;
+		font-size: .9rem;
+		padding: 0 0 5px;
+	}

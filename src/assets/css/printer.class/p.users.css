@@ -1,0 +1,45 @@
+@media print {
+	#printer.print-user > .card {
+		height: 6cm;
+		position: relative;
+		page-break-inside: avoid;
+	}
+	#printer.print-user > .card > * { position: absolute; }
+	#printer.print-user > .card img.base { height: 5.5cm; width: 17cm; top: 0; left: 0; z-index: -1; border: solid 1px #DDD; }
+	#printer.print-user > .card img.photo { width: 2.5cm; height: 3cm; top: 1.22cm; left: 0.955cm; }
+	#printer.print-user > .card .name { top: 2cm; left: 3.70cm; width: 170px; height: 85px; display: table; }
+	#printer.print-user > .card .firstname { color: #006b9b; font-size: 16pt; font-weight: 600; vertical-align: bottom; display: table-cell; }
+	#printer.print-user > .card .lastname { font-size: 10.5pt; font-weight: 600; color: #333; }
+	#printer.print-user > .card .expire { top: 4.55cm; left: 2.74cm; font-size: 9.5pt; font-weight: 600; }
+	#printer.print-user > .card .type { top: 1.2cm; left: 9.5cm; text-transform: uppercase; font-weight: bold; font-size: 12pt;  }
+	#printer.print-user > .card .course { top: 1.8cm; left: 9.5cm; font-size: 15pt; font-weight: 600; color: #006b9b; }
+	#printer.print-user > .card .idnumber { top: 5cm; left: 9.5cm; font-family: monospace; font-size: 8.6pt; font-weight: 600; }
+	#printer.print-user > .card .barcode { top: 4.35cm; left: 9.6cm; font-family: 'Code39'; font-size: 35pt; height: 0.35cm; overflow: hidden; -webkit-transform: scale(1.04,3); transform: scale(1.04,3); width: 6.8cm; white-space: nowrap; }
+	#printer.print-user > .card .barcode-error { top: 4.25cm; left: 11cm; font-family: monospace; font-size: 10pt; font-weight: bold; background-color: #FFFFFFEE; color: #0074AA; padding: 2px; z-index: 1; letter-spacing: 3px; border-radius: 2px; }
+
+	#printer.user-list .top { padding-bottom: 10px; margin-bottom: 10px; border-bottom: solid 1px #DDD; }
+	#printer.user-list img.logo { height: 100px; }
+	#printer.user-list .info { text-align: center; }
+	#printer.user-list .info h1 { margin: 27px 0 20px; font-size: 2rem; color: #333; }
+	#printer.user-list .info h2 { margin:0; font-size: 1rem; text-transform: uppercase; font-weight: 600; }
+	#printer.user-list .meta h1 { margin:0; font-weight: 600;  font-size: .7rem; }
+	#printer.user-list .meta h1:first-of-type { margin-top: 15px; }
+	#printer.user-list .meta h2 { margin:0; font-size: 1rem; font-weight: normal; margin-bottom: 5px; }
+  #printer.user-list .break { text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
+
+	#printer.user-list .list .header::after { content: ''; clear: both; display: block; }
+	#printer.user-list .list .item { font-size: .8rem; }
+	#printer.user-list .list .item > div:first-child { text-align: right; padding-right: 10px; }
+	#printer.user-list .list .item:nth-last-of-type(odd) { background-color: #F8F8F8; }
+	#printer.user-list .item .blocks .row { height: 20px; }
+	#printer.user-list [class*="col-"] { padding: 0; }
+	#printer.user-list .item > [class*="col-"] { height: 20px; }
+	#printer.user-list .item:not(:first-of-type) .blocks { border-top: none; }
+	#printer.user-list .blocks { border: solid 1px #DDD; display: inline-block; color: #CCC !important; width: 10%; text-align: center;}
+	#printer.user-list .blocks:not(:first-of-type) { border-left: none;}
+	#printer.user-list .blocks .fecha { font-size: .8rem; border-bottom: solid 1px #DDD; }
+	#printer.user-list .blocks .row > * { font-size: .8rem; border-right: solid 1px #DDD; width: 33.33%; height: 20px; display:inline-block; color: #CCC; }
+	#printer.user-list .blocks .row > *:last-of-type { border: none; }
+
+
+}

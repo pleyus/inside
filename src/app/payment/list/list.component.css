@@ -1,0 +1,10 @@
+.table .monospace { font-size: .95rem; }
+
+h1 > a.selected
+{
+	background-color: rgb(203, 236, 255);
+}
+h1 > a.selected:hover
+{
+	border-left-color: #1F7BB1;
+}

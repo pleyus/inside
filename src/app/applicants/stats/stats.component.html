@@ -1,0 +1,121 @@
+<div class="filter">
+	<div class="block col-3">
+		<label for="from">Desde</label>
+		<input [(ngModel)]="DATE_SINCE" value="2018-01-01" max="{{$.Now() | date: 'yyyy-MM-dd' }}" type="date" id="from">
+	</div>
+	<div class="block col-3">
+		<label for="to">Hasta</label>
+		<input [(ngModel)]="DATE_UNTIL" value="{{$.Now() | date: 'yyyy-MM-dd' }}" max="{{$.Now() | date: 'yyyy-MM-dd' }}" type="date" id="to">
+	</div>
+	<div class="col-6">
+		<a class="button primary pull-right" (click)="Update()">Actualizar</a>
+	</div>
+</div>
+
+<div class="tabs secondary">
+	<header>
+		<a (click)="View('register')" class="item {{ isView('register') ? 'active' : '' }}">General</a>
+		<a (click)="View('interested')" class="item {{ isView('interested') ? 'active' : '' }}">Intereses</a>
+		<a (click)="View('towns')" class="item {{ isView('towns') ? 'active' : '' }}">Municipios</a>
+		<a (click)="View('vias')" class="item {{ isView('vias') ? 'active' : '' }}">Difusión</a>
+	</header>
+	<div class="tab-body">
+
+		<div *ngIf="isView('register')" class="row">
+			<h1>Aspirantes registrados</h1>
+
+			<div class="graph">
+				<div *ngIf="RegistredData.length < 1" class="empty loading-text"></div>
+				<canvas *ngIf="RegistredData.length > 0 && REG_LINE" baseChart
+					[(datasets)]="RegistredData"
+					[(labels)]="RegistredLabels"
+					[colors]="[COLOR_LAD, COLOR_LSC, COLOR_BOO, COLOR_GRIS]"
+					[options]="{ responsive: true }"
+					[chartType]="'line'"></canvas>
+
+				<canvas *ngIf="RegistredData.length > 0 && !REG_LINE" baseChart
+					[(data)]="RegistredData"
+					[(labels)]="RegistredLabels"
+					[colors]="RegistredColor"
+					[options]="{responsive: true, legend: {position: 'left'}}"
+					[chartType]="'doughnut'"></canvas>
+			</div>
+		</div>
+
+
+		<div *ngIf="isView('interested')" class="row">
+			<h1>Intereses</h1>
+			<div class="tabs third">
+				<header>
+					<a (click)="Interes('gen')" class="item {{TYPE === 'gen' ? 'active' : ''}}">General</a>
+					<a (click)="Interes('male')" class="item {{TYPE === 'male' ? 'active' : ''}}">Hombres</a>
+					<a (click)="Interes('female')" class="item {{TYPE === 'female' ? 'active' : ''}}">Mujeres</a>
+					<a (click)="Interes('undefined')" class="item {{TYPE === 'undefined' ? 'active' : ''}}">Indefinido</a>
+				</header>
+				<div class="tab-body">
+					<div class="graph">
+						<div *ngIf="InterestedData.length < 1" class="empty loading-text"></div>
+						<canvas *ngIf="InterestedData.length > 0" baseChart
+							[(data)]="InterestedData"
+							[colors]="InterestedColor"
+							[(labels)]="InterestedLabels"
+							[options]="{animation: false, responsive: true, legend: {position: 'left'}}"
+							[chartType]="'doughnut'"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div *ngIf="isView('towns')" class="row">
+			<h1> Municipios </h1>
+			<div class="col-6">
+				<div class="graph">
+					<div *ngIf="TownsData.length < 1" class="empty loading-text"></div>
+					<canvas *ngIf="TownsData.length > 0" baseChart
+						[(datasets)]="TownsData"
+						[(labels)]="TownsLabels"
+						[colors]="[COLOR_BLUE]"
+						[options]="{animation: false, responsive: true}"
+						[chartType]="'horizontalBar'"></canvas>
+				</div>
+			</div>
+			<div class="col-6">
+				<div class="graph">
+					<div *ngIf="TownsEnrollData.length < 1" class="empty loading-text"></div>
+					<canvas *ngIf="TownsEnrollData.length > 0" baseChart
+						[(datasets)]="TownsEnrollData"
+						[(labels)]="TownsEnrollLabels"
+						[colors]="[COLOR_BLUE]"
+						[options]="{animation: false, responsive: true, label : { position: 'right' }}"
+						[chartType]="'horizontalBar'"></canvas>
+				</div>
+			</div>
+		</div>
+
+		<div *ngIf="isView('vias')" class="row">
+			<h1>Vias de difusión</h1>
+
+			<div class="tabs third">
+				<header>
+					<a (click)="Vias('gen')" class="item {{VIASTYPE === 'gen' ? 'active' : ''}}">General</a>
+					<a (click)="Vias('enrolled')" class="item {{VIASTYPE === 'enrolled' ? 'active' : ''}}">Inscritos</a>
+					<a (click)="Vias('retired')" class="item {{VIASTYPE === 'retired' ? 'active' : ''}}">Baja</a>
+					<a (click)="Vias('applicants')" class="item {{VIASTYPE === 'applicants' ? 'active' : ''}}">Aspirantes</a>
+					<a (click)="Vias('excluded')" class="item {{VIASTYPE === 'excluded' ? 'active' : ''}}">Excluidos</a>
+				</header>
+				<div class="tab-body">
+					<div class="graph">
+						<div *ngIf="ViasData.length < 1" class="empty loading-text"></div>
+						<canvas *ngIf="ViasData.length > 0" baseChart
+							[(datasets)]="ViasData"
+							[(labels)]="ViasLabels"
+							[options]="{animation: false, responsive: true, legend: { position: 'left' }, scales: OP_SCALES}"
+							[chartType]="'bar'"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>

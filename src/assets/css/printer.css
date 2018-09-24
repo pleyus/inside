@@ -1,0 +1,12 @@
+@import url(printer.class/psv.css);
+@import url(printer.class/ppc.css);
+@import url(printer.class/p.users.css);
+
+#printer { display: none; font-family: inherit; width: 100%; font-size: .8rem;  }
+#viewer { display: block; }
+[id*="printable"] { display: none; }
+
+@media print {
+	#printer { display: block; }
+	#viewer { display: none; }
+} 

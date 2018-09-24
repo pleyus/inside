@@ -1,0 +1,21 @@
+p.empty { margin: 20px 0 20px; padding: 0 0 0 10px; text-align: left; }
+.group > label { margin: 10px 0 0 10px; }
+.tagged { margin: 10px; }
+
+.form { 
+	border-bottom: solid 1px #DDD; 
+	transition: max-height ease 200ms;
+	max-height: 500px;
+	overflow: hidden;
+}
+
+.form.hidden { 
+	max-height: 0px;
+}
+
+textarea { height: 100px; margin: 10px 0; padding: 5px !important; height: 100px !important; border: solid 1px #DDD; white-space: initial; }
+h2 { padding: 20px 0 0; font-size: 1.2rem; margin-top: 20px; }
+
+.prop { font-size: .8rem; color: #666; display: block; margin: 0; padding: 2px 0; }
+
+textarea.disabled { background-color: #F9F9F9; }

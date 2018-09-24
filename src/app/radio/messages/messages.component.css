@@ -1,0 +1,67 @@
+p {
+	border-bottom: solid 1px #F1F1F1;
+	padding-bottom: 1rem;
+	margin-top: 0;
+	line-height: 1.5rem;
+}
+div {
+	border-bottom: solid 1px #F1F1F1;
+	padding: 1rem;
+}
+div:last-child {
+	border: none;
+}
+h1 {
+	font-size: 1rem;
+	font-weight: 600;
+	margin: 0; padding: 0;
+}
+h1 > b {
+	cursor: pointer;
+}
+h1 > b:hover {
+	color: #1F7BB1;
+}
+h1 > i {
+	font-size: .8rem;
+	font-weight: normal;
+	color: #888;
+	padding-left: 1rem;
+}
+
+div > p {
+	padding: 0;
+	margin: 1rem 0 .5rem;
+	border: 0;
+	color: #555;
+
+}
+.tag {
+	background-color: #EEE;
+    color: #1f77b1 !important;
+    border-radius: .2rem;
+    padding: .1rem .5rem !important;
+    margin-left: 1rem;
+}
+.link { font-size: .9rem; }
+.more {
+	display: block;
+	padding: 1rem;
+	text-align: center;
+	color: #888;
+	cursor: pointer;
+	font-size: .95rem;
+}
+.more:hover {
+	color: #1f77b1;
+	text-decoration: underline;
+}
+.banned h1 > b,
+.banned p {
+	text-decoration: line-through;
+	color: #555
+}
+section {
+	max-height: 450px;
+	overflow-y: auto;
+}

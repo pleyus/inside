@@ -1,0 +1,73 @@
+.info-head 
+{
+	display: block;
+	text-align: center;
+	border-bottom: solid 1px #DDD;
+	padding: 1rem; 
+	margin-bottom: 1rem;
+
+}
+
+.info-head > .img {
+	position: relative;
+	margin: 0 auto;
+	width: 5cm;
+	height: 6cm;
+	background-color: #EEE;
+	border: solid 1px #DDD;
+	background-size: cover;
+	background-position: center;
+}
+.info-head h1 {
+	font-size: 2rem;
+}
+.info-head .date {
+	font-size: 1rem;
+	font-style: italic;
+	color: #666;
+}
+.link-report {
+	color: #1F7BB1;
+	font-size: .9rem;
+	cursor: pointer;
+}
+.link-report:hover{
+	text-decoration: underline;
+}
+.genere {
+	position: absolute;
+    bottom: 2px;
+    right: -10px;
+    font-size: 3.5rem;
+	/*transform: rotate(-140deg);*/
+	color: #FFFFFF78;
+}
+.genere.icon-male { 
+    text-shadow: 0 0 20px #70d1d2;
+}
+.genere.icon-female { 
+    text-shadow: 0 0 20px #ffbbd8;
+}
+.icon-birthday{
+	color: #ffa805;
+}
+.block p ~ h1 {
+	margin-top: 3rem;
+}
+.block h1 {
+	color: #1F7BB1;
+    margin: 0 0 1.5rem;
+    font-weight: 600;
+}
+.note {
+	color: #888;
+    font-weight: 600;
+}
+.note i {
+	display: block;
+    font-weight: normal;
+    padding-left: 1.5rem;
+}
+.note i::before {
+	content: '» ';
+}

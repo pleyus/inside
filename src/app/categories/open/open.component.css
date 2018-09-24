@@ -1,0 +1,6 @@
+.group > h1 { overflow: hidden; }
+nav.top { display: block; margin: 0 0 10px; border-bottom: solid 1px #DDD; width: 100%; }
+nav.top > a { display: inline-block; }
+textarea { height: 90px; }
+
+.table .body { max-height: 230px;}

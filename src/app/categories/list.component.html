@@ -1,0 +1,32 @@
+<div class="row" id="header">
+	<div class="title row">
+		<h1>{{Title}}</h1>
+		<p>
+			Permite administrar las categorias o indicadores disponibles del sitio 
+			(regularmente son los elementos que aparecen en las listas desplegables)
+		</p>
+	</div>
+</div>
+<div class="tabs">
+	<header>
+		<a *ngIf="$.CanDo('courses')" class="item" routerLinkActive="active" routerLink="courses">
+			<span class="icon-book"></span>
+			Especialidades
+		</a>
+		<a *ngIf="$.CanDo('vias')" class="item" routerLinkActive="active" routerLink="vias">
+			<span class="icon-share"></span>
+			Vias de difusión
+		</a>
+		<a *ngIf="$.CanDo('campaigns')" class="item" routerLinkActive="active" routerLink="campaigns">
+			<span class="icon-flag-checkered"></span>
+			Campañas
+		</a>
+		<a *ngIf="$.CanDo('institutions')" class="item" routerLinkActive="active" routerLink="institution">
+			<span class="icon-build"></span>
+			Escuelas
+		</a>
+	</header>
+	<div class="tab-body">
+		<router-outlet></router-outlet>
+	</div>
+</div>

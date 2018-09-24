@@ -1,0 +1,26 @@
+section {
+  border: solid 1px #DDD;
+  padding: 1rem;
+  margin: 0 auto;
+  width: 350px;
+  text-align: center;
+  font-size: 1rem;
+}
+img { width: 70px; }
+label {
+  display: block;
+  font-weight: 600;
+  font-size: .8rem;
+  padding: 0 0 5px;
+  margin-bottom: -5px;
+  color: #888;
+  font-weight: 600;
+  text-align: left;
+}
+input { border-left: 7px solid #3E667C; }
+.password { cursor: pointer; }
+.password.show { color:#3E667C; }
+.password:hover { color: #3E667C; }
+.button { margin-bottom: 20px; }
+#loading-bar::before { background-color: rgb(19, 141, 29); }
+.hidebar { height: 4px; }

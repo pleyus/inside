@@ -1,0 +1,188 @@
+<div class="row" id="header">
+	<div class="title row">
+		<h1>{{
+			Pay.concept != ''
+			? Pay.concept
+			:(
+				$.isAdmin()
+				? 'Pago nuevo'
+				: '¿Que haces aqui?'
+			)
+		}}</h1>
+	</div>
+
+</div>
+
+<div *ngIf="$.isAdmin()">
+	<div class="row">
+		<div class="group col-6">
+			<h1>Datos del pago</h1>
+
+			<!-- Nombre -->
+			<label>Asigna{{Id < 1 ? 'r a:' : 'do a:'}}</label>
+			<div class="row">
+				<linker-box
+					[(object)]="Pay.user"
+					(pickedup)="UserSelected($event)"
+					[disabled]="Id > 0"
+					[required]="true"
+					[placeholder]="'Buscar usuario'"
+					[using]="'users'"
+					[make]="'search'"
+					[link]="'/users/$id'"
+					[button1.caption]="'Registrar aspirante...'"
+					(button1.click)="CreateUser(0)"
+					[button2.caption]="'Registrar usuario normal'"
+					(button2.click)="CreateUser(1)"
+					></linker-box>
+			</div>
+
+			<!-- Concepto -->
+			<p>
+				<label for="concept">Concepto del pago</label>
+				<input class="required col-12" type="text" list="concepts-list" [(ngModel)]="Pay.concept" id="concept">
+				<datalist id="concepts-list">
+					<option *ngFor="let i of ConceptList" value="{{i}}">
+				</datalist>
+			</p>
+
+			<div class="cash">
+				<!-- Cantidad -->
+				<p class="col-6 nopadding">
+					<label for="amount">Monto</label>
+					<input class="col-12" *ngIf="Id < 1" currencyMask type="text" [(ngModel)]="Pay.amount" id="amount">
+					<label *ngIf="Id > 0" class="input">{{Pay.amount | currency : 'USD' : 'symbol'}}</label>
+				</p>
+
+				<!-- Recargos -->
+				<p class="col-6 nopadding">
+					<label for="charge">{{ Pay.amount < 0 ? 'Descuento' : 'Recargos'}}</label>
+					<input class="col-12" *ngIf="Id < 1" currencyMask type="text" [(ngModel)]="Pay.charge" id="charge">
+					<label *ngIf="Id > 0" class="input">{{Pay.charge | currency : 'USD' : 'symbol'}}</label>
+				</p>
+			</div>
+
+		</div>
+		<div class="group col-6">
+
+			<h1>Otro</h1>
+
+			<!-- Referencia -->
+			<p title="{{Id < 1 ? 'Guarde la ficha para generar la referencia' : ''}}">
+				<label>Referencia</label>
+				<span class="icon-bank"></span> <b>{{Id > 0 ? Pay.ref : '[Pendiente]'}}</b>
+			</p>
+
+			<!-- Folio -->
+			<p title="{{Id < 1 ? 'Guarde la ficha para generar el folio' : ''}}">
+				<label>Folio</label>
+				<span class="icon-dot-circled"></span> <b>{{Id > 0 ? ("00000"+Pay.id).slice(-6) : '[Pendiente]'}}</b>
+			</p>
+
+			<!-- Verificación -->
+			<div class="verify row" title="{{Pay.cid < 2 ? '¿Ya se pago esta ficha?' : 'La ficha fue pagada'}}">
+
+				<label *ngIf="Pay.cid < 2" class="checkbox" title="Control de pagos">
+					<div class="mark {{check_pay ? 'checked' : ''}}">
+						<span class="icon-ok"></span>
+					</div>
+					<div class="text">Pago realizado</div>
+					<input type="checkbox" id="checked-payment" [(ngModel)]="check_pay" />
+				</label>
+
+				<!-- <label *ngIf="Pay.cid < 2" class="normal" for="check_pay">
+					<input id="check_pay" [(ngModel)]="check_pay" type="checkbox"> Pago realizado
+				</label> -->
+
+				<label *ngIf="Pay.cid > 1"> <span class="icon icon-flag state-1"></span> Pago realizado</label>
+				<textarea *ngIf="check_pay" class="col-12" name="payment" id="payment" [(ngModel)]="Pay.payment" placeholder="(Opcional)&#10;Describa como se realizó el pago: &#10;&#10;  –Numero del boucher de pago&#10;  –Pago en efectivo"></textarea>
+			</div>
+
+			<!-- Info de pagos -->
+			<p *ngIf="Pay.gid > 1" class="paid"> <span class="icon-feather"></span> Registrado por <b title="{{Pay.generator.firstname + ' ' + Pay.generator.lastname}}">{{Pay.generator.firstname}}</b> <i>{{Pay.at > 0 ? ' – ' + (Pay.at*1000 | date: 'EEE, dd/MMM/yyyy HH:mm') : ''}}</i></p>
+			<p *ngIf="Pay.cid > 1" class="paid"> <span class="icon-money"></span> Verificado por <b title="{{Pay.collector.firstname + ' ' + Pay.collector.lastname}}">{{Pay.collector.firstname}}</b> <i>{{Pay.cat > 0 ? ' – ' + (Pay.cat*1000 | date: 'EEE, dd/MMM/yyyy HH:mm') : ''}}</i></p>
+		</div>
+	</div>
+
+	<div class="action-buttons">
+		<a *ngIf="Pay.status != 2" (click)="Save()" class="button {{ Pay.amount < 0 ? 'primary' : 'success' }}">{{Id < 1 ? 'Crear ficha' : 'Actualizar'}}</a>
+		<a *ngIf="Id > 0" class="button" (click)="T.Print('printable', 'ppc')">Imprimir</a>
+		<a *ngIf="Id > 0 && !check_pay" (click)="Delete()" title="Eliminar ficha actual" class="icon icon-trash button separe-left"></a>
+	</div>
+
+	<div id="printable">
+		<div *ngIf="Pay.user !== null" class="container table">
+
+			<div class="row">
+				<p class="block col-4">
+					<img class="logo" src="assets/logo.png" alt="UNITAM">
+					<span class="patronato">Patronato Potosino Hidalguense para el Fomento y Desarrollo de la Educación Susperior A. C.</span>
+				</p>
+
+				<p class="block col-4">
+
+					<b>Nombre</b>
+					<span>{{Pay.user.firstname + ' ' + Pay.user.lastname}}</span>
+
+					<b>Area</b>
+					<span>{{Pay.user.course ? Pay.user.course.name: '(Ninguno)' }}</span>
+
+				</p>
+
+				<p class="block col-2">
+
+					<b class="center">Folio</b>
+					<span class="center">{{Pay.id}}</span>
+
+					<b class="center">Fecha</b>
+					<span class="center">{{Pay.at * 1000 | date: 'dd/MM/yyyy'}}</span>
+
+				</p>
+
+				<p *ngIf="Pay.amount > 0" class="block col-2">
+					<img class="bancomer" src="assets/bancomer.png" alt="BANCOMER">
+					<b class="center">Cuenta</b>
+					<span class="center">0198061262</span>
+				</p>
+
+			</div>
+
+			<div class="row">
+				<p class="block col-4">
+					<b>Concepto de pago</b>
+					<span class="concept">{{Pay.concept}}</span>
+				</p>
+				<p class="block col-2">
+					<b class="center">Referencia</b>
+					<span class="center monospace" style="font-size: 1rem">{{Pay.ref}}</span>
+				</p>
+				<p class="block col-2">
+					<b class="center">{{ Pay.amount < 0 ? 'Cantidad' : 'Importe'}}</b>
+					<span class="center">{{ (Pay.amount < 0 ? -Pay.amount : Pay.amount) | currency : 'USD' : 'symbol' }}</span>
+				</p>
+				<p class="block col-2">
+					<b class="center">{{ Pay.amount < 0 ? 'Descuento' : 'Recargos'}}</b>
+					<span class="center">{{Pay.charge | currency : 'USD' : 'symbol'}}</span>
+				</p>
+				<p class="block col-2">
+					<b class="center">Total</b>
+					<span class="center">{{
+						(
+							(Pay.amount*1) < 0
+							? -(Pay.amount*1) -(Pay.charge*1)
+							: +(Pay.amount*1) +(Pay.charge*1)
+						)
+						| currency : 'USD' : 'symbol'}}</span>
+				</p>
+			</div>
+
+			<div class="row">
+				<p class="block separe-top">
+					<b>Total con letra</b>
+					<span>{{T.NumeroALetras( (Pay.amount*1) + (1*Pay.charge) )}} </span>
+				</p>
+			</div>
+		</div>
+		<div *ngIf="Id < 1" class="error">No se puede imprimir la ficha de pago debid... Un momento, este mensaje no deberia ser visible. :-|</div>
+	</div>
+</div>

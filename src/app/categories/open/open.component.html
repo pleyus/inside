@@ -1,0 +1,105 @@
+<h1>
+	{{ 
+		cat_type == 'courses'
+		? 'Especialidades' : (
+			cat_type == 'vias'
+			? 'Vias de difusión' : 'Campañas')
+	}}
+</h1>
+
+
+<p *ngIf="cat_type == 'courses'">En caso de requerirlo, es posible crear nuevas especialidades, estas aparecerán en los formularios donde sea necesario seleccionar una especialidad. Ten en cuenta que no se podrán eliminar las que crees, solo se desactivarán y quedarán ocultas.</p>
+<p *ngIf="cat_type == 'vias'">Agregue las posibles respuestas a la pregunta <i>¿Como supo de nosotros?</i></p>
+<p *ngIf="cat_type == 'campaigns'">Para tener un mejor control en las campañas realizadas para la captación de clientes utilice el parametro <b>?campaign=<i>{{Category.slug != '' ? Category.slug : 'identificador-de-la-campaña'}}</i></b> al final de los links que dirijan a cualquiera de las páginas de landing del sitio.</p>
+
+
+<div class="row">
+	<div class="group col-5">
+			
+		<h1>{{Category.name == '' ? '«Nuevo elemento»' : Category.name}}</h1>
+
+		<p class="row" title="Es el nombre que se mostrará en las listas desplegables">
+			<label for="name">Nombre</label>
+			<input class="required col-12" maxlength="100" type="text" [(ngModel)]="Category.name" placeholder="Nombre para mostrar">
+		</p>
+		
+		<p class="row" *ngIf="cat_type != 'vias'" title="Se recomienda utilizar solo minusculas sin espacios y numeros. Ej: cat-15-nueva, nombre-corto-1">
+			<label for="name">Nombre corto (slug)</label>
+			<input class="required col-12" maxlength="15" type="text" [(ngModel)]="Category.slug" placeholder="nombre-corto">
+		</p>
+
+		<p class="row" *ngIf="cat_type == 'courses'" title="">
+			<label for="name">Sistema</label>
+			<select class="col-12" [(ngModel)]="Category.param1">
+				<option value="e">Escolarizado</option>
+				<option value="s">Semiescolarizado</option>
+			</select>
+		</p>
+		
+	</div>
+
+	<div class="group col-7">
+		<h1>
+			{{ 
+				cat_type == 'courses'
+				? 'Especialidades registradas' : (
+					cat_type == 'vias'
+					? 'Vias de difusión registradas' : 'Campañas registradas')
+			}}
+		</h1>
+		
+		<div class="table fit short">
+			<table>
+				<thead>
+					<ng-container  *ngIf="cat_type == 'courses'">
+						<th class="col-6">Nombre</th>
+						<th class="col-2">Nombre corto</th>
+						<th class="col-4">Sistema</th>
+					</ng-container>
+					
+					<ng-container  *ngIf="cat_type == 'vias'">
+						<th class="col-12">Nombre</th>
+					</ng-container>
+	
+					<ng-container  *ngIf="cat_type == 'campaigns'">
+						<th class="col-6">Nombre</th>
+						<th class="col-6">Nombre corto</th>
+					</ng-container>
+				</thead>
+
+				<tbody>
+					<div *ngIf="List.length < 1" class="empty">
+						No hay elementos en la lista
+					</div>
+					<a *ngFor="let Item of List" class="row link" (click)="SetCategory(Item)">
+
+						<ng-container *ngIf="cat_type == 'courses'">
+							<div class="col-6">{{Item.name}}</div>
+							<div class="col-2">{{Item.slug}}</div>
+							<div class="col-4">{{Item.param1 == 'e' ? 'Escolarizado' : 'Semiescolarizado'}}</div>
+						</ng-container>
+	
+						<ng-container *ngIf="cat_type == 'vias'">
+							<div class="col-12">{{Item.name}}</div>
+						</ng-container>
+	
+						<ng-container *ngIf="cat_type == 'campaigns'">
+							<div class="col-6">{{Item.name}}</div>
+							<div class="col-6">{{Item.slug}}</div>
+						</ng-container>
+					</a>
+
+				</tbody>
+			</table>
+		</div>
+
+	</div>
+</div>
+<div class="row">
+	<p class="action-buttons"> 
+		<a (click)="Save()" class="button {{Category.id > 0 ? 'primary' : 'success'}}">{{Category.id > 0 ? 'Actualizar' : 'Crear nuevo'}}</a>
+		<a *ngIf="Category.id > 0" (click)="Category = { id: 0, name: '', slug: '' }" class="button">Cancelar</a>
+		<a *ngIf="Category.id > 0" (click)="Delete()" title="Eliminar categoria" class="icon-trash button separe-left"></a>
+	</p>
+</div>
+

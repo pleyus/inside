@@ -1,0 +1,4 @@
+.tile-viewer > .item { text-align: center; display: inline-block; margin: 10px; padding: 5px; border: solid 1px #DDD; text-decoration: none; color: #333; height: 7rem; width: 7rem; vertical-align: top; }
+.tile-viewer > .item:hover { color: #1F7BB1; border: solid 1px #a5c5d8; }
+.tile-viewer > .item > span { font-size: 3rem; display: block; color: #666; padding: 1rem 0; }
+.tile-viewer > .item:hover > span { color: #6aa4c7; }

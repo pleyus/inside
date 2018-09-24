@@ -1,0 +1,35 @@
+@media print {
+	#printer.ppc [class*="col-"] { padding: 0; }
+	#printer.ppc p { line-height: .9rem !important; }
+
+	#printer.ppc > .container { border: solid 1px #31708f; position: relative; overflow: initial; }
+	#printer.ppc > .container::before { 
+		content:'';
+		display: block;
+		height: 105%;
+		width: 100%;
+		position: absolute;
+		z-index: -1;
+		background-size: auto 100%;
+		background-image: url(/assets/logo.png);
+		background-position: right 30px;
+		background-repeat: no-repeat;
+		right: 0;
+		bottom:0;
+		opacity: 0.12;
+	}
+	#printer.ppc > .container > .row { padding: 0; }
+	#printer.ppc > .container > .row > .block { margin: 0; }
+	#printer.ppc > .container > .row > .block > * { display: block; }
+	#printer.ppc > .container > .row > .block > span { padding: 3px 10px 5px; }
+	#printer.ppc > .container > .row > .block > .concept { 
+		display: block;
+		text-overflow: unset;
+		white-space: normal;
+		overflow: hidden; 
+	}
+	#printer.ppc > .container > .row > .block > .patronato { white-space: initial; font-size: .7rem; font-weight: 600; padding-top: 12px; }
+	#printer.ppc > .container > .row > .block > img.logo { float: left; margin-right: 8px; width: 90px; height: 70px; background-color: transparent; }
+	#printer.ppc > .container > .row > .block > img.bancomer { width: 130px; height: 35px; margin: 5px 0 10px; }
+	#printer.ppc > .container > .row > .block > b { margin: 5px 0 0; background-color: rgb(210, 229, 255); color: #000; padding: 2px 10px; font-weight: 600; }
+}

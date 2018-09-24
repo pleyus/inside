@@ -1,0 +1,14 @@
+h1 { font-weight: 600; }
+
+.tabs.secondary .item { padding: .5rem 1rem; }
+.tabs.secondary .item.active { background-color: #666; }
+.tabs.secondary .item:not(.active):hover { color: #333; }
+
+/* .tabs, .graph {
+	overflow: hidden;
+	margin-bottom: 2rem;
+	max-height: 600px;
+	-webkit-transition: max-height 500ms ease-in-out;
+    transition: max-height 500ms ease-in-out;
+}
+ */

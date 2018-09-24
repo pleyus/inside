@@ -1,0 +1,114 @@
+.linker {
+	margin: 0;
+    padding: 0;
+    border-radius: 0;
+	border: none;
+	position: relative;
+}
+.linker.reset{
+	position: unset !important;
+}
+
+.linker > div {
+	position: absolute;
+	width: 100%;
+	background-color: #FFF;
+	border: solid 1px #DDD;
+	border-top: none;
+}
+.linker > div > *:not(ul) { 
+	padding: 1rem;
+}
+ul {
+	max-height: 250px;
+	list-style: none;
+	overflow-x: auto;
+	margin:0;
+	padding: 0;
+
+}
+
+
+
+.footer {
+	border-top: solid 1px #DDD;
+}
+.footer {
+	background-color: #F1F1F1;
+}
+.footer a ~ a {
+	margin-top: 10px;
+}
+.footer a {
+	color: #1F7BB1;
+	cursor: pointer;
+	display: block;
+}
+.footer a:hover { text-decoration: underline; }
+
+li{
+	display: block;
+	padding: 10px;
+	border-bottom: solid 1px #DDD;
+	cursor: pointer;
+}
+li:hover{
+	background-color: #F1F1F1
+}
+li::after, .face::after {
+	content: '';
+	display: block;
+	clear: both;
+}
+li:last-of-type{ border: none;}
+.img {
+	background-size: cover;
+	background-position: center;
+	width: 2.5rem;
+	height: 3rem;
+	float: left;
+	margin-right: 10px;
+	background-color: #FAFAFA;
+	border: solid 1px #DDD;
+}
+.info {
+	float: left;
+}
+.face .info {
+	float: none;
+}
+.info h1 {
+	font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+    margin-bottom: 5px;
+}
+.info h2 {
+	font-weight: normal;
+    font-size: 1rem;
+	margin: 0;
+	padding-left: 10px;
+}
+.info p {
+	font-size: .9rem;
+    font-style: italic;
+    color: #666;
+    margin: 0;
+    padding-left: 10px;
+}
+
+.face .info p {
+	padding: 0;
+}
+.face .icon-close {
+	display: none;
+	cursor: pointer
+}
+.face:hover .icon-close{
+	display: block;
+}
+.face:hover .icon-close:hover{
+	color: #1F7BB1;
+}
+.face h1.link { cursor: pointer; }
+.face h1.link:hover { color: #1F7BB1; }

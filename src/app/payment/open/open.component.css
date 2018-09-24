@@ -1,0 +1,15 @@
+.group > label { margin-top: 15px; padding-left: 10px; }
+.group > div:not(.linker) { padding: 0 10px; }
+textarea { height: 100px; }
+label.input { font-weight: 600; }
+.verify>label:not(.normal) { display: block; margin-bottom: 10px; font-weight: 600; text-transform: inherit; }
+.verify { margin: 10px 0; }
+
+.checkbox .text {
+	font-size: 600;
+	vertical-align: baseline;
+}
+
+.paid { font-size: .8rem; color: #666; display: block; margin: 0; padding: 2px 0; }
+.cash > .col-6:first-child { padding-right: 5px; }
+.cash > .col-6:last-child { padding-left: 5px; }

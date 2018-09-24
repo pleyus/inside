@@ -1,0 +1,362 @@
+<div class="row" id="header">
+	<div class="title row">
+		<h1>{{
+			User.firstname+User.lastname != ''
+			? User.firstname + " " + User.lastname
+			: '(Sin nombre)'
+		}}</h1>
+	</div>
+</div>
+
+<p *ngIf="$.isAdmin() && Id < 1" class="color-alert blue">
+	Para agregar alumnos de nuevo ingreso, utilize el modulo de
+	<a routerLink="/applicants/0"><b>Aspirantes</b></a>.
+	Para poder recabar la información sobre la segmentación.
+</p>
+
+<div class="tabs clearfix">
+	<header>
+		<div class="item {{ GetOption('selected_tab')== 'personal' ? 'active' : '' }}"
+			(click)="SetOption('selected_tab', 'personal')">Personal</div>
+
+		<div class="item {{ GetOption('selected_tab')== 'meta' ? 'active' : '' }}"
+			(click)="SetOption('selected_tab', 'meta')">Metadatos</div>
+	</header>
+
+	<!-- Personal -->
+	<div class="tab-body {{ GetOption('selected_tab')== 'personal' ? 'active' : '' }}">
+		<div class="row">
+			<div class="group col-4">
+				<h1>Generales</h1>
+
+				<!-- Nombre -->
+				<p>
+					<label>Nombre</label>
+					<input class="required col-12" type="text" [(ngModel)]="User.firstname" placeholder="Nombre">
+					<input class="col-12" type="text" [(ngModel)]="User.lastname" placeholder="Apellido">
+				</p>
+
+				<!-- Sexo -->
+				<p>
+					<label>Sexo</label>
+					<select class="col-12" [(ngModel)]="User.sex">
+						<option value="0">(Seleccione)</option>
+						<option value="1">Mujer</option>
+						<option value="2">Hombre</option>
+					</select>
+				</p>
+				<!-- virdey -->
+				<p>
+					<label>
+						Fecha de nacimiento
+						<span *ngIf="T.HappyB(User.birthday*1000)" title="¡Está cumplendo años hoy!" class="icon-birthday animate-jump color-special"></span>
+					</label>
+					<input class="col-12" type="date" (change)="SetBirthday()" max="{{ TODAY | date: 'yyyy-MM-dd' }}" [(ngModel)]="HUMAN_BIRTHDAY" >
+					<i class="empty"
+						*ngIf="User.birthday < 0 || User.birthday > 0">
+						Edad: {{ T.Age( User.birthday*1000 ) }}</i>
+				</p>
+
+				<!-- Ubicación -->
+				<p class="row">
+					<label>Dirección</label>
+					<linker-box
+						[show-image]="false"
+						[using]="'sepomex'"
+						[make]="'get'"
+						[placeholder]="'Ciudad, Codigo postal, localidad...'"
+						[(object)]="User.location"
+						(pickedup)="LocationSelected($event)"
+						></linker-box>
+				</p>
+				<p class="row">
+					<textarea class="col-12" [(ngModel)]="User.address" placeholder="Calle, número, etc..."></textarea>
+				</p>
+
+			</div>
+			<div class="group col-4">
+				<h1>Contacto</h1>
+
+				<!-- Email -->
+				<p class="row">
+					<label>Email</label>
+					<input class="col-12 required" type="text" [(ngModel)]="User.email" placeholder="Email">
+				</p>
+
+				<!-- Telefono -->
+				<div class="row phone">
+					<label>Teléfonos</label>
+
+					<h1>Personal</h1>
+					<input class="col-12 required" maxlength="10" type="text" [(ngModel)]="User.personal_phone" placeholder="Telefono personal">
+
+					<h1>Otros numeros</h1>
+						<div class="phones">
+							<p *ngFor="let P of User.phones; let i = index">
+								<i>Numero <span class="icon-close pull-right" (click)="removePhone(i)"></span></i>
+								<input [(ngModel)]="P.name" type="text" class="col-6" placeholder="Casa, Mamá...">
+								<input [(ngModel)]="P.phone" type="text" class="col-6" placeholder="Teléfono (10 dígitos)" max-length="10">
+							</p>
+							<p class="empty" *ngIf="User.phones.length < 1">(Ninguno)</p>
+							<a class="link" (click)="addPhone()">Agregar numero</a>
+						</div>
+				</div>
+
+
+			</div>
+			<div class="group col-4">
+				<h1>Imagen de usuario</h1>
+				<p *ngIf="Id > 0">
+					<span class="picture clearfix">
+						<span
+							class="img"
+							title="Imagen actual de {{User.firstname}} {{User.pid > 0 ? '' : '(Sin imagen)'}}"
+							[ngStyle]="User.pid > 0 ? {'background-image':'url(https://unitam.edu.mx/uploads/users/' + User.picture.filename + ')'} : {}">
+							<span *ngIf="User.pid > 0" class="icon-close pull-right" title="Eliminar imagen actual" (click)="SetPicture(User.picture, 'delete')"></span>
+						</span>
+						<ng-container *ngFor="let P of Pictures">
+							<span
+								*ngIf="P.id != User.pid"
+								class="img prev"
+								title="Doble clic para usar como imagen de usuario (Subida: el {{(P.at*1000 | date:'dd/MM/yyyy hh:mm:ss')}})"
+								(dblclick)="SetPicture(P)"
+								[ngStyle]="{'background-image': 'url(https://unitam.edu.mx/uploads/users/' + P.filename + ')'}">
+								<span
+									class="icon-close pull-right"
+									title="{{'Eliminar imagen alterna (Subida el ' + (P.at*1000 | date:'dd/MM/yyyy hh:mm:ss') + ')'}}"
+									(click)="SetPicture(P, 'delete')"></span>
+							</span>
+						</ng-container>
+					</span>
+
+					<label class="button primary" for="pic-upload">
+						<span class="icon-upload-cloud"></span> Subir imagen
+					</label>
+					<input class="file-upload-field" id="pic-upload" type="file" (change)="UploadPicture($event)" placeholder="Subir imagen..." accept=".jpg, .jpeg, .png">
+				</p>
+				<p class="empty" *ngIf="Id < 1">Guarde primero el usuario para asignar alguna imagen</p>
+			</div>
+		</div>
+	</div>
+
+	<!-- Meta -->
+	<div class="tab-body {{ GetOption('selected_tab')== 'meta' ? 'active' : '' }}">
+		<div class="row">
+			<div class="group col-3">
+				<h1>Rol</h1>
+
+				<p class="row">
+					<label for="">Tipo de usuario</label>
+					<select [(ngModel)]="User.type" class="col-12">
+						<option value="{{$.T_QUEST}}">(Seleccione)</option>
+						<option value="{{$.T_LOGGED}}">Registrado</option>
+						<option value="{{$.T_STUDENT}}">Estudiante</option>
+						<option value="{{$.T_TEACHER}}">Maestro</option>
+						<option value="{{$.T_ADMIN}}">Administrador</option>
+					</select>
+				</p>
+
+				<p class="row">
+					<label for="">Estado</label>
+					<select [(ngModel)]="User.status" class="col-12">
+						<option value="{{$.ACTIVE}}">Activo</option>
+						<option value="{{$.IN_BREAK}}">Baja temporal</option>
+						<option value="{{$.DROPPED}}">Excluido</option>
+
+						<option *ngIf="User.type == $.T_STUDENT" value="{{$.IS_GRADUATED}}">Egresado</option>
+						<option *ngIf="User.status == $.IS_APPLICANT" value="{{$.IS_APPLICANT}}">Aspirante</option>
+					</select>
+				</p>
+
+				<p class="row">
+					<label>No. Control</label>
+					<input max-length="15" type="text" placeholder="Ej: UTR999, UTC999, 00LSC999" [(ngModel)]="User.idnumber" class="col-12">
+				</p>
+
+				<p *ngIf="User.type == $.T_STUDENT" class="row course">
+					<label for="">Curso</label>
+					<select [(ngModel)]="User.cid" class="col-12">
+						<option value="0">(Especialidad)</option>
+						<option *ngFor="let C of COURSES" value="{{C.id}}">{{C.name}}</option>
+					</select>
+					<input (change)="LevelSetter()" type="number" maxlength="2" min="0" max="10" class="col-12" placeholder="Nivel" maxlength="2" [(ngModel)]="User.level">
+				</p>
+
+			</div>
+
+			<div class="group col-3">
+				<h1>Privilegios</h1>
+				<p class="row">
+
+					<label class="checkbox" title="Control de pagos">
+						<div class="mark {{User.capabilities.payment ? 'checked' : ''}}">
+							<span class="icon-ok"></span>
+						</div>
+						<div class="text">Pagos</div>
+						<input type="checkbox" id="checked-payment" [(ngModel)]="User.capabilities.payment" />
+					</label>
+					<label class="checkbox">
+						<div class="mark {{User.capabilities.applicants ? 'checked' : ''}}">
+							<span class="icon-ok"></span>
+						</div>
+						<div class="text">Aspirantes</div>
+						<input type="checkbox" id="checked-payment" [(ngModel)]="User.capabilities.applicants" />
+					</label>
+					<label class="checkbox" title="Edición de lista de cursos">
+						<div class="mark {{User.capabilities.courses ? 'checked' : ''}}">
+							<span class="icon-ok"></span>
+						</div>
+						<div class="text">Cursos</div>
+						<input type="checkbox" id="checked-payment" [(ngModel)]="User.capabilities.courses" />
+					</label>
+					<label class="checkbox" title="Edición vias de difusión">
+						<div class="mark {{User.capabilities.vias ? 'checked' : ''}}">
+							<span class="icon-ok"></span>
+						</div>
+						<div class="text">Vias</div>
+						<input type="checkbox" id="checked-payment" [(ngModel)]="User.capabilities.vias" />
+					</label>
+					<label class="checkbox" title="Edición de campañas promocionales">
+						<div class="mark {{User.capabilities.campaigns ? 'checked' : ''}}">
+							<span class="icon-ok"></span>
+						</div>
+						<div class="text">Campañas</div>
+						<input type="checkbox" id="checked-payment" [(ngModel)]="User.capabilities.campaigns" />
+					</label>
+					<label class="checkbox" title="Edición de directorio de escuelas">
+						<div class="mark {{User.capabilities.institutions ? 'checked' : ''}}">
+							<span class="icon-ok"></span>
+						</div>
+						<div class="text">Instituciones</div>
+						<input type="checkbox" id="checked-payment" [(ngModel)]="User.capabilities.institutions" />
+					</label>
+					<label class="checkbox" title="Gestion de página de radio">
+						<div class="mark {{User.capabilities.radio ? 'checked' : ''}}">
+							<span class="icon-ok"></span>
+						</div>
+						<div class="text">Radio</div>
+						<input type="checkbox" id="checked-payment" [(ngModel)]="User.capabilities.radio" />
+					</label>
+					<label class="checkbox" title="Editor de biblioteca virtual">
+						<div class="mark {{User.capabilities.docs ? 'checked' : ''}}">
+							<span class="icon-ok"></span>
+						</div>
+						<div class="text">Biblioteca</div>
+						<input type="checkbox" id="checked-payment" [(ngModel)]="User.capabilities.docs" />
+					</label>
+					<label class="checkbox" title="Recepción de mensajes de la página de contacto">
+						<div class="mark {{User.capabilities.messages ? 'checked' : ''}}">
+							<span class="icon-ok"></span>
+						</div>
+						<div class="text">Mensajes</div>
+						<input type="checkbox" id="checked-payment" [(ngModel)]="User.capabilities.messages" />
+					</label>
+					<label class="checkbox" title="Administrador de Feedbacks">
+						<div class="mark {{User.capabilities.feedback ? 'checked' : ''}}">
+							<span class="icon-ok"></span>
+						</div>
+						<div class="text">Feedback</div>
+						<input type="checkbox" id="checked-feedback" [(ngModel)]="User.capabilities.feedback" />
+					</label>
+					<label class="checkbox" title="Editor de cuentas de usuario">
+						<div class="mark {{User.capabilities.user ? 'checked' : ''}}">
+							<span class="icon-ok"></span>
+						</div>
+						<div class="text">Cuentas</div>
+						<input type="checkbox" id="checked-payment" [(ngModel)]="User.capabilities.user" />
+					</label>
+
+
+				</p>
+			</div>
+
+			<div class="group col-6">
+				<!-- Nombre -->
+				<h1>En plataforma:</h1>
+				<p class="row">
+					<label>Nombre de usuario</label>
+					<linker-box
+						[placeholder]="'Buscar usuario de plataforma...'"
+						[using]="'users'"
+						[make]="'search-platform'"
+						[show-image]="false"
+						[(object)]="User.platform"
+						[button1.caption]="'Registrar nuevo...'"
+						[button1.link]="'https://unitam.edu.mx/plataforma/user/editadvanced.php?id=-1'"
+						[button1.link.target]="'_blank'"
+						(pickedup)="UserPlatSelected($event)"
+						></linker-box>
+				</p>
+				<p class="row platform-links" *ngIf="User.uid > 0">
+					<a class="link right" href="https://unitam.edu.mx/plataforma/user/profile.php?id={{User.uid}}" target="_blank" title="Ver perfil de {{User.platform.firstname + ' ' + User.platform.lastname}}">Perfil de usuario</a>
+					<a class="link right" href="https://unitam.edu.mx/plataforma/user/editadvanced.php?id={{User.uid}}&returnto=profile" target="_blank" title="Editar perfil de {{User.platform.firstname}}">Editar...</a>
+				</p>
+
+
+				<div class="row" *ngIf="User.uid > 0">
+					<label>Ultimos 7 dias de actividad</label>
+					<canvas *ngIf="ChartData.length > 0" baseChart
+						[datasets]="ChartData"
+						[labels]="ChartLabels"
+						[options]="ChartOptions"
+						[colors]="ChartColors"
+						[legend]="false"
+						[chartType]="'bar'"></canvas>
+					<a href="https://unitam.edu.mx/plataforma/report/log/user.php?id={{User.uid}}&course=1&mode=all" target="_blank" class="link">Ver reporte completo</a>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="row" *ngIf="User.type == $.T_STUDENT">
+			<div class="group col-5">
+				<h1>Procedencia</h1>
+				<p class="row">
+					<label>Escuela de procedencia</label>
+					<linker-box
+						[show-image]="false"
+						[using]="'categories'"
+						[make]="'list'"
+						[placeholder]="'Buscar institución...'"
+						[params]="'type=institution'"
+						[(object)]="User.institution"
+						(pickedup)="InstitutionSelected($event)"
+						></linker-box>
+				</p>
+
+			</div>
+		</div>
+
+	</div>
+</div>
+
+
+<div class="row">
+	<p>
+		<a (click)="Save()" class="button primary">{{Id < 1 ? 'Agregar usuario' : 'Actualizar'}}</a>
+		<a *ngIf="Id > 0" (click)="T.Print('printable-cards', 'print-user')" class="button separe-left" title="Imprimir credencial"><span class="icon-print"></span> Credencial</a>
+	</p>
+</div>
+
+<section id="printable-cards">
+	<div class="card" *ngIf="User.id > 0">
+			<img [src]="'assets/card-base.jpg'" class="base">
+			<img class="photo" *ngIf="T.CreateUrl(User.picture.filename, 'users') != ''" [src]="T.CreateUrl(User.picture.filename, 'users')">
+			<div class="name">
+				<div class="firstname">
+					{{User.firstname}}
+					<div class="lastname">{{User.lastname}}</div>
+				</div>
+			</div>
+			<div class="expire">{{CardOptions.Valid}}</div>
+			<div class="type">{{
+				$.isStudent(User) ? 'Estudiante' : (
+				$.isAdmin(User) ? 'Administrativo' : (
+				$.isTeacher(User) ? 'Docente' : 'Usuario web'))
+			}}</div>
+			<div class="course">{{User.cid > 0 ? getCourse() : ''}}</div>
+			<div *ngIf="User.idnumber.length > 10" class="barcode-error">[INCOMPLETO]</div>
+			<div class="barcode">*{{User.idnumber}}*</div>
+			<div class="idnumber">{{User.idnumber}}</div>
+	</div>
+</section>

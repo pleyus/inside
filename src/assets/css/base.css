@@ -1,0 +1,43 @@
+* { box-sizing: border-box; }
+
+body, html { margin: 0; padding: 0; font-family: 'Titillium Web', 'Trebuchet MS'; font-size: 1rem; line-height: 1.15rem; }
+a { text-decoration: none; }
+p { line-height: 1.5rem; color: #555; }
+
+input[type="text"].small { width: 25% !important; }
+
+.empty { text-align: center; padding: 10px; color: #666; font-size: .9rem; font-style: italic; }
+.monospace { font-family: monospace; }
+.inline { display: inline-block !important; }
+
+.center { text-align: center; margin: 0 auto; }
+.left { text-align: left; }
+.right { text-align: right; }
+.clearfix::after { content: ''; clear: both; display: block; }
+
+.link { color: #1F7BB1; cursor: pointer; }
+.link:hover { text-decoration: underline; }
+
+.separe-left { margin-left: 1rem !important; }
+.separe-top { margin-top: 1rem !important; }
+.box { background-color: #F1F1F1; padding: 10px; display: block; clear: both; }
+
+
+.wrap { max-width: 1200px; margin: 0 auto; }
+
+.hide { display: none !important; }
+
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar:horizontal { height: 3px;}
+::-webkit-scrollbar-track { border: solid 1px #DDD; }
+::-webkit-scrollbar-thumb { background-color: #AAA; }
+::-webkit-scrollbar-thumb:hover { background: #888; }
+
+@media only screen and (min-width: 600px) {
+    /* For tablets: */
+}
+@media only screen and (min-width: 768px) {
+    /* For desktop: */
+}
+.pull-right { float: right }
+.pull-left { float: left }

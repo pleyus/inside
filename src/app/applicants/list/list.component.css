@@ -1,0 +1,65 @@
+span.tag 
+{
+	font-size: .6rem;
+	color: #FFF;
+	background-color: #00C853;
+	padding: .2rem .5rem;
+	border-radius: .2rem;
+	letter-spacing: .05rem;
+}
+span.tag.recent, span.tag.t0 { background-color: #0288D1; }
+span.tag.t1 { background-color: #039BE5; }
+span.tag.t2 { background-color: #03A9F4; }
+span.tag.t3 { background-color: #29B6F6; }
+span.tag.t4 { background-color: #4FC3F7; }
+span.tag.t5 { background-color: #81D4FA; color: #333; }
+span.tag.t6 { background-color: #B3E5FC; color: #333; }
+span.tag.t7 { background-color: #E1E5EE; color: #333; }
+span.tag.old { background-color: #EEE; color: #333; }
+span.tag.forgotten { background-color: #F1F1F1; color: #555; }
+span.tag.excluded { background-color: #922; color: #FFF; }
+
+.tracking { border: none; }
+.tracking .applicant.tracked {
+	background-color: #E1F5FE;
+	border: solid 1px #4FC3F7;
+}
+.tracking .applicant {
+	padding: 1rem;
+	border: solid 1px #F1F1F1;
+}
+.tracking .applicant .header {
+	font-weight: 600;
+	text-transform: uppercase;
+}
+.tracking .applicant .date {
+	font-size: .8rem;
+	color: #888;
+	padding-bottom: .5rem;
+}
+.tracking .applicant .date i { margin: 0 1rem; }
+.tracking .applicant .phone {
+	font-size: 1.5rem;
+	padding: .5rem;
+}
+.tracking .applicant .note {
+	padding-left: 1rem;	
+}
+.tracking .applicant .note input {
+	border-width: 1px;
+	width: 100%;
+}
+.tracking .applicant .note div {
+	font-style: italic;
+	font-size: .8rem;
+	color: #888;
+	white-space: normal;
+    height: 3rem;
+}
+.tracking .applicant .note div span {
+	font-weight: 600;
+	display: block;
+	color: #1F7BB1;
+}
+.tracking .applicant a { color: #333; }
+.tracking .applicant:hover a:hover { color: #1F7BB1; }

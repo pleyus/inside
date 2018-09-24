@@ -1,0 +1,18 @@
+<p>
+	Aqui llegan todos los mensajes que se envian desde la página de radio, en caso de notar algun mensaje <i>inapropiado</i> puedes bloquear a la persona que lo ha enviado.
+</p>
+
+<section>
+	<div *ngFor="let M of Mensajes; let i = index" class="{{M.status == 1 ? 'banned' : ''}}">
+		<h1>
+			<b (click)="ShowMe(M)">{{M.name}}</b>
+			<i>{{ M.at*1000 | date: 'dd/MM/yy HH:mm' }}</i>
+			<i *ngIf="RELATED.listid == M.listid" class="tag" title="El emisor es {{M.name}}">Mismo emisor</i>
+		</h1>
+		<p>{{ M.message }}</p>
+		<a class="link" (click)="Ban(M)">{{M.status == 0 ? 'B' : 'Desb'}}loquear</a>
+	</div>
+
+</section>
+
+<div class="more" *ngIf="LoadMore" (click)="GetMessages('more')">Mostrar mas</div>

@@ -1,0 +1,21 @@
+#content > * > h1 { height: 30px; margin: 10px 0 20px; }
+#content > * > h1 a { font-weight: normal; font-size: 1rem; margin-left: 20px; vertical-align: middle; color: #1F7BB1; border-left: solid 5px transparent; padding: 5px; border-radius: 5px; }
+#content > * > h1 a:hover { border-left: solid 5px #1F7BB1; }
+
+#content #header .title > h1 { font-size: 2rem; font-weight: 600; margin: 1rem 0; line-height: 2.5rem }
+#content #header .buttons { text-align: right; }
+
+#content { min-height: 250px; position: relative; vertical-align: top; padding: 10px; display: inline-block; } 
+#content.loggin { text-align: center; border: none; width: 100%; }
+#content.loggin a { color: #1F7BB1; }
+#content.loggin img { width: 60px; height: auto; display: block; margin: 0 auto; }
+
+#content > * > p:first-of-type { color: #666; line-height: 1.3rem; font-size: .93rem; white-space: initial; }
+
+@media only screen and (min-width: 600px) {
+    /* For tablets: */
+}
+@media only screen and (min-width: 768px) {
+    /* For desktop: */
+    #content { border-left: solid 1px #DDD; }
+}

@@ -1,0 +1,39 @@
+<!-- Si es que no hay login o aun no se ha dado de alta -->
+<section>
+  <img src="favicon.ico" alt="Logo de la Universidad Tamazunchale">
+
+  <div class="data" *ngIf="$.Me.id == 0">
+    <p>{{LoginMessage}}</p>
+
+    <div class="row filter">
+      <div class="col-12">
+        <label for="user">Usuario</label>
+        <div class="sbox">
+          <span class="icon-user"></span>
+          <input class="required" id="user" type="text" [(ngModel)]="Username" placeholder="Ej: {{Placeholder}}">
+        </div>
+      </div>
+    </div>
+
+    <div class="row filter">
+      <div class="col-12">
+        <label for="pass">Contraseña</label>
+        <div class="sbox">
+          <span class="icon-asterisk password {{ShowPass ? 'show' : ''}}" title="Mostrar contraseña" (click)="ShowPass = !ShowPass"></span>
+          <input class="required" id="pass" type="{{ ShowPass ? 'text' : 'password'}}" [(ngModel)]="Password">
+        </div>
+      </div>
+    </div>
+    <p class="error" class="state-{{ResponseMessage.loginCorrect}}" *ngIf="ResponseMessage.loginCorrect > 0">
+      {{ResponseMessage.loginMessage}}
+    </p>
+    <button class="button success" (click)="Login()">Iniciar sesión</button>
+    <div id="loading-bar" *ngIf="Loading"></div>
+    <div class="hidebar" *ngIf="!Loading"></div>
+  </div>
+
+  <div *ngIf="$.Me.id === 0 && $.Me.uid > 0">
+    <h1>Hola {{$.Me.firstname}}!</h1>
+    <p>Al parecer aun no tienes acceso a Inside, contacta con el Area de Sistemas para tu alta.</p>
+  </div>
+</section>

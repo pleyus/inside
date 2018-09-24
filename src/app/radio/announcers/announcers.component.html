@@ -1,0 +1,42 @@
+<section>
+	<div class="row">
+		<div class="group col-4">
+			<h1>Agregar</h1>
+			<div class="row">
+				<label for="search">Usuario</label>
+				<linker-box
+					(pickedup)="SetUser($event)"
+					[(object)]="Announcer.user"
+					[required]="true"
+					[placeholder]="'Buscar usuario'"
+					[using]="'users'"
+					[make]="'search'"
+					></linker-box>
+				
+			</div>
+
+			<div class="row">
+				<label for="alias" title="Algun seudónimo para mostrar en lugar del nombre real">Alias</label>
+				<input class="col-12" type="text" maxlength="80" placeholder="Apodo..." [(ngModel)]="Announcer.alias">
+			</div>
+
+			<div class="action-buttons">
+				<a class="button success" (click)="AddAnnouncer()">Agregar</a>
+			</div>
+
+		</div>
+		<div class="group col-8">
+			<h1>Registrados</h1>
+			<ul class="announcers tile">
+				<li *ngFor="let H of Announcers">
+					<div class="img" [ngStyle]="{ 'background-image': 'url(' + ( H.filename != '' ? 'https://unitam.edu.mx/uploads/users/' + H.filename : '') + ')' }"></div>
+					<h1><a [routerLink]="['/users/', H.uid]">{{H.alias}}</a></h1>
+					<h2>{{H.firstname}}</h2>
+					<a class="remove" (click)="RemoveAnnouncer(H)">Eliminar</a>
+				</li>
+				<li *ngIf="!Announcers.length" class="empty">Aún no hay locutores</li>
+			</ul>
+		</div>
+	</div>
+		
+</section>

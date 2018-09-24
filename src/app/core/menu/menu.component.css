@@ -1,0 +1,5 @@
+nav { display: inline-block; vertical-align: top; }
+nav > a { color: #333; text-decoration: none; display: block; padding: 15px 10px; }
+nav > a::before { padding-right: 10px; }
+nav > a:hover { background-color: #1F7BB1; color: #FFF; }
+nav > .active { background-color: #1F7BB1; color: #FFF; }

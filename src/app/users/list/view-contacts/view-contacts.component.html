@@ -1,0 +1,37 @@
+<table>
+	<thead class="row header">
+		<th class="col-1"></th>
+		<th title="Ordenar por nombre" class="col-3 order" (click)="Order('u.firstname')">
+			Nombre
+			<span *ngIf="order_by == 'u.firstname'" class="icon-{{order == 'ASC' ? 'down' : 'up'}}-open"></span> 
+		</th>
+		<th title="Ordenar por numero telefonico personal" class="col-2 order" (click)="Order('u.personal_phone')">
+			Tel. Personal
+			<span *ngIf="order_by == 'u.personal_phone'" class="icon-{{order == 'ASC' ? 'down' : 'up'}}-open"></span> 
+		</th>
+		<th title="Ordenar por Municipio" class="col-3 order" (click)="Order('s.municipio')">
+			Municipio
+			<span *ngIf="order_by == 's.municipio'" class="icon-{{order == 'ASC' ? 'down' : 'up'}}-open"></span> 
+		</th>
+		<th title="Ordenar por correo electrónico" class="col-3 order" (click)="Order('u.email')">
+			Correo
+			<span *ngIf="order_by == 'u.email'" class="icon-{{order == 'ASC' ? 'down' : 'up'}}-open"></span> 
+		</th>
+	</thead>
+	
+	<tbody>
+		<a *ngFor="let U of Users; let i = index" class="row" [routerLink]="[U.id]">
+			<td class="col-1">
+				<div class="img" [ngStyle]="{'background-image':'url(' + T.CreateUrl(U.filename, 'users') + ')'}"></div>
+			</td>
+			<td class="col-3">{{ U.firstname + ' ' + U.lastname }}</td>
+			<td class="col-2" title="{{U.personal_phone}}">{{ U.personal_phone && U.personal_phone.length < 5 ? '- - - - - - - - - -' : U.personal_phone }}</td>
+			<td *ngIf="U.lid > 0" class="col-3" title="{{  U.address + ' ' + U.asentamiento + ', ' +
+				U.municipio + ', ' + U.estado }} ">{{ U.municipio + ', ' + U.estado }} </td>
+			<td *ngIf="!(U.lid > 0)" class="col-3" title="Aun no se cuenta con la ubicación de U.firstname"> <i>(Desconocido)</i> </td>
+			<td class="col-3">{{ U.email }}</td>
+		</a>
+		
+		<tr class="row empty" *ngIf="Users.length < 1">No hay datos para mostrar</tr>
+	</tbody>
+</table>

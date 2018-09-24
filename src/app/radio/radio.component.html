@@ -1,0 +1,27 @@
+<div class="row" id="header">
+	<div class="title row">
+		<h1>{{Title}}</h1>
+	</div>
+</div>
+<div class="tabs">
+	<header>
+		<a class="item" *ngIf="$.isAdmin() || $.Me.hostOf > 0" routerLinkActive="active" routerLink="messages">
+			<span class="icon-mail"></span>
+			Mensajes
+			<span *ngIf="S.News.RadioMessages > 0" class="bullet pull-right">
+				{{ S.News.RadioMessages > 9 ? '+9' : S.News.RadioMessages }}
+			</span>
+		</a>
+		<a class="item" *ngIf="$.isAdmin()" routerLinkActive="active" routerLink="guide">
+			<span class="icon-podcast"></span>
+			Programas
+		</a>
+		<a class="item" *ngIf="$.isAdmin()" routerLinkActive="active" routerLink="announcers">
+			<span class="icon-headphones"></span>
+			Locutores
+		</a>
+	</header>
+	<div class="tab-body">
+		<router-outlet></router-outlet>
+	</div>
+</div>

@@ -1,0 +1,41 @@
+.tracking > div:not(.linker) { margin: 10px 0; }
+.tracking > div > span:first-of-type { margin: 0 10px; }
+.tracking > div > div:first-of-type { padding-bottom: 10px;}
+
+.tracking > .notes ul {
+	display: block;
+	clear: both;
+	list-style: none;
+    padding: 0;
+	font-size: .8rem;
+	max-height: 400px;
+	overflow-y: auto;
+}
+.tracking > .notes li {
+    padding: .8rem;
+}
+
+.tracking > .notes small { font-style: italic; color: #AAA; }
+.tracking > .notes small span { display: none; cursor: pointer; }
+.tracking > .notes li:hover small span { display: block; }
+
+.tracking > .notes .note p { margin: 0; }
+.tracking > .notes .note i { display: block; text-align: right; font-size: .7rem; color: #1F7BB1; }
+
+.tracking > .notes li:not(:last-child) {
+	border-bottom: solid 1px #EEE;
+}
+.empty { font-size: .8rem; }
+
+label ~ small { display: block; }
+
+.checkbox .text { vertical-align: baseline; }
+.group label { display: inline-block;}
+.checkbox span:before{
+	padding-top: 3px;
+    margin-left: 1px;
+}
+.checkbox .mark {
+	height: 20px;
+	width: 20px;
+}

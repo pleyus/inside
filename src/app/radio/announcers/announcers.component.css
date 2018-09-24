@@ -1,0 +1,53 @@
+ul.tile{
+	list-style: none;
+}
+
+ul.tile > li {
+	width: 30%;
+	float: left;
+	padding: .5rem;
+}
+ul.tile > li.empty {
+	width: 100%;
+}
+ul.tile > li .img { 
+	border: solid 1px #F1F1F1;
+	background-color: #EEE;
+	margin: 0 auto;
+	padding:.5rem;
+	width: 100px;
+	height: 100px;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+
+}
+ul.tile > li h1{
+	text-align: center;
+	margin: .5rem 0;
+}
+ul.tile > li h1 a { color: #333; cursor: pointer; }
+ul.tile > li h1 a:hover { text-decoration: underline; }
+ul.tile > li h2{
+	text-align: center;
+	font-size: 1rem;
+	font-weight: normal;
+}
+
+a.remove{
+	display: block;
+	text-align: center;
+	cursor: pointer;
+	font-size: .9rem;
+	color: #1F7BB1;
+}
+a.remove:hover{
+	text-decoration: underline;
+}
+
+.user span {
+	cursor: pointer;
+}
+.user span:hover {
+	color: #1F7BB1;
+}

@@ -1,0 +1,156 @@
+<div class="row" id="header">
+	<div class="title row">
+		<h1>{{
+			Applicant.user.firstname+Applicant.user.lastname != ''
+			? Applicant.user.firstname + " " + Applicant.user.lastname
+			: '(Sin nombre)'
+		}}</h1>
+	</div>
+</div>
+
+<div class="row">
+	<div class="group col-4">
+		<h1>Datos personales</h1>
+		<p class="row">
+			<label for="firstname">Nombre</label>
+			<input class="required col-12" name="firstname" id="firstname" type="text" placeholder="Nombre" [(ngModel)]="Applicant.user.firstname">
+			<input class="col-12" name="lastname" id="lastname" type="text" placeholder="Apellidos" [(ngModel)]="Applicant.user.lastname">
+		</p>
+		<div class="row">
+			<label for="personal_phone">Contacto</label>
+			<div class="sbox">
+        <span class="icon-phone"></span>
+        <input class="required col-12" maxlength="10" name="personal_phone" id="personal_phone" type="text" placeholder="Teléfono personal" [(ngModel)]="Applicant.user.personal_phone" maxlength="10">
+      </div>
+      <div class="sbox">
+        <span class="icon-at"></span>
+        <input class="required col-12" placeholder="Correo electrónico" name="email" id="email" type="text" [(ngModel)]="Applicant.user.email">
+      </div>
+    </div>
+    <p class="row">
+        <label>Ubicación</label>
+        <linker-box
+          [placeholder]="'Ciudad, Codigo postal, localidad...'"
+          [show-image]="false"
+          [using]="'sepomex'"
+          [make]="'get'"
+          [(object)]="Applicant.user.location"
+          (pickedup)="LocationSelected($event)"
+          ></linker-box>
+      </p>
+      <p class="row">
+        <textarea class="col-12" [(ngModel)]="Applicant.user.address" placeholder="Calle, número, etc..."></textarea>
+      </p>
+
+	</div>
+	<div class="group col-4">
+
+		<h1>Segmentación</h1>
+
+		<p class="row">
+			<label for="course">Interes</label>
+			<select class="col-12" name="course" id="course" [(ngModel)]="Applicant.user.cid">
+				<option value="0">(Seleccione)</option>
+				<option *ngFor="let C of Courses" value="{{C.id}}">{{C.name}}</option>
+			</select>
+		</p>
+
+		<p class="row">
+			<label for="sex">Sexo</label>
+			<select class="col-12" name="sex" id="sex" [(ngModel)]="Applicant.user.sex">
+				<option value="0">(Desconocido)</option>
+				<option value="1">Femenino</option>
+				<option value="2">Masculino</option>
+			</select>
+		</p>
+
+		<p class="row">
+			<label>Escuela de procedencia</label>
+			<small *ngIf="Applicant.origin !== '' && Applicant.user.iid < 1">Antes: {{Applicant.origin}}</small>
+			<linker-box
+				[placeholder]="'Buscar escuela...'"
+				[show-image]="false"
+				[using]="'categories'"
+				[make]="'list'"
+				[params]="'type=institution'"
+				[(object)]="Applicant.user.institution"
+				(pickedup)="InstitutionSelected($event)"
+				></linker-box>
+		</p>
+
+		<p *ngIf="Vias.length > 0" class="row">
+			<label for="via">Vía de difusión</label>
+			<select class="col-12" name="via" id="via" [(ngModel)]="Applicant.via">
+				<option value="0">(Seleccione)</option>
+				<option *ngFor="let i of Vias" value="{{i.id}}">{{i.name}}</option>
+			</select>
+		</p>
+
+	</div>
+	<div class="group tracking col-4">
+		<h1>Seguimiento</h1>
+
+		<!-- Registrado -->
+		<div class="row">
+			<div title="Registrado por">
+				<span class="icon-user"></span>
+				{{
+					Applicant.user.rid > 0
+					? 'por ' + Applicant.user.regby.firstname + ' ' + Applicant.user.regby.lastname
+					: '(Autoregistro)'
+				}}
+			</div>
+			<div title="Fecha de registro">
+				<span class="icon-calendar"></span>
+				{{Applicant.user.at > 0 ? (Applicant.user.at*1000  | date: 'dd/MM/yyyy hh:mm:ss') : 'Justo ahora' }}
+			</div>
+		</div>
+
+		<!-- Campaign -->
+		<div *ngIf="Id > 0" title="Nombre de la campaña de promoción utilizada">
+			<span class="icon-dot-circled {{Applicant.campaign.id > 0 ? 'state-1' : ''}}"></span>
+			{{ Applicant.campaign.name }}
+		</div>
+
+		<!-- Inscrito -->
+		<div *ngIf="Applicant.user.type == $.T_STUDENT && Applicant.user.status == $.ACTIVE" title="El alumno se inscribió">
+			<span class="icon-user color-special"></span> <b>Inscrito</b></div>
+
+		<!-- Excluded -->
+		<div *ngIf="Id > 0" title="En caso de que el aspirante ya no muestre interes o ya esté inscrito en otra institución">
+			<span class="icon-attention"></span>
+
+			<label class="checkbox">
+				<div class="mark {{check_excluded ? 'checked' : ''}}">
+					<span class="icon-ok"></span>
+				</div>
+				<div class="text">Descartar de aspirantes</div>
+				<input type="checkbox" id="checked-payment" [(ngModel)]="check_excluded" />
+			</label>
+		</div>
+
+		<!-- Notes -->
+		<h1>Notas</h1>
+		<div class="row notes">
+
+			<input *ngIf="Id > 0" class="col-12" type="text" placeholder="Escribe la nota y pulsa Enter" [(ngModel)]="NewNote" (keyup.enter)="SaveNote()">
+
+			<ul *ngIf="Applicant.notes.length > 0">
+				<li *ngFor="let N of Applicant.notes; let i = index" class="note">
+					<small>{{N.at * 1000 | date: 'EEE dd/MMM/yyyy hh:mm'}} <span class="icon-close pull-right" (click)="DeleteNote(i)" title="Borrar nota"></span></small> <br>
+					<p>{{N.note}}</p>
+					<i>por {{N.firstname + ' ' + N.lastname}}</i>
+				</li>
+			</ul>
+			<p class="empty" *ngIf="Applicant.notes.length < 1 && Id > 0">No hay notas aun</p>
+			<p class="empty" *ngIf="Id < 1">Guarde primero el aspirante</p>
+		</div>
+	</div>
+</div>
+
+<div class="row action-buttons">
+	<a (click)="Save()" class="button primary" title="Guardar el estado actual del aspirante">Guardar</a>
+	<a *ngIf="Id > 0" (click)="Delete()" class="button" title="Eliminar este registro">Eliminar</a>
+	<a (click)="GoBack()" class="button" title="Cancelar cambios realizados">Cancelar</a>
+	<a *ngIf="$.CanDo('user') && Id > 0" routerLink="/users/{{Applicant.user.id}}" class="pull-right button" title="Ver datos del usuario">Perfil</a>
+</div>

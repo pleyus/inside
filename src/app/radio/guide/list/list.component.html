@@ -1,0 +1,28 @@
+<p>
+	Puede gestionar los programas que aparecen en el sitio web desde aqui o <a [routerLink]="[0]">crear un programa</a> nuevo
+</p>
+
+<section class="tile">
+	<a title="{{ G.status === 1 ? 'El programa no se encuentra activo actualmente' : G.name }}" *ngFor="let G of Guides" class="col-4 link {{ G.status == 1 ? 'hidden' : ''}}" [routerLink]="[G.id]">
+		<div class="img {{G.status === 1 ? 'inactive' : ''}}" [ngStyle]="{ 'background-image' : 'url(' + T.CreateUrl(G.img, 'radio') + ')' }"></div>
+		<div class="info">
+			<h1>{{G.name}}</h1>
+			<p>
+				<span *ngFor="let H of G.announcers">{{H}}</span>
+				<span class="empy" *ngIf="G.announcers.length < 1">(Sin locutores)</span>
+			</p>
+			<p>
+				<span class="tag {{ InDays(G.days, 1) }}">L</span>
+				<span class="tag {{ InDays(G.days, 2) }}">M</span>
+				<span class="tag {{ InDays(G.days, 3) }}">X</span>
+				<span class="tag {{ InDays(G.days, 4) }}">J</span>
+				<span class="tag {{ InDays(G.days, 5) }}">V</span>
+				<span class="tag {{ InDays(G.days, 6) }}">S</span>
+
+			</p>
+		</div>
+	</a>
+	<div class="empty" *ngIf="Guides.length < 1">No hay programas aún</div>
+</section>
+
+<div class="more" *ngIf="LoadMore" (click)="GetGuides('more')">Mostrar mas</div>

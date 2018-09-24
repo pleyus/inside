@@ -1,0 +1,108 @@
+<h1>
+	{{Title}}
+</h1>
+<p *ngIf="!$.isAdmin() && !$.CanDo('feedback'); else messadmin">
+	Feedback te permite realizar comentarios sobre nuestro servicio o sobre alguna
+	persona con la opción de mostrar o no tus datos. Ten en cuenta que si uno de
+	tus feedbacks es considerado inapropiado, se suspenderá tu acceso a este modulo.
+</p>
+<ng-template #messadmin>
+  <p>
+    Desde aqui podrás gestionar los mensajes de retroalimentación que los usuarios envian desde Inside.
+  </p>
+</ng-template>
+
+<!-- For create -->
+<div *ngIf="Feed.id == 0 && !$.isAdmin() && !$.CanDo('feedback')" class="row">
+
+	<div class="group col-7">
+		<h1>Comentario</h1>
+		<textarea class="required col-12" id="comment" placeholder="{{FeedbackHeading}}" [(ngModel)]="Feed.comment"></textarea>
+	</div>
+
+	<div class="group col-5">
+		<h1>Opciones</h1>
+
+		<label for="checked-hide" class="checkbox" title="Oculta tus datos dentro del modulo, pero el comentario queda ligado a tu cuenta. Esto no garantiza tu anonimato.">
+			<div class="mark {{Feed.hide > 0 ? 'checked' : ''}}">
+				<span class="icon-ok"></span>
+			</div>
+			<div class="text">Ocultar mis datos</div>
+			<input type="checkbox" id="checked-hide" [(ngModel)]="Feed.hide" />
+		</label>
+
+		<label *ngIf="Feed.hide > 0" for="checked-ghost" class="checkbox" title="No podrá dar seguimiento a sus comentarios ya que serán anónimos">
+			<div class="mark {{Feed.ghost > 0 ? 'checked' : ''}}">
+				<span class="icon-ok"></span>
+			</div>
+			<div class="text">Anónimo</div>
+			<input type="checkbox" id="checked-ghost" [(ngModel)]="Feed.ghost" />
+		</label>
+
+		<p *ngIf="Feed.ghost" class="empty"><b>Advertencia: </b> Si hace un comentario anónimo se desactivarán las respuestas para el comentario, y no aparecera en su la lista de comentarios.</p>
+
+	</div>
+	<p class="col-12">
+		<a (click)="Save()" class="button primary">Enviar comentario</a>
+	</p>
+</div>
+
+<!-- For Open -->
+<div class="form row {{ Feed.id > 0 ? '' : 'hidden' }}">
+	<div class="group col-6">
+		<h1>{{ $.isAdmin() && $.CanDo('feedback') ? 'C' : 'Tu c' }}omentario</h1>
+		<textarea readonly class="disabled col-12">{{Feed.comment}}</textarea>
+		<p *ngIf="Feed.status == 1" class="prop col-12"> <span class="icon-feather"></span> Este comentario fue marcado como inapropiado</p>
+		<p class="prop col-12">
+			<span class="icon-user"></span>
+			{{
+				Feed.ghost > 0
+				? 'Comentario anónimo'
+				: (Feed.hide > 0
+				? 'Emisor oculto'
+				: 'Comentario por ' + Feed.user.firstname + ' ' + Feed.user.lastname +
+					(Feed.user.cid > 0 ? ' – ' + Feed.user.course + ' ' + T.Romanize(Feed.user.level) : ''))
+			}}
+		</p>
+		<p class="prop col-12"> <span class="icon-calendar"></span> {{Feed.at*1000 | date: 'dd/MM/yyyy'}}</p>
+
+	</div>
+
+	<div *ngIf="(Feed.response != '' || $.isAdmin() && $.CanDo('feedback')) && !Feed.ghost" class="group col-6">
+		<h1>Respuesta</h1>
+		<textarea readonly class="disabled col-12" *ngIf="Feed.rat > 0">{{Feed.response}}</textarea>
+		<textarea *ngIf="$.isAdmin() && $.CanDo('feedback') && Feed.rat == 0" class="required response col-12" placeholder="Se contestará de manera anónima" [(ngModel)]="Feed.response"></textarea>
+		<p *ngIf="Feed.rat > 0" class="prop col-12"> <span class="icon-calendar"></span> {{Feed.rat*1000 | date: 'dd/MM/yyyy'}}</p>
+	</div>
+
+	<p class="col-12">
+		<a *ngIf="($.isAdmin() && $.CanDo('feedback') && Feed.rat == 0) && !Feed.ghost" (click)="Respond()" class="button primary">Enviar respuesta</a>
+		<a (click)="Close()" class="button separe-left">Cerrar</a>
+	</p>
+</div>
+
+<h2>{{ $.isAdmin() && $.CanDo('feedback') ? 'C' : 'Tus c' }}omentarios</h2>
+<div class="table">
+	<table>
+		<thead>
+			<th class="col-2">Fecha</th>
+			<th class="col-4-5">Comentario</th>
+			<th class="col-4-5">Respuesta</th>
+			<th class="col-1">Estado</th>
+		</thead>
+		<tbody>
+			<a *ngFor="let I of Feeds" class="row link" (click)="Load(I.id)">
+				<div class="col-2">{{ I.at*1000 | date: 'dd/MM/yy' }}</div>
+				<div class="col-4-5">{{ I.comment.substr(0, 80) + (I.comment.length > 81 ? '...' : '') }}</div>
+				<div class="col-4-5">{{ I.response.substr(0, 80) + (I.response.length > 81 ? '...' : '') }}</div>
+				<div class="col-1">
+					<span title="{{I.hide > 0 ? 'Comentario anónimo' : 'Comentario firmado'}}" class="icon icon-user state-{{I.hide > 0 ? 0 : 1}}"></span>
+					<span title="{{I.rat > 0 ? 'Comentario respondido' : 'Aun no hay respuesta'}}" class="icon icon-feather state-{{I.rat > 0 ? 1 : 0}}"></span>
+				</div>
+			</a>
+			<div class="empty" *ngIf="Feeds.length < 1">Aun no hay comentarios</div>
+		</tbody>
+	</table>
+
+</div>
+<a *ngIf="LoadMore &&  GetOption('last') > 1 && Feeds.length > 0" (click)="GetFeeds( 'more' )" class="link box center"> <span *ngIf="LoadingMore" class="icon-loading animate-spin"></span> Mostrar más</a>

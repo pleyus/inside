@@ -1,0 +1,25 @@
+<div class="row" id="header">
+	<div class="title row">
+		<h1>Biblioteca – Panel</h1>
+	</div>
+</div>
+<div class="tabs">
+	<header>
+		<a class="item" routerLinkActive="active" routerLink="/library/list">
+			<span class="icon-books"></span>
+			Libros
+		</a>
+		<a class="item" routerLinkActive="active" routerLink="/library/autors">
+			<span class="icon-podcast"></span>
+			Autores
+		</a>
+		<a class="item" routerLinkActive="active" routerLink="/library/editorial">
+			<span class="icon-headphones"></span>
+			Editoriales
+		</a>
+	</header>
+	<div class="tab-body">
+		<router-outlet></router-outlet>
+	</div>
+</div>
+	

@@ -1,0 +1,104 @@
+<p>
+	Desde aqui puede modificar las esculeas que se encuentran registradas en nuestro directorio.
+	Es recomendable Llenar todos los campos requeridos del formulario de creación para tener un mejor registro.
+</p>
+
+<div class="row" *ngIf="Institution.id > -1">
+	<div class="row">
+		<div class="group col-6">
+				
+			<h1>{{ Institution.name == '' ? '«Nuevo elemento»' : Institution.name}}</h1>
+
+			<p class="row">
+				<label>Nombre</label>
+				<input class="required col-12" maxlength="100" type="text" [(ngModel)]="Institution.name" placeholder="Ej. Universidad Tama...">
+			</p>
+			
+			<p class="row">
+				<label>Teléfonos</label>
+				<input class="col-12" maxlength="10" type="text" [(ngModel)]="Institution.phone1" placeholder="10 digitos">
+				<input class="col-12" maxlength="10" type="text" [(ngModel)]="Institution.phone2" placeholder="Alterno o del director">
+			</p>
+
+			<p class="row">
+				<label>Director</label>
+				<input class="col-12" type="text" [(ngModel)]="Institution.director" placeholder="Nombre completo">
+			</p>
+			
+		</div>
+		<div class="group col-6">
+				
+			<h1>Ubicación</h1>
+			<p class="row">
+				<label>Localidad</label>
+				<linker-box
+					[(object)]="Institution.location"
+					(pickedup)="SetLocation($event)" 
+					[placeholder]="'Ciudad, Codigo postal, localidad...'"
+					[using]="'sepomex'"
+					[make]="'get'"
+					[show-image]="false"
+					></linker-box>
+			</p>
+			<p class="row">
+				<label>Dirección</label>
+				<textarea class="col-12" [(ngModel)]="Institution.address" placeholder="Calle, numero, referencias..."></textarea>
+			</p>
+			
+		</div>
+	</div>
+
+	<div class="action-buttons">
+		<a (click)="Save()" class="button {{Institution.id > 0 ? 'primary' : 'success'}}">{{Institution.id > 0 ? 'Actualizar' : 'Crear nuevo'}}</a>
+		<a (click)="SetCategory()" class="button">Cancelar</a>
+		<a *ngIf="Institution.id > 0" (click)="Delete()" title="Eliminar categoria" class="icon-trash button separe-left"></a>
+	</div>
+</div>
+
+<div class="row filter" *ngIf="Institution.id < 0">
+	<div class="col-6">
+		<label for="sbox">Busqueda</label>
+		<div class="sbox">
+			<span class="icon-search"></span>
+			<input id="sbox" type="text" (keyup)="search()" [(ngModel)]="search_string" 
+				placeholder="Nombre, director, telefono, ubicación...">
+		</div>
+	</div>
+	<div class="col-6">
+		<a title="Registrar una nueva institución" 
+		class="button pull-right" 
+		(click)="Institution.id = 0">
+			Registrar escuela
+		</a>
+	</div>
+</div>
+<div class="table" *ngIf="Institution.id < 0">
+	<table>
+		<thead>
+			<th title="Ordenar por nombre" class="col-4 order" (click)="Order('i.name')">
+				Nombre
+				<span *ngIf="_OrderBy == 'i.name'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
+			</th>
+			<th title="Ordenar por dirección" class="col-5 order" (click)="Order('s.asentamiento')">
+				Dirección
+				<span *ngIf="_OrderBy == 's.asentamiento'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
+			</th>
+			<th title="Ordenar por teléfono" class="col-3 order" (click)="Order('i.phone')">
+				Teléfono
+				<span *ngIf="_OrderBy == 'i.phone'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
+			</th>
+		</thead>
+		<tbody>
+			<div *ngIf="List.length < 1" class="empty">
+				No hay elementos en la lista
+			</div>
+			<a *ngFor="let Item of List" class="row link" (click)="SetCategory(Item)">
+				<div class="col-4">{{Item.name}}</div
+				><div class="col-5">{{Item.loc}} {{Item.mun}} {{Item.est}}</div
+				><div class="col-3">{{Item.phone1}}</div>
+			</a>
+		</tbody>
+	</table>
+		
+</div>
+<a *ngIf="LoadMore && List.length > 0 && Institution.id < 0" (click)="GetInstitutions( 'more' )" class="link box center"> Mostrar más </a>

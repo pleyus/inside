@@ -1,0 +1,151 @@
+<div class="row filter">
+	<div class="col-5">
+		<label for="sbox">Busqueda</label>
+		<div class="sbox">
+			<span class="icon icon-search"></span>
+			<input id="sbox" type="text" (keyup)="search()" [(ngModel)]="search_string" placeholder="Nombre, especialidad, nota de seguimiento...">
+		</div>
+	</div>
+
+	<div class="col-3">
+		<label>Filtrar</label>
+		<div class="dropdown">
+			<button class="dropbtn" title="Filtrar resultados">
+				<span class="button-text">{{ FilterText()}}</span>
+				<span class="icon-down-open"></span>
+			</button>
+
+			<!-- Filtros -->
+			<div class="dropdown-content" (click)="search()">
+				<a (click)="setFilter('')" title="Muestra todos los aspirantes">
+					<span class="icon-{{isFilter('') ? 'ok' : 'noicon'}}"></span>
+					Todos 
+				</a>
+				<a (click)="setFilter('active')" title="Muestra solamente los inscritos">
+					<span class="icon-{{isFilter('active') ? 'ok' : 'noicon'}}"></span>
+					Inscritos
+				</a>
+
+				<span class="separator">Seguimiento</span>
+				<a (click)="setFilter('recent')" title="Aquellos que se les dio seguimiento recientemente (menos de 7 dias)">
+					<span class="icon-{{isFilter('recent') ? 'ok' : 'noicon'}}"></span>
+					Esta semana
+				</a>
+				<a (click)="setFilter('week')" title="Seguimiento de 7 a 15 dias">
+					<span class="icon-{{isFilter('week') ? 'ok' : 'noicon'}}"></span>
+					Semana pasada
+				</a>
+				<a (click)="setFilter('old')" title="Aquellos que ya no se les ha dado seguimiento">
+					<span class="icon-{{isFilter('old') ? 'ok' : 'noicon'}}"></span>
+					Mas de 15 dias
+				</a>
+
+				<span class="separator">Otros</span>
+				
+				<a (click)="setFilter('excluded')" title="Muestra solo aquellos que se han descartado de aspirantes">
+					<span class="icon-{{isFilter('excluded') ? 'ok' : 'noicon'}}"></span>
+					Descartados
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-2">
+		<label>Periodo</label>
+		<div class="dropdown">
+			<button class="dropbtn" title="Modo de vista">
+				<span class="button-text">{{Period > 0 ? Period : 'Todos'}}</span>
+				<span class="icon-down-open"></span>
+			</button>
+			<div class="dropdown-content">
+				<a (click)="setPeriod(0)" title="Todos los datos disponibles">
+					<span class="icon-{{0 == Period ? 'ok' : 'noicon'}}"></span>
+					Todos
+				</a>
+				<a *ngFor="let P of Periods" (click)="setPeriod(P)" title="Promoción P{{P}}">
+					<span class="icon-{{P == Period ? 'ok' : 'noicon'}}"></span>
+					{{P}}
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-2 not-labeled">
+		<a *ngIf="$.isAdmin()" title="Registrar nuevo..." class="button success pull-right" [routerLink]="[ '/applicants/0' ]">Nuevo</a>
+	</div>
+
+</div>
+
+<div class="table">
+
+	<table>
+		<thead>
+			<th title="Ordenar por fecha de registro" class="col-1 order" (click)="Order('u.at')">
+				Fecha
+				<span *ngIf="_OrderBy == 'u.at'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
+			</th>
+			<th title="Ordenar por nombre" class="col-3">
+				<div class="order" (click)="Order('u.firstname')">
+					Nombre
+					<span *ngIf="_OrderBy == 'u.firstname'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
+				</div>
+				/
+				<div class="order" (click)="Order('u.lastname')">
+					Apellido
+					<span *ngIf="_OrderBy == 'u.lastname'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
+				</div>
+			</th>
+			<th title="Ordenar por fecha de ultimo seguimiento" class="col-1 order" (click)="Order('n.at')">
+				<span class="icon-calendar"></span>
+				<span *ngIf="_OrderBy == 'n.at'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
+			</th>
+			<th title="Ordenar por nota de seguimiento" class="col-5 order" (click)="Order('n.note')">
+				Nota
+				<span *ngIf="_OrderBy == 'n.note'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
+			</th>
+			<th class="col-2"> </th>
+		</thead>
+		<tbody>
+			<a *ngFor="let A of Applicants" class="row" [routerLink]="['/applicants/' + A.id]">
+				<td class="col-1" title="Fecha de registro: {{ A.at*1000 | date: 'EEE dd/MMM/yyyy hh:mm:ss' }}">{{ A.at*1000 | date: 'dd/MMM' }}</td>
+				<td class="col-3">{{ A.firstname + ' ' + A.lastname }}</td>
+				<td class="col-1"><span *ngIf="A.note_at > 0" title="{{ GetTaggedTitle(A) }}" class="tag {{ GetTaggedClass(A) }}">{{ A.note_at * 1000 | date : 'dd/MMM' }}</span> </td>
+				<td class="col-5" title="{{ A.note }}">{{ A.note }}</td>
+				<td class="col-2" style="text-align: right">
+					<span *ngIf="A.type == $.T_STUDENT && A.status == $.ACTIVE" title="Ya se ha inscrito, buen trabajo" class="icon icon-user color-special"></span>
+					<span title="{{ A.mid > 0 ? 'Ya se cuenta con su ubicación' : 'Aun no esta localizado' }}" class="icon icon-location state-{{ A.mid > 0 ? 1 : 0}}"></span>
+					<span title="{{ A.tutor_phone != '' ? 'Telefonos completos' : 'Falta el telefono del tutor o alternativo' }}" class="icon icon-phone state-{{ A.tutor_phone != '' ? 1 : 0}}"></span>
+					<span 
+						title="{{ A.campaign < 0 ? 'Registrado por un administrador' : (A.campaign == 0 ? 'Autoregistro' : 'Campaña pagada')}}" 
+						class="icon icon-dot-circled {{ A.campaign < 0 ? 'color-info' : (A.campaign == 0 ? 'state-0' : 'color-active')}}">
+						</span>
+				</td>
+			</a> 
+<!-- 
+			<ng-container *ngIf="isView('tracker')">
+				<div *ngFor="let A of Applicants" class="applicant col-6 {{A.note_saved > 0 ? 'tracked' : ''}}">
+					<div class="header">
+						<span *ngIf="A.type == $.T_STUDENT && A.status == $.ACTIVE" title="Ya se ha inscrito, buen trabajo" class="icon icon-user color-special"></span> 
+						<a [routerLink]="[A.id]">{{ A.firstname + ' ' + A.lastname }}</a>
+					</div>
+					<div class="date">{{ A.course }} <i>|</i> {{ A.at*1000 | date: 'dd/MM/yy' }}</div>
+					<div class="phone">
+						<span class="icon-phone"></span> {{A.personal_phone.length > 6 ? A.personal_phone : '(Sin numero)' }}
+						<span *ngIf="A.tutor_phone.length > 6" class="icon-phone"></span> {{A.tutor_phone.length > 6 ? A.tutor_phone : '' }}
+					</div>
+					<div class="note">
+						<input name="note" id="note" placeholder="Escriba una nota y pulse enter..." type="text" [(ngModel)]="A.new_note" (keyup.enter)="SaveNote(A)">
+						<div>
+							<span *ngIf="A.note_at > 0">{{ A.note_at*1000 | date: 'dd/MM hh:mm' }}</span>
+							{{A.note_at > 0 ? A.note : '(Aun no hay seguimiento)'}}
+						</div>
+					</div>
+				</div>
+			</ng-container> -->
+			<div class="empty" *ngIf="Applicants.length < 1">Sin aspirantes para mostrar</div>
+		</tbody>
+	</table>
+
+</div>
+
+<a *ngIf="LoadMore && Applicants.length > 0" (click)="GetApplicants( 'more' )" class="link box center">Mostrar más...</a>

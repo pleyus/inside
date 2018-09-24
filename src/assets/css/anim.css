@@ -1,0 +1,16 @@
+@keyframes jump {
+	0% {
+		transform: translate3d(0,0,0) scale3d(1,1,1);
+	}
+	40% {
+		transform: translate3d(0,-15%,0) scale3d(.8,1.5,1);
+	}
+	100% {
+		transform: translate3d(0,-50%,0) scale3d(1.5,.8,1);
+	}
+}
+.animate-jump {
+	transform-origin: 50% 50%;
+	animation: jump .6s linear alternate infinite; 
+	display:inline-block;
+}

@@ -1,0 +1,80 @@
+<nav class="col-2">
+
+	<a
+		*ngIf="!$.isAdmin()"
+		class="icon icon-user"
+		routerLinkActive="active" routerLink="/me">
+		Perfil
+	</a>
+	<a 
+		*ngIf="($.isAdmin() && $.CanDo('payment')) || $.isStudent()" 
+		class="icon icon-payment" 
+		routerLinkActive="active" routerLink="/payment">
+		{{$.isStudent() ? 'Mis ' : ''}}Pagos
+	</a>
+	<a 
+		*ngIf="$.isAdmin() && $.CanDo('applicants')"
+		class="icon icon-applicant" 
+		routerLinkActive="active" routerLink="/applicants">
+		Aspirantes
+		<span *ngIf="S.News.Applicants > 0" class="bullet pull-right">
+			{{S.News.Applicants > 9 ? '+9' : S.News.Applicants}}
+		</span>
+	</a>
+
+	<a 
+		*ngIf="$.isAdmin() && $.CanDo('messages')"
+		class="icon icon-inbox" 
+		routerLinkActive="active" routerLink="/inbox">
+		Mensajes
+		<span *ngIf="S.News.Messages > 0" class="bullet pull-right">
+			{{S.News.Messages > 9 ? '+9' : S.News.Messages}}
+		</span>
+	</a>
+
+	<a 
+		*ngIf="$.isAdmin() && ( 
+			$.CanDo('institutions')
+			|| $.CanDo('courses') 
+			|| $.CanDo('vias') 
+			||$.CanDo('campaigns'))" 
+		class="icon icon-tags" 
+		[class.active]="$.isActive(['/categories'])"  
+		[routerLink]="['/categories', $.ST.categories]">
+		Categorias
+	</a>
+	
+
+	<a 
+		*ngIf="$.isAdmin() && $.CanDo('user')"
+		class="icon icon-user"
+		routerLinkActive="active" routerLink="/users">
+		Usuarios
+	</a>
+	
+
+
+	<a 
+		*ngIf="($.isAdmin() && $.CanDo('radio')) || $.Me.radio.length > 0"
+		class="icon icon-mic" 
+		[class.active]="$.isActive(['/radio'])" 
+		[routerLink]="['/radio', $.ST.radio]">
+		Studio3.3
+		<span *ngIf="S.News.RadioMessages > 0" class="bullet pull-right">
+			{{S.News.RadioMessages > 9 ? '+9' : S.News.RadioMessages}}
+		</span>
+	</a>
+
+
+
+	<a 
+		class="icon icon-feedback"
+		routerLinkActive="active"
+		routerLink="/feedback">
+		Feedback
+		<span *ngIf="S.News.Feedbacks > 0" class="bullet pull-right">
+			{{S.News.Feedbacks > 9 ? '+9' : S.News.Feedbacks}}
+		</span>
+	</a>
+
+</nav>

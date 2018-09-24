@@ -1,0 +1,14 @@
+.img {
+	height: 45px;
+    width: 45px;
+    border: solid #DDD 1px;
+    background-color: #EEE;
+    background-size: cover;
+    border-radius: 100%;
+	background-position: center;
+	margin: 0 auto;
+}
+
+[class*="col-"]:not(th):not(.col-1){
+	padding-top: 20px;
+}

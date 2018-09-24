@@ -1,0 +1,74 @@
+/* .graph { padding: 5px; width: 100%; font-size: .9rem; }
+.graph > div { display: inline-block; width: 12.5%; }
+.graph > .reference { text-align: right; width: auto; border-right: solid 1px #DDD; }
+.graph > .block { text-align: center; }
+.graph > div > div:nth-child(2) { border-bottom: solid 1px #DDD; }
+.graph > .reference > div:nth-child(2)
+{
+	height: 200px;
+}
+.graph > .block > div:nth-child(2) { background-color: #1F7BB1; margin: 0 5px; }
+.graph > .reference span
+{
+	display: block;
+    width: 10px;
+    height: 19px;
+    border-top: solid 1px #DDD;
+    float: right;
+    clear: both;
+} */
+
+/* .card {
+	display: block;
+	width: 17cm;
+	border: solid 1px #DDD;
+	page-break-inside: avoid;
+} */
+
+textarea
+{
+	height: 100px;
+}
+input.col-6:last-of-type{ margin-left: 10px;}
+input.col-6 { width: 48% !important;}
+
+.platform-links a { display: block; }
+
+.course .col-4 { padding-left: 10px; }
+.field { 
+	display: block; 
+	padding: 5px 10px; 
+	border: solid 1px #F1F1F1; 
+	line-height: 1.5rem; 
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+h1 > .feed { border-radius: 30px; float: right; background-color: #1f7bb1; color: rgb(255, 255, 255); font-size: 0.8rem; cursor: pointer; }
+h1 > .feed:hover { background-color: darkred; }
+
+label.button { text-transform: initial !important; padding-left: .3rem; display: inline-block; }
+.picture { margin-bottom: 1rem; height: 151px; overflow: hidden; display: block; }
+.picture .img { width: 3.333cm; height: 4cm; background-size: cover; background-position: center; float: left; margin-right: .4rem; background-color: #EEE; border: solid 1px #DDD; }
+.picture .img.prev { width: 1.6665cm; height: 2cm; cursor: pointer; filter: blur(2px); background-size: 150%; transition: 100ms background-size; }
+.picture .img.prev:hover { filter: blur(0px); background-size: 100%; }
+.picture .img span {
+	display: none;
+    color: #333;
+    font-size: 1rem;
+	cursor: pointer; 
+}
+.picture .img:hover span { display: block; }
+
+.tab-body { display: none; }
+.tab-body.active { display: block; }
+
+.phone h1 ~ div { padding-left: 1rem; }
+.phone h1 { font-size: 1rem; font-weight: normal; margin-bottom: 5px; font-size: .9rem; color: #666; }
+.phones a { text-align: right; display: block; font-size: .9rem }
+.phones p i { display: block; font-size: .8rem; text-transform: uppercase; font-style: normal; color: #666;}
+.phones p { margin: 10px 0; padding: 0 0 10px; }
+.phones p i span { display: none; cursor: pointer; color: #AAA; }
+.phones p i span:hover { color: #1f7bb1; }
+.phones p:hover i span { display: block; }
+.phones p::after { content: ''; display: block; clear: both; }
+.phones p:not(:last-of-type) { border-bottom: solid 1px #DDD; }

@@ -1,0 +1,44 @@
+<section class="linker {{reset ? 'reset' : ''}}" *ngIf="object_value === null && Disabled === false">
+	<input 
+		(focus)="r(false)"
+		(blur)="r(true)" 
+		type="text" 
+		class="{{Required ? 'required' : ''}}" 
+		(keyup)="Search($event)" 
+		placeholder="{{Placeholder}}" 
+		[(ngModel)]="search_string">
+
+	<div *ngIf="search_string != '' && !reset"> 
+		<div class="empty" *ngIf="!isLoading && search_string !== '' && Items.length < 1">No hay resultados con <b>{{search_string}}</b></div>
+		<div class="empty" *ngIf="isLoading"> <span class="animate-spin icon-loading"></span> Buscando <b>{{search_string}}</b>...</div>
+
+		<ul>
+			<li *ngFor="let Item of Items" (click)="SelectThis(Item)">
+				<div *ngIf="ShowImage" class="img" [ngStyle]="{'background-image':'url(' + T.CreateUrl(Item.link_imgurl, (iusing !== '' ? iusing : Using) ) + ')'}"></div>
+				<div class="info"> 
+					<h1>{{Item.link_title}}</h1>
+					<h2>{{Item.link_subtitle}}</h2>
+					<p>{{Item.link_body}}</p>
+				</div>
+			</li>
+		</ul>
+
+		<div class="footer" *ngIf="Button1Text !== '' || Button2Text !== ''">
+			<a *ngIf="Button1Text !== '' && Button1Link === ''" (click)="Button1Click.emit({emiter: 'Button1'})">{{Button1Text}}</a>
+			<a *ngIf="Button2Text !== '' && Button2Link === ''" (click)="Button2Click.emit({emiter: 'Button2'})">{{Button2Text}}</a>
+			<a *ngIf="Button1Text !== '' && Button1Link !== '' && Button1Click.observers.length === 0" href="{{Button1Link}}" target="{{Button1Target}}">{{Button1Text}}</a>
+			<a *ngIf="Button2Text !== '' && Button2Link !== '' && Button2Click.observers.length === 0" href="{{Button2Link}}" target="{{Button2Target}}">{{Button2Text}}</a>
+		</div>
+	</div>
+</section>
+
+<section class="face" *ngIf="object_value !== null">
+	<div *ngIf="ShowImage" class="img" [ngStyle]="{'background-image':'url(' + T.CreateUrl(object_value.link_imgurl, Using) + ')'}"></div>
+	<div class="info"> 
+		<h1 class="{{link != '' ? 'link' : ''}}" (click)="Link(object_value.id)" title="{{ link != '' ? 'Detalles de ' + object_value.link_title : '' }}">
+			{{object_value.link_title}}
+			<span *ngIf="!Disabled" (click)="SelectThis()" class="icon-close pull-right"></span>
+		</h1>
+		<p>{{object_value.link_subtitle}}{{ object_value.link_body ? ' ' + object_value.link_body : ''}}</p>
+	</div>
+</section>

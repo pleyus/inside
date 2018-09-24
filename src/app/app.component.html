@@ -1,3 +1,46 @@
-<!-- Esto será Inside For Education -->
-<h1>Inside</h1>
-<p>v0.1</p>
+<ng-container *ngIf="Me.id > 0">
+  <section id="viewer" (mousemove)="S.Alive($event)">
+    <section id="status"
+      class="
+        {{S.Message != '' ? '' : 'hide'}}
+        {{S.Class}}
+        {{S.Type == 8 ? 'black' : ''}}">
+      <div class="container col-4">
+
+        <div class="{{ S.IsLoading() || S.Type == 8 ? 'loader' : 'bar'}}"></div>
+        <div class="message">
+          <div class="type">{{S.Type == 8 ? "Felicidades" : "Inside"}}</div>
+          <img *ngIf="S.Type == 8" src="assets/happyb.gif" alt="♪ Felicidades a ti! ♪">
+          <p class="{{S.Type == 8 ? 'center' : ''}}" [innerHTML]="S.Message"></p>
+
+          <p *ngIf="S.IsLoading() && S.LoadingTicks > 10" class="uptime">Esto ya tardó mucho... <span class="icon-emo-bad"></span></p>
+
+          <a (click)="S.ClearState()" class="{{ ( !S.IsLoading() || S.LoadingTicks > 10 ) && S.Type !== 8 ? '' : 'hide'}} button">Cerrar</a>
+        </div>
+      </div>
+    </section>
+
+    <app-core-header></app-core-header>
+
+    <section class="row wrap">
+
+      <core-menu></core-menu>
+
+      <div id="content" class="col-10">
+          <router-outlet></router-outlet>
+      </div>
+
+    </section>
+
+    <footer>
+    <p>Universidad Tamazunchale – {{Now() | date: 'yyyy'}}</p>
+    <p>
+      <a class="link" href="https://unitam.edu.mx/plataforma/">Plataforma</a> |
+      <a class="link" href="https://unitam.edu.mx/web/">Sitio web</a> |
+      <a class="link" href="https://facebook.com/UNITAM?ref=inside-unitam">Facebook</a>
+    </p>
+    </footer>
+  </section>
+  <div id="printer"></div>
+</ng-container>
+<app-login *ngIf="!(Me.id > 0)"></app-login>

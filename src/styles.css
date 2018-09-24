@@ -1,1 +1,15 @@
-/* You can add global styles to this file, and also import other style files */
+@import url(assets/css/fontello.css);
+@import url(assets/css/titillium.css);
+@import url(assets/css/animation.css);
+@import url(assets/css/base.css);
+@import url(assets/css/anim.css);
+
+@import url(assets/css/table.css);
+@import url(assets/css/forms.css);
+@import url(assets/css/buttons.css);
+
+@import url(assets/css/status.css);
+@import url(assets/css/content.css);
+@import url(assets/css/printer.css);
+
+footer { text-align: center; border-top: solid 1px #DDD; }

@@ -1,0 +1,132 @@
+<section>
+	<div class="row">
+		<div class="group col-4">
+			<h1>General</h1>
+			<p class="row">
+				<label for="name">Nombre</label>
+				<input class="col-12" type="text" maxlength="80" id="name" placeholder="Nombre del programa" [(ngModel)]="Guide.name">
+			</p>
+
+			<p class="row">
+				<label class="checkbox">
+					<div class="mark {{Guide.status ? 'checked' : ''}}">
+						<span class="icon-ok"></span>
+					</div>
+					<div class="text">Inactivo</div>
+					<input type="checkbox" id="checked-payment" [(ngModel)]="Guide.status" />
+				</label>
+			</p>
+
+			<p class="row">
+				<label>Imagen</label>
+				
+				<ng-container *ngIf="Id > 0; else NO_IMAGE">
+					<span class="img" [ngStyle]="{ 'background-image' : 'url(' + T.CreateUrl(Guide.img, 'radio') + ')' }"></span>
+					<label class="button" for="image">{{Guide.img == '' ? 'Subir imagen' : 'Reemplazar...'}}</label>
+					<div class="button" *ngIf="Guide.img != ''" (click)="RemoveImg()">Quitar</div>
+					<input type="file" id="image" (change)="SelectImage($event)">
+				</ng-container>
+
+				<ng-template #NO_IMAGE>
+					<span class="empty box">Es necesario guardar primero el programa para subir su imagen.</span>
+				</ng-template>
+			</p>
+
+		</div>
+		<div class="group col-4">
+			<h1>Locutores</h1>
+			<div class="row" *ngIf="Guide.announcers.length < 5">
+				<label for="search" title="Para agregar un locutor primero se debe crear uno en el apartado locutores de Studio3.3">Agregar locutor</label>
+				<input class="col-12" type="text" maxlength="80" id="search" placeholder="Buscar locutor..." (keyup)="Search()" [(ngModel)]="host_search">
+				<ul class="listy col-12">
+					<li *ngFor="let h of announcers_found; let i = index" (click)="AddAnnouncer(h, i)" class="link">
+						<b>{{h.alias}}</b>
+						<i>{{h.firstname + ' ' + h.lastname}}</i>
+						<span *ngIf="h.course">{{h.course + ' ' + T.Romanize(h.level)}}</span>
+					</li>
+					<li class="empty" *ngIf="announcers_found.length < 1 && host_search.length > 0 && !announcers_searching">No se encontró nadie...</li>
+					<li class="empty" *ngIf="announcers_searching">...</li>
+				</ul>
+				
+			</div>
+
+			<div class="row">
+				<label>Locutores</label>
+				<ul class="listy big">
+					<li *ngFor="let H of Guide.announcers; let i = index">
+						<span class="icon-close pull-right" (click)="RemoveAnnouncer(i)"></span>
+						<b>{{H.alias}}</b>
+						<i>{{H.firstname + ' ' + H.lastname}}</i>
+						<span *ngIf="H.course">{{H.course + ' ' + T.Romanize(H.level)}}</span>
+					</li>
+					<li class="empty" *ngIf="Guide.announcers.length < 1">No hay locutores en este programa</li>
+				</ul>
+			</div>
+
+		</div>
+		<div class="group col-4">
+			<h1>Horarios</h1>
+			<div class="row">
+				<label>Agregar transmisión</label>
+				<div>
+					Dia
+					<select class="col-12" [(ngModel)]="Transmision.day">
+						<option *ngFor="let d of Dias; let i = index" value="{{i}}">{{d}}</option>
+					</select>
+				</div>
+
+				<div class="row time header">
+					<span class="col-6">Inicio</span>
+					<span class="col-6">Fin</span>
+				</div>
+				<div class="row time">
+					<span class="col-3">
+						Hora
+						<select [(ngModel)]="Transmision.start.h">
+							<option *ngFor="let h of Horas" value="{{h}}">{{("00"+h).slice(-2)}}</option>
+						</select>
+					</span>
+					<span class="col-3">
+						Min
+						<select [(ngModel)]="Transmision.start.m">
+							<option *ngFor="let m of Minutos" value="{{m}}">{{("00"+m).slice(-2)}}</option>
+						</select>
+					</span>
+					<span class="col-3">
+						Hora
+						<select [(ngModel)]="Transmision.end.h">
+							<option *ngFor="let h of Horas" value="{{h}}">{{("00"+h).slice(-2)}}</option>
+							<option value="20">20</option>
+						</select>
+					</span>
+					<span class="col-3">
+						Min
+						<select [(ngModel)]="Transmision.end.m">
+							<option *ngFor="let m of Minutos" value="{{m}}">{{("00"+m).slice(-2)}}</option>
+						</select>
+					</span>
+				</div>
+				<a class="link pull-right" (click)="AddTime(Transmision)">Agregar</a>
+			</div>
+			<label>Transmisiones</label>
+			<ul class="listy big">
+				<li *ngFor="let D of Guide.days; let i = index">
+					<span class="icon-close pull-right" (click)="RemoveTime(i)"></span>
+					<b>{{Dias[D.day]}}</b>
+					<i>
+						de {{D.start.h > 9 ? D.start.h : '0' + D.start.h }}:{{D.start.m > 9 ? D.start.m : '0' + D.start.m }}
+						a {{D.end.h > 9 ? D.end.h : '0' + D.end.h }}:{{D.end.m > 9 ? D.end.m : '0' + D.end.m }}
+					</i>
+				</li>
+				<li class="empty" *ngIf="Guide.days.length < 1">Aun no hay horario de transmisión</li>
+			</ul>
+
+		</div>
+	</div>
+
+	<div class="row action-buttons">
+		<a (click)="Save()" class="button success">{{Id > 0 ? 'Actualizar' : 'Guardar'}}</a>
+		<a (click)="Remove()" class="button" *ngIf="Id > 0">Eliminar</a>
+	</div>
+		
+</section>
