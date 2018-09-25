@@ -15,8 +15,8 @@ h2 { color: #555; font-size: 1rem; margin: 0; }
 
 
 .image { float: right; position: relative; height: 130px; width: 300px; }
-.image span 
-{ 
+.image span
+{
 	position: absolute;
     background-color: gray;
     color: #FFF;
@@ -26,7 +26,7 @@ h2 { color: #555; font-size: 1rem; margin: 0; }
     right: 0;
 	margin-bottom: -.1rem;
 }
-.image::before { content: ''; clear: both; display: block; } 
+.image::before { content: ''; clear: both; display: block; }
 .image img { position: absolute;  display: block; height: 130px; width: 300px; }
 
 
@@ -39,12 +39,24 @@ h2 { color: #555; font-size: 1rem; margin: 0; }
 	border-left: solid 4px rgb(230, 169, 1);
 }
 .birthdays .item.now span { color: rgb(230, 169, 1); }
-.birthdays .item .cal { display: inline-block; margin: 5px 10px 0 0; border: solid 1px #1f7bb1; border-radius: 2px; width: 30px; text-align: center; vertical-align: top; }
-.birthdays .item .cal .day, .birthdays .item .cal .month { line-height: 8px; font-size: .5rem; background-color: #1f7bb1; color: #FFF; }
-.birthdays .item .cal .num { font-size: 1rem; background-color: #FFF; color: #1f7bb1; font-weight: bold; line-height: 15px; }
+
+.birthdays .item .cal { display: inline-block; margin-right: 10px; border: solid 1px #1f7bb1; border-radius: 2px; width: 30px; text-align: center; vertical-align: top; }
+.birthdays .item.disabled .cal { border-color: #555 }
+
+.birthdays .item .cal .day, .birthdays .item .cal .month { line-height: 13px; font-size: .6rem; background-color: #1f7bb1; color: #FFF; }
+.birthdays .item.disabled .cal .day, .birthdays .item.disabled .cal .month { background-color: #555 }
+
+.birthdays .item .cal .num { font-size: 1rem; background-color: #FFF; color: #1f7bb1; font-weight: bold; line-height: 20px; }
+.birthdays .item.disabled .cal .num { color: #555; }
+
 .birthdays .item.now .cal { border-color: rgb(230, 169, 1); }
 .birthdays .item.now .cal .day, .birthdays .item.now .cal .month { background-color: rgb(230, 169, 1); }
 .birthdays .item.now .cal .num { color: rgb(230, 169, 1); }
+.birthdays .item.disabled.now .cal { border-color: #AAA }
+.birthdays .item.disabled.now .cal .day, .birthdays .item.disabled.now .cal .month { background-color: #AAA }
+.birthdays .item.disabled.now .cal .num { color: #AAA }
 
 .birthdays .item .data { display: inline-block; overflow: hidden; }
+.birthdays .item img { display: inline-block; overflow: hidden; background-color: #F1F1F1; border: solid 1px #DDD; margin-right: 10px; height: 50px; }
+.birthdays .item.disabled img { filter: grayscale(1); }
 .data > div:last-of-type { font-size: .8rem; color: #888; }

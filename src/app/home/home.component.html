@@ -1,146 +1,7 @@
-<div class="row">
-	<div class="version col-4"
-		*ngIf="$.isAdmin()"
-		[ngStyle]="{'visibility': (GetOption('version') != $.VERSION ? 'visible':'hidden')}">
-<!--
-	Agregar datos a las fgrafiacas
-
--->
-		<div class="limit">
-			<h1>Cambios de la version Inside v3.5</h1>
-			<ul>
-        <li class="hotfix" title="v3.5.1">Correcciones menores en filtros de impresion de listas de usuario</li>
-        <li class="hotfix" title="v3.5.1">Correcciones en gestion de programas de radio</li>
-        <li class="hotfix" title="v3.5.1">Corregidas las estadisticas por municipio</li>
-        <li class="hotfix" title="v3.5.1">Se ha actualizado el formato de las referencias</li>
-        <li>Usuarios</li>
-        <ul>
-          <li>Implementada la búsqueda con comodines.</li>
-          <li>Se incluyo la serialización de numeros de control de los usuarios en la edicion masiva usando el signo de numero</li>
-          <li>Ahora se pueden guardar más numeros de telefono alternos para los usuarios</li>
-          <li>Implementada la impresión de credenciales de los usuarios</li>
-          <li>Agregada la opción de imprimir lista de usuarios</li>
-        </ul>
-        <li>Aspirantes</li>
-        <ul>
-          <li>Agregado el indicador campaña a la lista de aspirantes</li>
-          <li>Se quito el cambió de vistas en aspirantes</li>
-          <li>Ahora se pueden escoger los periodos de promoción de aspirantes</li>
-          <li>Se restringió la creación de notas de aspirantes poco descriptivas</li>
-        </ul>
-        <li>Se agregaron etiquetas a los filtros de las listas</li>
-				<li>Se implemento el banneo de Feedbacks y se incluye la opción de comentario anónimo</li>
-			</ul>
-			<h2>Inside v3.4</h2>
-			<ul>
-				<li class="hotfix" title="v3.4.2">Implementado SSL</li>
-				<li class="hotfix" title="v3.4.1">Se soluciono el falso positivo de campaña pagada en aspirantes</li>
-				<li class="hotfix" title="v3.4.1">Reparado el boton de nuevo en aspirantes</li>
-				<li>Corregidos bugs menores</li>
-				<li>Ahora se pueden ordenar las listas</li>
-				<li>Se ha agregado el vinculo en los linkers</li>
-				<li>Se mejoró la categoría de instituciones para una gestion facil de instituciones</li>
-				<li>Corregida la carga interminable en caso de fallo, ahora se muestra un mensaje de despues de 10s de carga sin terminar y la opcion de cerrar el loading para evitar cuelgues.</li>
-				<li>Se agregó la marca de «creador» a los aspirantes y usuarios, para tener registro quien lo da de alta</li>
-				<li>Estadisticas</li>
-				<ul>
-					<li>Se han implementado las estadisticas en aspirantes</li>
-					<li>Se actualizaron los graficos utilizados</li>
-				</ul>
-			</ul>
-
-			<h2>Inside v3.3</h2>
-			<ul>
-				<li class="hotfix" title="hotfix 3.3.1">Se redujo este log ;D</li>
-				<li class="hotfix" title="hotfix 3.3.1">Ahora los proximos cumpleaños se muestran en portada (aqui al lado)</li>
-				<li class="hotfix" title="hotfix 3.3.1">Ajustada la forma de cargar la informacion de usuarios al editar.</li>
-				<li>Implementado el modulo de mensajes</li>
-				<ul>
-					<li>Ahora se recaba la información del formulario de contacto del sitio web</li>
-					<li>Se puede convertir un mensaje en aspirante</li>
-				</ul>
-				<li>Mejorado el sistema de notificaciones de nuevos eventos</li>
-				<li>Ahora se pueden realizar acciones masivas desde la lista de usuarios</li>
-				<li>Optimizadas las cajas de busqueda</li>
-			</ul>
-			<h2>Inside v3.2</h2>
-			<ul>
-				<li>Actualizado el <span class="info" title="Usado para seleccionar a los usuarios y asignarlos a algun modulo (Busqueda de alumnos en fichas de pago)">Linker</span></li>
-				<ul>
-					<li>Busqueda con imagenes (cuando este disponible)</li>
-					<li>Al pulsar Enter se selecciona el primer elemento</li>
-				</ul>
-				<li>Actualizada la categoria de Instituciones</li>
-				<li>Actualización de aspirantes</li>
-				<ul>
-					<li>Agregada la notificación de nuevos aspirantes</li>
-					<li>Corregida la superposición de la lista de las notas de los aspirantes</li>
-					<li>Mejorada la localización de los aspirantes</li>
-					<li>Mejorada la busqueda de <span class="info" title="Primero se deben agregar desde Categorias » Instituciones">escuelas de procedencia</span></li>
-				</ul>
-
-				<li>Actualizado el modulo de pagos</li>
-				<ul>
-					<li>Agregadas casillas de checkeo para imprimir multiples pagos</li>
-					<li>Cambiada la forma de busqueda de usuarios (linker)</li>
-					<li>Ahora se almacena la especialidad, el nivel y el tipo de usuario a quien se le asignan las fichas</li>
-				</ul>
-				<li>Cambios generales</li>
-				<ul>
-					<li>Rediseñadas las casillas de checkeo</li>
-					<li>Cambiado el modo de impresión</li>
-				</ul>
-			</ul>
-			<h2>Inside v3.1</h2>
-			<ul>
-				<li>Mejorado el modulo de seguridad</li>
-				<li>Agregada la gestión de permisos en Metadatos de usuario</li>
-				<li>Agregadas capacidades individuales para los administradores</li>
-				<li>Ampliado el contenedor principal</li>
-				<li>Limitado el tamaño de las listas</li>
-				<li>Actualizada la vista de datos de usuario</li>
-				<li>Actualizada la imagen de usuario</li>
-				<li>Agregado el boton de <b>Perfil</b> en edición de aspirante</li>
-				<li>Corregidos bugs menores</li>
-			</ul>
-			<h2>Inside v3.0</h2>
-			<ul>
-				<li>Actualizado el motor a Angular6</li>
-				<li>Corregidos bugs menores</li>
-				<li>Actualizado modulo de Studio3.3 para la gestion de la radio</li>
-				<ul>
-					<li>Agregado el apartado de programas al modulo de radio</li>
-					<li>Agregado el apartado locutores al modulo de radio</li>
-					<li>Ahora se puede saber si el remitente de un mensaje de radio cambio de nombre</li>
-				</ul>
-				<li>Mejorada la interfaz de categorias</li>
-				<li>Las fichas de pago ahora pueden contener conceptos mas grandes</li>
-				<li>Autocarga de registros recien generados</li>
-			</ul>
-			<h2>Inside v2.9</h2>
-			<ul>
-				<li>Scrollbar adelgazada</li>
-				<li>Actualizado el backend del servidor</li>
-				<li>Agregado el apartado de radio</li>
-				<li>Actualizada la categoria de instituciones</li>
-				<li>Implementada la opción de leer mensajes enviados a la radio</li>
-			</ul>
-			<h2>Inside v2.8</h2>
-			<ul>
-				<li>Implementado el log de cambios (este bloque)</li>
-				<li>Corregidos problemas menores</li>
-				<li>Implementada la opcion de subir <i>imágenes de usuario</i></li>
-				<li>Nueva vista de usuarios <i>Contactos</i></li>
-				<li>Implementadas las instituciones (escuelas) de procedencia en la información de usuarios</li>
-				<li>Agregada la categoria de <i>instituciones</i></li>
-				<li>Implementado el seguimiento de actualizaciones</li>
-			</ul>
-		</div>
-		<a (click)="SetOption('version', $.VERSION) " class="button" title="Ocultar esta información...{{ok =='Aceptar' ? '' : ' (es como el botón de aceptar)'}}">{{ok}}</a>
-	</div>
-
-	<div class="birthdays col-4 limit" *ngIf="S.News.Birthdays.length > 0" >
-		<h1>Proximos cumpleaños</h1>
+<div class="row limit">
+	<div class="birthdays col-5">
+    <h1>Proximos cumpleaños</h1>
+    <div class="empty" *ngIf="S.News.Birthdays.length === 0">No hay cumpleaños proximos</div>
 		<div *ngFor="let B of S.News.Birthdays"
 			title="{{
 				(T.HappyB(B.birthday * 1000) ? '¡Hoy cumple' : '¡Cumplirá' ) +
@@ -148,18 +9,20 @@
 				' ' + B.age + ' años!' +
 				(B.id === $.Me.id ? ' ¡¡¡FELICIDADES!!!' : '')
 			}}"
-			class="item {{T.HappyB(B.birthday * 1000) ? 'now' : ''}}">
+			class="item {{B.status === 0 ? '' : 'disabled'}} {{T.HappyB(B.birthday * 1000) ? 'now' : ''}}">
 			<div class="cal">
 				<div class="day">{{ B.at * 1000 | date: 'EEE'}}</div>
 				<div class="num">{{ B.at * 1000 | date: 'dd'}}</div>
 				<div class="month">{{ B.at * 1000 | date: 'MMM'}}</div>
-			</div>
+      </div>
+      <img src="{{ T.CreateUrl(B.filename, 'users') }}">
 			<div class="data">
 				<div>{{B.firstname + ' ' + B.lastname}}</div>
-				<div>{{B.course}}{{B.level > 0 ? ' ' + T.Romanize(B.level) : ''}}</div>
+				<div>{{B.course}}{{B.level > 0 ? ' ' + T.Romanize(B.level) : ''}}{{B.status === 0 ? '' : ' (de baja)'}}</div>
 			</div>
 		</div>
-	</div>
+  </div>
+
 </div>
 
 <div class="image">
