@@ -82,7 +82,8 @@ export class UsersListComponent {
     this.CardOptions.WithOutPhoto = this.GetOption('card.without-photo');
 
     //  Cargamos los Ids guardados
-    this.SavedIds = this.GetOption('sids').split(',');
+    this.SavedIds = this.GetSavedIds();
+
 
     const m = this.$.Now().getMonth(),
         y = this.$.Now().getFullYear();
@@ -153,6 +154,12 @@ export class UsersListComponent {
       //  Lanzamos el orden
       '&order=' + this._Order +
       '&order_by=' + this._OrderBy +
+
+      //  En caso de que se quiera mostrar
+      (making === 'load-ids' && this.SavedIds.length > 0
+        ? '&ids=' + this.SavedIds.join(',')
+        : ''
+      ) +
 
       // Si se esta buscando algo le decimos
       (making === 'search' || search !== '' ? '&s=' + search : ''),
@@ -248,20 +255,55 @@ export class UsersListComponent {
     });
   }
 
+  public ClearSavedList() {
+    this.SavedIds = [];
+    this.SetOption( 'sids', '' );
+  }
   public SaveList(flush = false) {
+
     if (flush) {
-      this.SavedIds = [];
-    } else {
-      this.SavedIds = this.GetOption('sids').split(',');
+      this.ClearSavedList();
+
     }
 
+    //  Si no, entonces cargamos los anteriores
+    this.SavedIds = this.GetSavedIds();
+
+    //  Recorremos los usuarios seleccionados
     for (let i = 0; i < this.Checkeds.length; i++) {
+
+      //  Y si el usuario actual aun no esta guardado, lo guardamos
       if ( !this.SavedIds.includes(this.Checkeds[i].id) ) {
-        this.SavedIds.push( this.Checkeds[i].ids );
+        //  Push!
+        this.SavedIds.push( this.Checkeds[i].id );
       }
     }
-
     this.SetOption( 'sids', this.SavedIds.join(',') );
+
+  }
+  private GetSavedIds() {
+    const ids = this.GetOption('sids').trim();
+    if (ids.length > 0) {
+      return ids.split(',');
+    } else {
+      return [];
+    }
+  }
+
+  /**
+   * Muestra la información de los usuarios guardados
+   */
+  public LoadSavedIds(event) {
+
+    if ( event.ctrlKey ) {
+      this.ClearSavedList();
+
+    } else {
+      this.search_string = '';
+      this.SetOption('last', 0);
+      this.GetUsers('load-ids');
+
+    }
   }
 
   Order(e) {

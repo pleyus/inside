@@ -497,7 +497,7 @@ export class Configuration {
   }
 }
 
-  @Injectable()
+@Injectable()
   export class AppStatus {
   private is_loading = false;
   private alerts_timer;

@@ -10,22 +10,32 @@ input[type="text"].required, textarea.required { border-left: 7px solid #3E667C;
 input[type="text"], textarea { border-left: 7px solid #AAA; outline: none; }
 
 /* searchbox o utilizada para poner icono a un input */
-.sbox { position: relative; }
-.sbox::after { content: ''; display: block; clear: both; }
-.sbox > span
-{
-	font-size: 1rem;
-	color: #999;
-	display: block;
-	position: absolute;
-	top: 0.5rem;
-	left: .7rem;
-	border-right: solid 1px #DDD;
-	padding-right: .2rem;
-  height: 1.5rem;
-  padding-top: 0.1rem;
-}
-.sbox > input { padding-left: 40px; }
+  .sbox { position: relative; }
+  .sbox::after { content: ''; display: block; clear: both; }
+  .sbox > span
+  {
+    font-size: 1rem;
+    color: #999;
+    display: block;
+    position: absolute;
+    top: 0.5rem;
+    height: 1.5rem;
+    padding-top: 0.1rem;
+  }
+  .sbox > span:first-child {
+    left: .7rem;
+    border-right: solid 1px #DDD;
+    padding-right: .2rem;
+  }
+  .sbox > span:last-child {
+    right: .7rem;
+    border-left: solid 1px #DDD;
+    padding-left: .2rem;
+  }
+  .sbox > span + input { padding-left: 40px; }
+  .sbox > span ~ input { padding-right: 40px; }
+  .sbox > span.clickable { color:rgb(1, 138, 230); cursor: pointer; }
+  .sbox > span.clickable:hover { color: rgb(90, 180, 240); }
 
 .file-upload-field
 {

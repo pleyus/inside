@@ -8,7 +8,9 @@
 			<label for="sbox" class="help">Busqueda <span class="icon-attention-alt" title="Ahora se pueden usar comodines en las busquedas" (click)="Info(0)"></span></label>
 			<div class="sbox">
 				<span class="icon-search"></span>
-				<input id="sbox" type="text" (keyup)="search()" [(ngModel)]="search_string" placeholder="Nombre, correo, numero de control...">
+        <input id="sbox" type="text" (keyup)="search()" [(ngModel)]="search_string" placeholder="Nombre, correo, numero de control...">
+        <span title="Cargar los usuarios guardados ({{SavedIds.length}} guardado{{SavedIds.length == 1 ? '' : 's'}}).&#013;Ctrl + Click para borrar"
+          *ngIf="SavedIds.length > 0" (click)="LoadSavedIds($event)" class="icon-user clickable"></span>
 			</div>
 		</div>
 		<div class="block col-2-5">
@@ -35,29 +37,29 @@
 		<div class="col-5-5 not-labeled">
 			<a title="Registrar nuevo usuario" class="button primary pull-right separe-left" [routerLink]="[ '0' ]">Registrar</a>
 
-			<div class="dropdown pull-right" *ngIf="Checkeds.length > 0">
-				<button class="dropbtn btn" title="Imprimir usuarios seleccionados">
-					<span class="button-text">Imprimir</span>
+			<div class="dropdown pull-right separe-left" *ngIf="Checkeds.length > 0">
+				<button class="dropbtn btn" title="Acciones a realizar con los elementos seleccionados">
+					<span class="button-text">Selección</span>
 					<span class="icon-down-open"></span>
 				</button>
 				<div class="dropdown-content">
-					<a (click)="PrintType = 'list'">Lista de Usuarios</a>
-					<a (click)="PrintType = 'card'">Credencial provisional</a>
+          <span class="separator">Imprimir</span>
+					<a (click)="PrintType = 'list'">Lista de usuarios</a>
+          <a (click)="PrintType = 'card'">Credenciales</a>
+
+          <span class="separator">Guardar</span>
+          <a *ngIf="SavedIds.length > 0" (click)="SaveList()" title="Agrega los elementos seleccionados a la lista actual">En la lista actual ({{SavedIds.length}} elemento{{SavedIds.length === 1 ? '' : 's'}})</a>
+          <a (click)="SaveList(true)" title="{{SavedIds.length > 0 ? 'Elimina la lista actual y c' : 'C'}}rea una nueva con los elementos seleccinados">
+            {{SavedIds.length > 0 ? 'Como nuevo...' : 'Guardar selección'}}
+          </a>
+          <a *ngIf="SavedIds.length > 0" (click)="ClearSavedList()" title="Borra la lista guardada">Limpiar lista</a>
+
+          <span class="separator">Descargar</span>
+          <a (click)="PrintType = 'card'">Datos para PSD</a>
+          <a (click)="PrintType = 'card'">Informaci</a>
 				</div>
       </div>
-      
-      <a *ngIf="Checkeds.length > 0 && SavedIds.length === 0" title="Guarda la selección actual de usuarios" 
-        class="button pull-right separe-left" (click)="SaveList()">Guardar</a>
 
-      <div class="dropdown pull-right" *ngIf="Checkeds.length > 0 && SavedIds.length > 0">
-        <button class="dropbtn btn" title="Agregar usuarios seleccionados a la lista temporal">
-          <span class="button-text">Agregar</span>
-          <span class="icon-down-open"></span>
-        </button>
-        <div class="dropdown-content">
-          <a (click)="SaveList(true)" title="Vacia la lista actual y crea una nueva con los usuarios seleccionados">Nueva lista</a>
-        </div>
-      </div>
 		</div>
 	</div>
 

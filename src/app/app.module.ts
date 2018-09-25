@@ -132,7 +132,7 @@ const appRoutes: Routes = [
     CurrencyMaskModule,
     ChartsModule
   ],
-  providers: [ WebService, Tools, AppStatus, Configuration],
+  providers: [ WebService, Tools, AppStatus, Configuration ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }
