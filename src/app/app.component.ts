@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
     id : 0,
     type : 0,
     uid : 0,
-    hostOf: 0,
+    announcerOf: 0,
     status : 0,
     birthday: 0,
     pid: 0,
@@ -49,7 +49,7 @@ export class AppComponent implements OnInit {
     }
   };
   CHBMessage = 0;
-  public VERSION = '3.5.1';
+  public VERSION = '3.6';
 
   /**
    * Define las urls dinamicas que pueden ser utilizadas con las SelectedTabs dentro de los componentes

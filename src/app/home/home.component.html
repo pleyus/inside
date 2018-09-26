@@ -1,28 +1,26 @@
-<div class="row limit">
-	<div class="birthdays col-5">
-    <h1>Proximos cumpleaños</h1>
-    <div class="empty" *ngIf="S.News.Birthdays.length === 0">No hay cumpleaños proximos</div>
-		<div *ngFor="let B of S.News.Birthdays"
-			title="{{
-				(T.HappyB(B.birthday * 1000) ? '¡Hoy cumple' : '¡Cumplirá' ) +
-				(B.id === $.Me.id ? 's' : '') +
-				' ' + B.age + ' años!' +
-				(B.id === $.Me.id ? ' ¡¡¡FELICIDADES!!!' : '')
-			}}"
-			class="item {{B.status === 0 ? '' : 'disabled'}} {{T.HappyB(B.birthday * 1000) ? 'now' : ''}}">
-			<div class="cal">
-				<div class="day">{{ B.at * 1000 | date: 'EEE'}}</div>
-				<div class="num">{{ B.at * 1000 | date: 'dd'}}</div>
-				<div class="month">{{ B.at * 1000 | date: 'MMM'}}</div>
-      </div>
-      <img src="{{ T.CreateUrl(B.filename, 'users') }}">
-			<div class="data">
-				<div>{{B.firstname + ' ' + B.lastname}}</div>
-				<div>{{B.course}}{{B.level > 0 ? ' ' + T.Romanize(B.level) : ''}}{{B.status === 0 ? '' : ' (de baja)'}}</div>
-			</div>
-		</div>
-  </div>
 
+<div class="birthdays">
+  <h1>Proximos cumpleaños</h1>
+  <div class="empty" *ngIf="S.News.Birthdays.length === 0">No hay cumpleaños proximos</div>
+  <div *ngFor="let B of S.News.Birthdays"
+    title="{{
+      (T.HappyB(B.birthday * 1000) ? '¡Hoy cumple' : '¡Cumplirá' ) +
+      (B.id === $.Me.id ? 's' : '') +
+      ' ' + B.age + ' años!' +
+      (B.id === $.Me.id ? ' ¡¡¡FELICIDADES!!!' : '')
+    }}"
+    class="item {{B.status === 0 ? '' : 'disabled'}} {{T.HappyB(B.birthday * 1000) ? 'now' : ''}}">
+    <div class="cal">
+      <div class="day">{{ B.at * 1000 | date: 'EEE'}}</div>
+      <div class="num">{{ B.at * 1000 | date: 'dd'}}</div>
+      <div class="month">{{ B.at * 1000 | date: 'MMM'}}</div>
+    </div>
+    <img src="{{ T.CreateUrl(B.filename, 'users') }}">
+    <div class="data">
+      <div>{{B.firstname + ' ' + B.lastname}}</div>
+      <div>{{B.course}}{{B.level > 0 ? ' ' + T.Romanize(B.level) : ''}}{{B.status === 0 ? '' : ' (de baja)'}}</div>
+    </div>
+  </div>
 </div>
 
 <div class="image">

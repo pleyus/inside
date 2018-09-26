@@ -37,14 +37,14 @@
 			<h1>Locutores</h1>
 			<div class="row" *ngIf="Guide.announcers.length < 5">
 				<label for="search" title="Para agregar un locutor primero se debe crear uno en el apartado locutores de Studio3.3">Agregar locutor</label>
-				<input class="col-12" type="text" maxlength="80" id="search" placeholder="Buscar locutor..." (keyup)="Search()" [(ngModel)]="host_search">
+				<input class="col-12" type="text" maxlength="80" id="search" placeholder="Buscar locutor..." (keyup)="Search()" [(ngModel)]="announcer_search">
 				<ul class="listy col-12">
 					<li *ngFor="let h of announcers_found; let i = index" (click)="AddAnnouncer(h, i)" class="link">
 						<b>{{h.alias}}</b>
 						<i>{{h.firstname + ' ' + h.lastname}}</i>
 						<span *ngIf="h.course">{{h.course + ' ' + T.Romanize(h.level)}}</span>
 					</li>
-					<li class="empty" *ngIf="announcers_found.length < 1 && host_search.length > 0 && !announcers_searching">No se encontró nadie...</li>
+					<li class="empty" *ngIf="announcers_found.length < 1 && announcer_search.length > 0 && !announcers_searching">No se encontró nadie...</li>
 					<li class="empty" *ngIf="announcers_searching">...</li>
 				</ul>
 				

@@ -94,7 +94,7 @@ export class RadioAnnouncersComponent {
   // 			this.W.Web('users',
   // 				'search',
   // 				's=' + this.user_search +
-  // 				'&in=radio.host',
+  // 				'&in=radio.announcer',
   // 			(r)=>{
   // 				// Limpiamos el mensaje de cargando...
   // 				this.users_searching = false;
@@ -113,7 +113,7 @@ export class RadioAnnouncersComponent {
 
   AddAnnouncer() {
     this.S.ShowLoading('Agregando locutor...');
-    this.W.Web('radio', 'save-host', 'host=' + JSON.stringify(this.Announcer), (r) => {
+    this.W.Web('radio', 'save-announcer', 'announcer=' + JSON.stringify(this.Announcer), (r) => {
       this.S.ShowAlert(r.data, r.status);
       if (r.status === 1) {
         // this.user_search = '';
@@ -135,7 +135,7 @@ export class RadioAnnouncersComponent {
 
     this.S.ShowLoading('Eliminando locutor...');
 
-    this.W.Web('radio', 'remove-host', 'id=' + H.id, (r) => {
+    this.W.Web('radio', 'remove-announcer', 'id=' + H.id, (r) => {
 
       this.S.ShowAlert(r.data, r.status);
       if (r.status === 1) {
@@ -165,7 +165,7 @@ export class RadioAnnouncersComponent {
       $.ST.radio = 'announcers';
       this.GetAnnouncers();
     } else {
-      S.ShowError('No tienes permiso de edición para los hosters', 0);
+      S.ShowError('No tienes permiso de edición para los announcerers', 0);
       R.navigate(['/home']);
     }
   }

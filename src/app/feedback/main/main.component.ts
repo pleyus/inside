@@ -17,7 +17,7 @@ export class FeedbackListComponent {
   {
     id: 0,
     hide: 0,
-    ghost: 0,
+    gannouncer: 0,
     comment: '',
     uid: 0,
     response: '',
@@ -124,7 +124,7 @@ export class FeedbackListComponent {
       // Revisamos que nos diga 1
       if (r.status === this.S.SUCCESS) {
         this.Feed = r.data;
-        this.Feed.ghost = this.Feed.uid > 1 ? 0 : 1;
+        this.Feed.gannouncer = this.Feed.uid > 1 ? 0 : 1;
         this.SetOption('lfs', id);
       } else {
         this.S.ShowError(r.data, 0);
@@ -195,7 +195,7 @@ export class FeedbackListComponent {
     this.Feed = {
       id: 0,
       hide: 0,
-      ghost: 0,
+      gannouncer: 0,
       comment: '',
       uid: 0,
       response: '',

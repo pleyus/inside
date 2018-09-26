@@ -5,7 +5,7 @@
 </div>
 <div class="tabs">
 	<header>
-		<a class="item" *ngIf="$.isAdmin() || $.Me.hostOf > 0" routerLinkActive="active" routerLink="messages">
+		<a class="item" *ngIf="$.isAdmin() || $.Me.announcerOf > 0" routerLinkActive="active" routerLink="messages">
 			<span class="icon-mail"></span>
 			Mensajes
 			<span *ngIf="S.News.RadioMessages > 0" class="bullet pull-right">

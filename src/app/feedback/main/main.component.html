@@ -31,15 +31,15 @@
 			<input type="checkbox" id="checked-hide" [(ngModel)]="Feed.hide" />
 		</label>
 
-		<label *ngIf="Feed.hide > 0" for="checked-ghost" class="checkbox" title="No podrá dar seguimiento a sus comentarios ya que serán anónimos">
-			<div class="mark {{Feed.ghost > 0 ? 'checked' : ''}}">
+		<label *ngIf="Feed.hide > 0" for="checked-gannouncer" class="checkbox" title="No podrá dar seguimiento a sus comentarios ya que serán anónimos">
+			<div class="mark {{Feed.gannouncer > 0 ? 'checked' : ''}}">
 				<span class="icon-ok"></span>
 			</div>
 			<div class="text">Anónimo</div>
-			<input type="checkbox" id="checked-ghost" [(ngModel)]="Feed.ghost" />
+			<input type="checkbox" id="checked-gannouncer" [(ngModel)]="Feed.gannouncer" />
 		</label>
 
-		<p *ngIf="Feed.ghost" class="empty"><b>Advertencia: </b> Si hace un comentario anónimo se desactivarán las respuestas para el comentario, y no aparecera en su la lista de comentarios.</p>
+		<p *ngIf="Feed.gannouncer" class="empty"><b>Advertencia: </b> Si hace un comentario anónimo se desactivarán las respuestas para el comentario, y no aparecera en su la lista de comentarios.</p>
 
 	</div>
 	<p class="col-12">
@@ -56,7 +56,7 @@
 		<p class="prop col-12">
 			<span class="icon-user"></span>
 			{{
-				Feed.ghost > 0
+				Feed.gannouncer > 0
 				? 'Comentario anónimo'
 				: (Feed.hide > 0
 				? 'Emisor oculto'
@@ -68,7 +68,7 @@
 
 	</div>
 
-	<div *ngIf="(Feed.response != '' || $.isAdmin() && $.CanDo('feedback')) && !Feed.ghost" class="group col-6">
+	<div *ngIf="(Feed.response != '' || $.isAdmin() && $.CanDo('feedback')) && !Feed.gannouncer" class="group col-6">
 		<h1>Respuesta</h1>
 		<textarea readonly class="disabled col-12" *ngIf="Feed.rat > 0">{{Feed.response}}</textarea>
 		<textarea *ngIf="$.isAdmin() && $.CanDo('feedback') && Feed.rat == 0" class="required response col-12" placeholder="Se contestará de manera anónima" [(ngModel)]="Feed.response"></textarea>
@@ -76,7 +76,7 @@
 	</div>
 
 	<p class="col-12">
-		<a *ngIf="($.isAdmin() && $.CanDo('feedback') && Feed.rat == 0) && !Feed.ghost" (click)="Respond()" class="button primary">Enviar respuesta</a>
+		<a *ngIf="($.isAdmin() && $.CanDo('feedback') && Feed.rat == 0) && !Feed.gannouncer" (click)="Respond()" class="button primary">Enviar respuesta</a>
 		<a (click)="Close()" class="button separe-left">Cerrar</a>
 	</p>
 </div>

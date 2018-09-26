@@ -16,7 +16,7 @@ export class RadioGuideEditorComponent {
 
   search_timer = null;
   announcers_searching = false;
-  host_search = '';
+  announcer_search = '';
   announcers_found = [];
 
 
@@ -93,7 +93,7 @@ export class RadioGuideEditorComponent {
   }
   RemoveAnnouncer(i) {
     this.Guide.announcers.splice(i, 1);
-    if ( this.host_search !== '' ) {
+    if ( this.announcer_search !== '' ) {
       this.Search();
     }
   }
@@ -211,7 +211,7 @@ export class RadioGuideEditorComponent {
     }
 
     // Si se vació la busqueda, entonces se quitan los announcers
-    if (this.host_search === '') {
+    if (this.announcer_search === '') {
       this.announcers_found = [];
       this.announcers_searching = false;
     } else {
@@ -229,7 +229,7 @@ export class RadioGuideEditorComponent {
         // Platicamos con la api
         this.W.Web('radio',
           'list-announcers',
-          's=' + this.host_search +
+          's=' + this.announcer_search +
           '&exclude=' + exclude,
         (r) => {
           // Limpiamos el mensaje de cargando...
@@ -238,7 +238,7 @@ export class RadioGuideEditorComponent {
 
           // Dependiendo de la respuesta, do.
           if (r.status === 1) {
-            // Asignamos los hosters encontrado
+            // Asignamos los announcerers encontrado
             this.announcers_found = r.data;
           } else {
             this.announcers_found = [];
