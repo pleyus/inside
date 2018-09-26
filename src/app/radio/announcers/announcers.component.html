@@ -10,9 +10,10 @@
 					[required]="true"
 					[placeholder]="'Buscar usuario'"
 					[using]="'users'"
-					[make]="'search'"
+          [make]="'search'"
+          [(dynamic-params)]="SearchParams"
 					></linker-box>
-				
+
 			</div>
 
 			<div class="row">
@@ -38,5 +39,5 @@
 			</ul>
 		</div>
 	</div>
-		
+
 </section>

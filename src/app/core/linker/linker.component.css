@@ -16,7 +16,7 @@
 	border: solid 1px #DDD;
 	border-top: none;
 }
-.linker > div > *:not(ul) { 
+.linker > div > *:not(ul) {
 	padding: 1rem;
 }
 ul {
@@ -85,20 +85,19 @@ li:last-of-type{ border: none;}
 }
 .info h2 {
 	font-weight: normal;
-    font-size: 1rem;
+  font-size: 1rem;
 	margin: 0;
-	padding-left: 10px;
 }
 .info p {
 	font-size: .9rem;
     font-style: italic;
-    color: #666;
+    color: #1F7BB1;
     margin: 0;
-    padding-left: 10px;
 }
 
 .face .info p {
-	padding: 0;
+  padding: 0;
+  color: #666;
 }
 .face .icon-close {
 	display: none;

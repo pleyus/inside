@@ -19,9 +19,12 @@ export class RadioAnnouncersComponent {
 
   LoadMore = false;
 
+  SearchParams = 'in=radio.announcer&exclude=';
+
   SetUser(u = null) {
     this.Announcer.user = u;
     this.Announcer.uid = u != null ? u.id : 0;
+
     // console.log(this.Announcer);
 
     // this.user_search = '';
@@ -60,6 +63,10 @@ export class RadioAnnouncersComponent {
           : r.data;
 
         this.LoadMore = r.data.length > 9;
+
+        const announs = this.Announcers.map( (a) => a.uid );
+        this.SearchParams = 'in=radio.announcer&exclude=' + announs.join(',');
+
       } else {
         this.S.ShowError(r.data, 0);
       }
