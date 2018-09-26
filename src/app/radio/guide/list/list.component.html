@@ -12,12 +12,12 @@
 				<span class="empy" *ngIf="G.announcers.length < 1">(Sin locutores)</span>
 			</p>
 			<p>
-				<span class="tag {{ InDays(G.days, 1) }}">L</span>
-				<span class="tag {{ InDays(G.days, 2) }}">M</span>
-				<span class="tag {{ InDays(G.days, 3) }}">X</span>
-				<span class="tag {{ InDays(G.days, 4) }}">J</span>
-				<span class="tag {{ InDays(G.days, 5) }}">V</span>
-				<span class="tag {{ InDays(G.days, 6) }}">S</span>
+				<span title="{{ InTime(G.days, 1) }}" class="tag {{ InDays(G.days, 1) }}">L</span>
+				<span title="{{ InTime(G.days, 2) }}" class="tag {{ InDays(G.days, 2) }}">M</span>
+				<span title="{{ InTime(G.days, 3) }}" class="tag {{ InDays(G.days, 3) }}">X</span>
+				<span title="{{ InTime(G.days, 4) }}" class="tag {{ InDays(G.days, 4) }}">J</span>
+				<span title="{{ InTime(G.days, 5) }}" class="tag {{ InDays(G.days, 5) }}">V</span>
+				<span title="{{ InTime(G.days, 6) }}" class="tag {{ InDays(G.days, 6) }}">S</span>
 
 			</p>
 		</div>

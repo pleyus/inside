@@ -14,13 +14,28 @@ export class RadioGuideListComponent {
   public Dias = ['D', 'L', 'M', 'X', 'J', 'V', 'S'];
   LoadMore = false;
 
-  InDays(Days, n) {
+  InTime(Days, n) {
+    let title = [];
     for (let i = 0; i < Days.length; i++) {
-      if (Days[i].day === n) {
+      if ( (Days[i].day * 1) === n) {
+        title.push('de ' + this.xx(Days[i].start.h) + ':' + this.xx(Days[i].start.m) +
+        ' a ' + this.xx(Days[i].end.h) + ':' + this.xx(Days[i].end.m) );
+      }
+    }
+    return title.join(', ');
+  }
+  InDays(Days, n) {
+
+    for (let i = 0; i < Days.length; i++) {
+      if ( (Days[i].day * 1) === n) {
         return 'active';
       }
     }
     return '';
+  }
+
+  xx(number) {
+    return number > 9 ? '' + number : (number < -9 ? '' + number : '0' + number );
   }
 
   public GetGuides( making = 'get' ) {
