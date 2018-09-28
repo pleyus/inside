@@ -261,25 +261,19 @@ export class UsersListComponent {
   }
   public SaveList(flush = false) {
 
+    //  Si se va a borrar todo:
     if (flush) {
       this.ClearSavedList();
-
     }
 
-    //  Si no, entonces cargamos los anteriores
-    this.SavedIds = this.GetSavedIds();
+    //  Si no, entonces unimos los guardados con los checkeados
+    this.SavedIds = [];
+    this.SavedIds = this.SavedIds.concat(this.GetSavedIds(), this.Checkeds.map( r => r.id ));
 
-    //  Recorremos los usuarios seleccionados
-    for (let i = 0; i < this.Checkeds.length; i++) {
+    //  Ahora quitamos los repetidos.
+    this.SavedIds.filter( (val, index, self) => self.indexOf(val) === index);
 
-      //  Y si el usuario actual aun no esta guardado, lo guardamos
-      if ( !this.SavedIds.includes(this.Checkeds[i].id) ) {
-        //  Push!
-        this.SavedIds.push( this.Checkeds[i].id );
-      }
-    }
     this.SetOption( 'sids', this.SavedIds.join(',') );
-
   }
   private GetSavedIds() {
     const ids = this.GetOption('sids').trim();
@@ -290,6 +284,26 @@ export class UsersListComponent {
     }
   }
 
+  DownloadPSD() {
+    this.S.ShowLoading('Preparando para descargar...');
+
+    //  Si se ha seleccionado algo...
+    if ( this.Checkeds.length > 0 ) {
+      //  Hablamos con la api
+      this.W.Web('users', 'card-data',
+      //  Mapeamos los seleccionados y sacamos los ids, despues los juntamos con comas (,)
+      'ids=' + (this.Checkeds.map( (c) => c.id ).join(',')),
+      (r) => {
+        if (r.status === this.S.SUCCESS) {
+          this.S.ShowSuccess('Su descarga esta disponible desde:<br>' +
+          '<a title="Descargar ahora" href="' + r.data + '" target="_blank">' +
+          r.data + '</a>', 0);
+        } else {
+          this.S.ShowAlert(r.data, r.status, 0);
+        }
+      });
+    }
+  }
   /**
    * Muestra la información de los usuarios guardados
    */

@@ -48,15 +48,15 @@
           <a (click)="PrintType = 'card'">Credenciales</a>
 
           <span class="separator">Guardar</span>
-          <a *ngIf="SavedIds.length > 0" (click)="SaveList()" title="Agrega los elementos seleccionados a la lista actual">En la lista actual ({{SavedIds.length}} elemento{{SavedIds.length === 1 ? '' : 's'}})</a>
+          <a *ngIf="SavedIds.length > 0" (click)="SaveList()" title="Agrega los elementos seleccionados a la lista actual">En la lista actual ({{SavedIds.length}})</a>
           <a (click)="SaveList(true)" title="{{SavedIds.length > 0 ? 'Elimina la lista actual y c' : 'C'}}rea una nueva con los elementos seleccinados">
             {{SavedIds.length > 0 ? 'Como nuevo...' : 'Guardar selección'}}
           </a>
           <a *ngIf="SavedIds.length > 0" (click)="ClearSavedList()" title="Borra la lista guardada">Limpiar lista</a>
 
           <span class="separator">Descargar</span>
-          <a (click)="PrintType = 'card'">Datos para PSD</a>
-          <a (click)="PrintType = 'card'">Informaci</a>
+          <a title="Descarga una carpeta comprimida con un archivo csv con la información de los alumnos&#013;
+            y las fotos de los alumnos" (click)="DownloadPSD()">Datos para PSD</a>
 				</div>
       </div>
 
