@@ -20,6 +20,8 @@ export class HomeComponent {
   ) {
     if ( $.isAdmin() ) {
       $.ngOnInit();
+      S.UpdateNews();
+      S.Alive(null);
     } else {
       R.navigate(['/me']);
     }

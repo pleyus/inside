@@ -93,6 +93,7 @@ export class AppComponent implements OnInit {
   public readonly T_COURSE = 2;
   //#endregion
 
+  public Loading = true;
 
 
 
@@ -153,6 +154,7 @@ export class AppComponent implements OnInit {
 
     //  Obtenemos el usuario actual mediante login
     this.loadUser( success => {
+      this.Loading = false;
       this.S.ClearState();
     });
   }
