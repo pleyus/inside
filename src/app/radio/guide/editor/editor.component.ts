@@ -23,6 +23,7 @@ export class RadioGuideEditorComponent {
   Id = 0;
   Guide = {
     name: '',
+    summary: '',
     status: 0,
     days: [],
     announcers: [],

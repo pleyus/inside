@@ -5,6 +5,11 @@
 			<p class="row">
 				<label for="name">Nombre</label>
 				<input class="col-12" type="text" maxlength="80" id="name" placeholder="Nombre del programa" [(ngModel)]="Guide.name">
+      </p>
+
+      <p class="row" title="Un pequeño resumen de lo que trata el programa">
+				<label for="summary">Resumen</label>
+				<textarea id="summary" cols="30" rows="10" placeholder="Un pequeño resumen de lo que trata el programa" [(ngModel)]="Guide.summary"></textarea>
 			</p>
 
 			<p class="row">
@@ -19,7 +24,7 @@
 
 			<p class="row">
 				<label>Imagen</label>
-				
+
 				<ng-container *ngIf="Id > 0; else NO_IMAGE">
 					<span class="img" [ngStyle]="{ 'background-image' : 'url(' + T.CreateUrl(Guide.img, 'radio') + ')' }"></span>
 					<label class="button" for="image">{{Guide.img == '' ? 'Subir imagen' : 'Reemplazar...'}}</label>
@@ -47,7 +52,7 @@
 					<li class="empty" *ngIf="announcers_found.length < 1 && announcer_search.length > 0 && !announcers_searching">No se encontró nadie...</li>
 					<li class="empty" *ngIf="announcers_searching">...</li>
 				</ul>
-				
+
 			</div>
 
 			<div class="row">
@@ -128,5 +133,5 @@
 		<a (click)="Save()" class="button success">{{Id > 0 ? 'Actualizar' : 'Guardar'}}</a>
 		<a (click)="Remove()" class="button" *ngIf="Id > 0">Eliminar</a>
 	</div>
-		
+
 </section>
