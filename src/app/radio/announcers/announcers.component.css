@@ -1,6 +1,9 @@
 ul.tile{
-	list-style: none;
+  list-style: none;
+  max-height: 415px;
+  overflow-y: auto;
 }
+ul.tile::after { content: ''; display: block; clear: both; }
 
 ul.tile > li {
 	width: 30%;
@@ -10,7 +13,7 @@ ul.tile > li {
 ul.tile > li.empty {
 	width: 100%;
 }
-ul.tile > li .img { 
+ul.tile > li .img {
 	border: solid 1px #F1F1F1;
 	background-color: #EEE;
 	margin: 0 auto;
@@ -51,3 +54,14 @@ a.remove:hover{
 .user span:hover {
 	color: #1F7BB1;
 }
+
+.more {
+  display: block;
+  border-top: solid 1px #DDD;
+  color: #1F7BB1;
+  cursor: pointer;
+  text-align: center;
+  padding: 10px;
+}
+.more:hover { text-decoration: underline; }
+.more::before { content: ''; display: block; clear: both; }

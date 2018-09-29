@@ -226,16 +226,15 @@ export class AppComponent implements OnInit {
     this.C.RequireOption('applicants', 'stats.since', '');
     this.C.RequireOption('applicants', 'stats.until', '');
 
-    this.C.RequireOption('main', 'version', '');
+    this.C.RequireOption('radio', 'announcers-list.last', 0);
+    this.C.RequireOption('radio', 'announcers-list.filter', '');
     this.C.RequireOption('radio', 'lmt', 0);
+    this.C.RequireOption('radio', 'selected.tab');
+
+    this.C.RequireOption('main', 'version', '');
     this.C.RequireOption('feedback', 'lfs', 0);
     this.C.RequireOption('payment', 'lpt', 0);
-    this.C.RequireOption('radio', 'selected.tab');
     this.C.RequireOption('categories', 'selected.tab');
-
-    this.C.DisposeOption('feedback', 'last-feedback-seen'); // v3.5
-    this.C.DisposeOption('radio', 'last-message-time');  // v3.5
-    this.C.DisposeOption('applicants', 'current_view');  // v3.5
   }
 
   isActive(instruction: any[]): boolean {

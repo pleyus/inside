@@ -21,26 +21,24 @@ export class RadioAnnouncersComponent {
 
   SearchParams = 'in=radio.announcer&exclude=';
 
+  search_timer = null;
+  search_string = '';
+
   SetUser(u = null) {
     this.Announcer.user = u;
     this.Announcer.uid = u != null ? u.id : 0;
-
-    // console.log(this.Announcer);
-
-    // this.user_search = '';
-    // this.users_found = [];
   }
 
   public GetAnnouncers( making = 'get' ): void {
     if (making !== 'more') {
-      this.SetOption('announcers.last', 0);
+      this.SetOption('announcers-list.last', 0);
     }
 
     this.S.ShowLoading
     (
-      (making === 'more'
-      ? ' Cargando'
-      : ' Obteniendo lista de usuarios') + '...'
+      making === 'search' || this.search_string !== ''
+      ? 'Buscando «' + this.search_string + '»...'
+      : 'Cargando ' + (making === 'more' ? ' mas locutores' : 'lista de locutores') + '...'
     );
 
 
@@ -48,7 +46,11 @@ export class RadioAnnouncersComponent {
     this.W.Web( 'radio', 'list-announcers',
 
     // Mandamos el ultimo que tenemos
-    'last=' + this.GetOption('announcers.last'),
+    'last=' + this.GetOption('announcers-list.last') +
+    // '&filter=' + this.GetOption('announcers-list.filter') +
+
+    //  Buscar
+    (making === 'search' || this.search_string !== '' ? '&s=' + this.search_string : ''),
 
 
     // Cuando conteste
@@ -62,7 +64,7 @@ export class RadioAnnouncersComponent {
           ? this.Announcers.concat(r.data)
           : r.data;
 
-        this.LoadMore = r.data.length > 9;
+        this.LoadMore = r.data.length > 5;
 
         const announs = this.Announcers.map( (a) => a.uid );
         this.SearchParams = 'in=radio.announcer&exclude=' + announs.join(',');
@@ -71,52 +73,24 @@ export class RadioAnnouncersComponent {
         this.S.ShowError(r.data, 0);
       }
 
-      this.SetOption('last', this.Announcers.length);
+      this.SetOption('announcers-list.last', this.Announcers.length);
 
     });
   }
 
-  // search_timer = null;
-  // users_searching = false;
-  // user_search = '';
-  // users_found = [];
-  // Search(){
-  // 	// Guardamos el ultimo elemento buscado
-  // 	this.users_searching = true;
+  Search() {
+    // Limpiamos el timer para evitar que cargue mas de la cuenta
+    if ( this.search_timer !== null ) {
+      clearTimeout(this.search_timer);
+    }
 
-  // 	// Limpiamos el timer para evitar que cargue mas de la cuenta
-  // 	if(this.search_timer !== null)
-  // 		clearTimeout(this.search_timer);
+    if (this.search_string === '') {
+      this.GetAnnouncers();
+    } else {
+      this.search_timer = setTimeout( () => { this.GetAnnouncers('search'); }, 500);
+    }
 
-  // 	// Si se vació la busqueda, entonces se quitan los users
-  // 	if(this.user_search == ''){
-  // 		this.users_found = [];
-  // 		this.users_searching = false;
-  // 	}
-
-  // 	else
-  // 		// Si no, se prepara un timer de atraso de busqueda
-  // 		this.search_timer = setTimeout(() => {
-  // 			// Platicamos con la api
-  // 			this.W.Web('users',
-  // 				'search',
-  // 				's=' + this.user_search +
-  // 				'&in=radio.announcer',
-  // 			(r)=>{
-  // 				// Limpiamos el mensaje de cargando...
-  // 				this.users_searching = false;
-
-  // 				// Dependiendo de la respuesta, do.
-  // 				if(r.status == 1){
-  // 					// Asignamos los userers encontrado
-  // 					this.users_found = r.data;
-  // 				}
-  // 				else
-  // 					this.users_found = [];
-  // 			})
-  // 		}, 500);
-
-  // }
+  }
 
   AddAnnouncer() {
     this.S.ShowLoading('Agregando locutor...');
@@ -150,6 +124,19 @@ export class RadioAnnouncersComponent {
       }
 
     });
+  }
+
+  public isFilter(value) {
+    return this.GetOption('announcers-list.filter') === value;
+  }
+  public setFilter(value) {
+    this.SetOption('announcers-list.filter', value);
+  }
+  public FilterText() {
+    let text = '';
+    if ( this.isFilter('') ) { text = 'Todos'; }
+    if ( this.isFilter('unsetted') ) { text = 'Libres'; }
+    return text;
   }
 
   public GetOption(option, context = 'radio', def = false) {
