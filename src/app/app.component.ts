@@ -49,7 +49,7 @@ export class AppComponent implements OnInit {
     }
   };
   CHBMessage = 0;
-  public VERSION = '3.6.2';
+  public VERSION = '3.6.3';
 
   /**
    * Define las urls dinamicas que pueden ser utilizadas con las SelectedTabs dentro de los componentes

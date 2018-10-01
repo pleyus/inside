@@ -54,14 +54,3 @@ a.remove:hover{
 .user span:hover {
 	color: #1F7BB1;
 }
-
-.more {
-  display: block;
-  border-top: solid 1px #DDD;
-  color: #1F7BB1;
-  cursor: pointer;
-  text-align: center;
-  padding: 10px;
-}
-.more:hover { text-decoration: underline; }
-.more::before { content: ''; display: block; clear: both; }

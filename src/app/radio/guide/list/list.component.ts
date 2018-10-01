@@ -14,8 +14,11 @@ export class RadioGuideListComponent {
   public Dias = ['D', 'L', 'M', 'X', 'J', 'V', 'S'];
   LoadMore = false;
 
+  search_timer = null;
+  public search_string = '';
+
   InTime(Days, n) {
-    let title = [];
+    const title = [];
     for (let i = 0; i < Days.length; i++) {
       if ( (Days[i].day * 1) === n) {
         title.push('de ' + this.xx(Days[i].start.h) + ':' + this.xx(Days[i].start.m) +
@@ -38,8 +41,27 @@ export class RadioGuideListComponent {
     return number > 9 ? '' + number : (number < -9 ? '' + number : '0' + number );
   }
 
+  Search() {
+    // Limpiamos el timer para evitar que cargue mas de la cuenta
+    if ( this.search_timer !== null ) {
+      clearTimeout(this.search_timer);
+    }
+
+    if (this.search_string === '') {
+      this.GetGuides();
+    } else {
+      this.search_timer = setTimeout( () => { this.GetGuides('search'); }, 1000);
+    }
+
+  }
+
   public GetGuides( making = 'get' ) {
-    this.S.ShowLoading('Cargando programas' + (making === 'more' ? ' anteriores' : '') + '...');
+    this.S.ShowLoading(
+      making === 'search' || this.search_string !== ''
+      ? 'Buscando «' + this.search_string + '»...'
+      : 'Cargando programas' + (making === 'more' ? ' anteriores' : '') + '...'
+    );
+    this.S.ShowLoading();
 
     // Si se e
     if (making === 'get') {
@@ -51,7 +73,9 @@ export class RadioGuideListComponent {
     this.W.Web( 'radio', 'list-guide',
 
     // Mandamos el ultimo que tenemos
-    'last=' + this.C.GetOption('last'),
+    'last=' + this.C.GetOption('last') +
+    //  Buscar
+    (making === 'search' || this.search_string !== '' ? '&s=' + this.search_string : ''),
 
 
     // Cuando conteste

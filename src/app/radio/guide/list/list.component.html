@@ -1,6 +1,20 @@
 <p>
-	Puede gestionar los programas que aparecen en el sitio web desde aqui o <a [routerLink]="[0]">crear un programa</a> nuevo
+	Puede gestionar los programas que aparecen en el sitio web desde aqui
 </p>
+
+<div class="filter">
+  <div class="col-5">
+    <label for="search">Buscar</label>
+    <div class="sbox">
+      <span class="icon-search"></span>
+      <input type="text" placeholder="Nombre del programa, alias de los locutores, descripción..." [(ngModel)]="search_string" (keyup)="Search()">
+    </div>
+  </div>
+  <div class="col-7 not-labeled">
+    <a [routerLink]="[0]" class="button primary pull-right">Agregar</a>
+  </div>
+</div>
+
 
 <section class="tile">
 	<a title="{{ G.status === 1 ? 'El programa no se encuentra activo actualmente' : G.name }}" *ngFor="let G of Guides" class="col-4 link {{ G.status == 1 ? 'hidden' : ''}}" [routerLink]="[G.id]">
