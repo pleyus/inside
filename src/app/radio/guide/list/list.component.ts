@@ -94,7 +94,7 @@ export class RadioGuideListComponent {
 
       this.C.SetOption('last', this.Guides.length );
       // En caso de que se este actualizando, loadmore no cambia, sino si
-      this.LoadMore = making === 'update' ? this.LoadMore : r.data.length >= 10 ;
+      this.LoadMore = making === 'update' ? this.LoadMore : r.data.length >= 6 ;
     });
   }
 
