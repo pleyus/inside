@@ -226,7 +226,7 @@ export class UsersListComponent {
   }
 
   Apply() {
-    let ids = [];
+    const ids = [];
     this.Checkeds.forEach(user => {
       ids.push(user.id);
     });
@@ -271,14 +271,14 @@ export class UsersListComponent {
     this.SavedIds = this.SavedIds.concat(this.GetSavedIds(), this.Checkeds.map( r => r.id ));
 
     //  Ahora quitamos los repetidos.
-    this.SavedIds.filter( (val, index, self) => self.indexOf(val) === index);
+    this.SavedIds = this.SavedIds.filter( (val, index, self) => self.indexOf(val) === index);
 
     this.SetOption( 'sids', this.SavedIds.join(',') );
   }
   private GetSavedIds() {
     const ids = this.GetOption('sids').trim();
     if (ids.length > 0) {
-      return ids.split(',');
+      return ids.split(',').map(v => v * 1);
     } else {
       return [];
     }
