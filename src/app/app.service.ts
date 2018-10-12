@@ -677,9 +677,9 @@ export class Configuration {
     this.HeartBeat = new Date().getTime();
   }
 
-  public UpdateNews() {
+  public UpdateNews(force = false) {
     // Vemos si el usuario sigue con vida Checando que no tenga mas de 10s sin mover el inside
-    if ( new Date().getTime() < this.HeartBeat + 1000 ) {
+    if ( new Date().getTime() < this.HeartBeat + 1000 || force ) {
       this.W.Web('general', 'get-counters',
         'lmt=' + this.C.GetOption('lmt', 'radio', 0) +
         '&lfs=' + this.C.GetOption('lfs', 'feedback', 0) +
