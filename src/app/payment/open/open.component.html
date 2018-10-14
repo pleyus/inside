@@ -48,17 +48,23 @@
 
 			<div class="cash">
 				<!-- Cantidad -->
-				<p class="col-6 nopadding">
+				<p class="col-4 nopadding">
 					<label for="amount">Monto</label>
-					<input class="col-12" *ngIf="Id < 1" currencyMask type="text" [(ngModel)]="Pay.amount" id="amount">
+					<input class="col-12 money" *ngIf="Id < 1" currencyMask type="text" [(ngModel)]="Pay.amount" id="amount">
 					<label *ngIf="Id > 0" class="input">{{Pay.amount | currency : 'USD' : 'symbol'}}</label>
 				</p>
 
 				<!-- Recargos -->
-				<p class="col-6 nopadding">
+				<p class="col-4 nopadding">
 					<label for="charge">{{ Pay.amount < 0 ? 'Descuento' : 'Recargos'}}</label>
-					<input class="col-12" *ngIf="Id < 1" currencyMask type="text" [(ngModel)]="Pay.charge" id="charge">
+					<input class="col-12 money" *ngIf="Id < 1" currencyMask type="text" [(ngModel)]="Pay.charge" id="charge">
 					<label *ngIf="Id > 0" class="input">{{Pay.charge | currency : 'USD' : 'symbol'}}</label>
+				</p>
+
+				<!-- Total -->
+				<p class="col-4 nopadding">
+					<label for="charge">Total</label>
+					<label class="input">{{ (Pay.amount + Pay.charge) | currency : 'USD' : 'symbol'}}</label>
 				</p>
 			</div>
 
