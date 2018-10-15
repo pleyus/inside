@@ -1,17 +1,18 @@
 h1 { color: #555; font-size: 1.3rem; margin: 1rem 0; }
 h2 { color: #555; font-size: 1rem; margin: 0; }
-*:not(.button) *:not(.link) {	cursor: default; }
 
-.info{ font-weight: 600; color: #d87646; }
-.hotfix{ font-weight: 600; color: #728fa9; }
-.info:hover{ text-decoration: underline;}
 .row > div { padding: 1rem; }
 
-.version { line-height: 1.3rem; font-size: .8rem; color: #555; }
-.version li { list-style-type: square; }
-.version ul ul { padding: 0 1rem; }
-.version .link { font-size:1rem; }
-.limit { max-height: 20rem; overflow-y: auto; margin-bottom: 1rem; }
+.version {
+  background-color: rgb(247, 252, 255);
+  color: #587687;
+  border: solid 1px #e4e4e4;
+  padding: 1rem;
+}
+.version span { cursor: pointer; }
+.version span:hover { color: #1f7bb1; }
+.version a { color: #1f7bb1; }
+.version a:hover { text-decoration: underline; }
 
 
 .image { float: right; position: relative; height: 130px; width: 300px; }

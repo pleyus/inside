@@ -1,3 +1,7 @@
+<div class="version" *ngIf="GetOption('version') !== $.VERSION">
+  Se ha actualizado a la versión {{$.VERSION}} de Inside. <a href="https://github.com/pleyus/inside/commits/" target="_blank">Ver mas</a>
+  <span class="icon-close pull-right" (click)="SetOption('version', $.VERSION)"></span>
+</div>
 
 <div class="birthdays">
   <h1>Proximos cumpleaños</h1>
