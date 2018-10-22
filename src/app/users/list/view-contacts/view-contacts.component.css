@@ -8,6 +8,7 @@
 	background-position: center;
 	margin: 0 auto;
 }
+.img.disabled { filter: grayscale(1); }
 
 [class*="col-"]:not(th):not(.col-1){
 	padding-top: 20px;
