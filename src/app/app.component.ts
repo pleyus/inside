@@ -271,11 +271,8 @@ export class AppComponent implements OnInit {
       return message + end.undef;
     }
   }
-  isCodersDay(): boolean {
+  TodayIs(Day: number, Month: number): boolean {
     const now = new Date();
-    if ( this.T.leapYear( now.getFullYear() )) {
-      return ( now.getMonth() === 8 && now.getDate() === 12 );
-    }
-    return ( now.getMonth() === 8 && now.getDate() === 13 );
+    return ( now.getMonth() === Day && now.getDate() === Day );
   }
 }

@@ -8,27 +8,9 @@
 			title="Imagen actual de {{$.Me.firstname}} {{$.Me.pid > 0 ? '' : '(Sin imagen)'}}"
 			[ngStyle]="{'background-image':'url(' + T.CreateUrl($.Me.pid > 0 ? $.Me.picture.filename : $.Me.image, 'users') + ')'}">		</div>
 		<div class="user-name">
-      <div title="Mantente curioso..." class="codersday monospace" *ngIf="$.isCodersDay()" (click)="RunMadafaca()">
-        <span class="icon-code"></span>
-        {{CodersDayText}}
-      </div>
+      <app-codersday></app-codersday>
 			<span *ngIf="T.HappyB( $.Me.birthday * 1000 )" (click)="$.HappyBirthdaySong()" class="icon-birthday color-special right"></span>
 			<a routerLink="/me" *ngIf="$.Me.id > 0">{{ $.Me.firstname + ' ' + $.Me.lastname }}</a>
 		</div>
 	</div>
 </header>
-
-<div class="codersday-canv {{ShowCoder ? '' : 'hide'}}">
-  <canvas id="codersday"></canvas>
-  <div class="message">
-    <h1>Feliz día del programador</h1>
-    <p>¡Hoy es el
-      <a class="link" href="https://www.google.com/search?num=100&newwindow=1&q=Día+del+programador" target="_blank" title="Creeme...">
-        día #256
-      </a>
-      del este año y se celebra el día del que escribe codigo! :P</p>
-    <p (click)="EasterEgg = EasterEgg + 1;" class="keep">–Keep coding...</p>
-    <p *ngIf="EasterEgg > 7" class="easter">¡Que! No piensas felicitar al creador de esta cosa... <br>¡Que mala persona! Ah pero hasta el día del taco celebras <span class="icon-emo-bad"></span> <br>Iré a llorar a mi cuarto.</p>
-    <div (click)="StopMadafaca()" class="button">Entendido</div>
-  </div>
-</div>

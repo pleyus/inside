@@ -38,6 +38,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { ApplicantsComponent } from './applicants/applicants.component';
 import { ApplicantsStatsComponent } from './applicants/stats/stats.component';
 import { LoginComponent } from './core/login/login.component';
+import { CodersdayComponent } from './core/holidays/codersday/codersday.component';
 
 const appRoutes: Routes = [
   {
@@ -121,7 +122,8 @@ const appRoutes: Routes = [
     MessagesComponent,
     ApplicantsComponent,
     ApplicantsStatsComponent,
-    LoginComponent
+    LoginComponent,
+    CodersdayComponent
   ],
 
   imports: [
