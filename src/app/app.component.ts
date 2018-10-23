@@ -12,7 +12,6 @@ import { Router } from '@angular/router';
 })
 
 export class AppComponent implements OnInit {
-  happy_birthday_song: HTMLAudioElement;
   public Me = {
     id : 0,
     type : 0,
@@ -48,8 +47,7 @@ export class AppComponent implements OnInit {
       user: 0
     }
   };
-  CHBMessage = 0;
-  public VERSION = '3.6.4';
+  public VERSION = '3.6.5';
 
   /**
    * Define las urls dinamicas que pueden ser utilizadas con las SelectedTabs dentro de los componentes
@@ -165,14 +163,6 @@ export class AppComponent implements OnInit {
 
           //  Si esta todo bien, cargamos los datos que obtuvimos.
           this.Me = r.data;
-
-          //  Revisamos si es el hbd de alguien
-          if ( this.T.HappyB(this.Me.birthday * 1000) ) {
-            //  Para cargar los recursos que vamos a usar
-            this.happy_birthday_song = new Audio('assets/happyb.mp3');
-            const hbi = new Image(0, 0);
-            hbi.src = 'assets/happyb.gif';
-          }
         }
         //  else {
         //   location.href = 'https://unitam.edu.mx/plataforma/logger.php?url=/inside/';
@@ -242,35 +232,6 @@ export class AppComponent implements OnInit {
     return this.R.isActive(this.R.createUrlTree(instruction), false);
   }
 
-  HappyBirthdaySong() {
-    this.happy_birthday_song = new Audio('assets/happyb.mp3');
-    const HBMessages = [
-      this.mSex(this.Me.sex, 'Ahora estas un año mas acian') + '... <br>Pero tienes un año mas de <b>experiencia.</b>',
-      'Han pasado ' + Math.floor(((new Date().getTime() / 1000) - this.Me.birthday) / 86400) +
-        ' dias desde que llegaste a este mundo... <br>¿Te hacemos prueba de carbono 14?',
-      '¡Alguien se está poniendo pasita! :D <br>Una pasita con un año mas de experiencia en la vida',
-      '<b>+1 vuelta al sol completada</b><br>Disfruta de este paseo por el cosmos porque solo se puede viajar una vez.',
-      'Hace 65 millones de años habian dinosaurios en la Tierra...<br>Algun dia, ' + (this.Me.firstname.split(' ')[0]) + '´s del futuro' +
-        ' dirán:<br> <i>«Hace 65 millones de años habian humanos en la Tierra»</i><br>... y tu tendras 65 millones de años :D'
-    ];
-    this.CHBMessage = this.CHBMessage >= HBMessages.length
-      ? 0
-      : this.CHBMessage;
-
-    this.happy_birthday_song.play();
-    this.S.ShowAlert(HBMessages[this.CHBMessage], 8, 15000);
-    this.CHBMessage++;
-  }
-  mSex(sex, message, end = { male: 'o', female: 'a', undef: 'x'}) {
-    if (sex === this.SEX_MALE) {
-      return message + end.male;
-
-    } else if (sex === this.SEX_FEMALE) {
-      return message + end.female;
-    } else if (sex === this.SEX_UNDEFINED) {
-      return message + end.undef;
-    }
-  }
   TodayIs(Day: number, Month: number): boolean {
     const now = new Date();
     return ( now.getMonth() === Day && now.getDate() === Day );

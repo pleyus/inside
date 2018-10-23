@@ -34,3 +34,12 @@ header .inside {
 	margin-top: 8px;
 }
 
+.holidays {
+  display: block;
+  float: right;
+  margin-right: 1rem;
+}
+
+@media screen and (max-width: 500px) {
+  header .user-name { display: none; }
+}

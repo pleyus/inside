@@ -6,11 +6,15 @@
 		<div
 			class="user-image right"
 			title="Imagen actual de {{$.Me.firstname}} {{$.Me.pid > 0 ? '' : '(Sin imagen)'}}"
-			[ngStyle]="{'background-image':'url(' + T.CreateUrl($.Me.pid > 0 ? $.Me.picture.filename : $.Me.image, 'users') + ')'}">		</div>
-		<div class="user-name">
-      <app-codersday></app-codersday>
-			<span *ngIf="T.HappyB( $.Me.birthday * 1000 )" (click)="$.HappyBirthdaySong()" class="icon-birthday color-special right"></span>
-			<a routerLink="/me" *ngIf="$.Me.id > 0">{{ $.Me.firstname + ' ' + $.Me.lastname }}</a>
-		</div>
+      [ngStyle]="{'background-image':'url(' + T.CreateUrl($.Me.pid > 0 ? $.Me.picture.filename : $.Me.image, 'users') + ')'}"></div>
+
+    <div class="user-name">
+      <a routerLink="/me" *ngIf="$.Me.id > 0">{{ $.Me.firstname + ' ' + $.Me.lastname }}</a>
+    </div>
+
+    <div class="holidays">
+        <app-codersday></app-codersday>
+        <app-happy-birthday [(User)]="$.Me"></app-happy-birthday>
+    </div>
 	</div>
 </header>

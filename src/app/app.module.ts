@@ -39,6 +39,8 @@ import { ApplicantsComponent } from './applicants/applicants.component';
 import { ApplicantsStatsComponent } from './applicants/stats/stats.component';
 import { LoginComponent } from './core/login/login.component';
 import { CodersdayComponent } from './core/holidays/codersday/codersday.component';
+import { HappyBirthdayComponent } from './core/holidays/happy-birthday/happy-birthday.component';
+import { ScriptHackComponent } from './core/script-hack/script-hack.component';
 
 const appRoutes: Routes = [
   {
@@ -123,7 +125,9 @@ const appRoutes: Routes = [
     ApplicantsComponent,
     ApplicantsStatsComponent,
     LoginComponent,
-    CodersdayComponent
+    CodersdayComponent,
+    HappyBirthdayComponent,
+    ScriptHackComponent
   ],
 
   imports: [
