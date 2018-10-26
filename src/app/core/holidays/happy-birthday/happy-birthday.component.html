@@ -1,0 +1,31 @@
+<ng-container *ngIf="Show">
+  <link href="https://fonts.googleapis.com/css?family=Wendy+One" rel="stylesheet" type="text/css">
+
+  <span class="ico"
+    (click)="ShowThis()"
+    title="¡Felicidades!"
+    id="cake-icon"
+    style="background-image: url('https://media.giphy.com/media/3ov9jF86s9BZ3deR1K/source.gif');"></span>
+
+  <section class="canvas-container {{ShowingCanvas ? '' : 'hide'}}">
+    <span (click)="HideThis()" class="icon-close pull-right"></span>
+
+    <div class="container">
+      <div class="balloon">
+        <div><span>☺</span></div>
+        <div><span>B</span></div>
+        <div><span>D</span></div>
+        <div><span>A</span></div>
+        <div><span>Y</span></div>
+        <div><span>!</span></div>
+      </div>
+      <div class="message" [innerHTML]="Message"></div>
+      <canvas id="myCanvas" style=""></canvas>
+    </div>
+    <input type="hidden" [(ngModel)]="UserObject.firstname" id="my-name">
+  </section>
+
+  <app-script-hack type="text/javascript" src="https://s3.amazonaws.com/codecademy-content/courses/hour-of-code/js/bubbles.js"></app-script-hack>
+  <app-script-hack type="text/javascript" src="https://s3.amazonaws.com/codecademy-content/courses/hour-of-code/js/alphabet.js"></app-script-hack>
+  <app-script-hack type="text/javascript" src="https://unitam.edu.mx/inside/assets/hbd.js"></app-script-hack>
+</ng-container>

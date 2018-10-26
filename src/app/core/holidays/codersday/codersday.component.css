@@ -1,0 +1,48 @@
+.codersday {
+  display: inline-block;
+  background-color: #555;
+  color: #07EC2A;
+  font-weight: 600;
+  padding: 3px 10px;
+  margin-right: 10px;
+  border-radius: 10px;
+  font-size: .8rem;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -ms-user-select:none;
+  cursor: pointer;
+}
+.codersday span::before, .codersday span { color: #FFF; margin:0 !important; padding: 0 !important; }
+
+.codersday-canv {
+  display: block;
+  position: fixed;
+  left: 0; right: 0; top: 0; bottom: 0;
+  background-color: #000;
+  z-index: 1;
+}
+.codersday-canv .message {
+  width: 450px;
+  background-color: #FFF;
+  border: solid 1px #DDD;
+  padding: 1rem;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  margin-left: -225px;
+}
+.codersday-canv .message .button {
+  width: 50%;
+  margin: auto;
+  display: block;
+  text-align: center;
+}
+.codersday-canv .message .keep {
+  text-align: right;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -ms-user-select:none;
+}
+.codersday-canv .message .easter { font-size: .9rem; color: #666; padding-left: 1rem; }
