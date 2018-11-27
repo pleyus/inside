@@ -11,12 +11,12 @@ import { Tools, WebService, AppStatus, Configuration } from './../../app.service
 })
 export class UsersOpenComponent
 {
-	
+
 	//#region Vars
 		public Title = "Información de usuario";
 		public Id;
 		public ImageFile: File;
-		
+
 
 		// public ActivityDays = [];
 		// public MaxActivityEvents = 0;
@@ -26,7 +26,7 @@ export class UsersOpenComponent
 		public COURSES = [];
 		public Pictures = [];
 
-		public User = 
+		public User =
 		{
 			id: 0,
 			idnumber: '',
@@ -44,7 +44,7 @@ export class UsersOpenComponent
 			lid: 0,
 			location: null,
 			address: '',
-			
+
 			email: '',
 			personal_phone: '',
 			tutor_phone: '',
@@ -99,27 +99,34 @@ export class UsersOpenComponent
 		public $ : AppComponent,
 		private S: AppStatus,
 		private C: Configuration
-	) 
-	{ 
-		AR.params.subscribe((p) => 
+	)
+	{
+		AR.params.subscribe((p) =>
 		{
-			
+
 			this.Id = p['uid'] > 0 ? p['uid'] : 0;
 			this.init();
-			
+
 		})
 	}
-	CardOptions = {
-		OnlyActive: true,
-		WithOutPhoto: false,
-		Valid: 'Diciembre 2018'
-	};
+  CardOptions = { Valid: 'Diciembre 2018' };
 
-	init() 
+	init()
 	{
 		if (this.$.isAdmin() && this.$.CanDo('user')) {
-			this.GetCourses();
-			
+      this.GetCourses();
+
+    const m = this.$.Now().getMonth(),
+      y = this.$.Now().getFullYear();
+
+    if ( m >= 0 && m < 6 ) {
+      this.CardOptions.Valid = 'Agosto ' + y;
+    } else if ( m >= 7 && m < 11) {
+      this.CardOptions.Valid = 'Diciembre ' + y;
+    } else {
+      this.CardOptions.Valid = 'Agosto ' + (y + 1);
+    }
+
 			if(this.Id > 0)
 				this.GetUserInfo();
 		} else {
@@ -127,7 +134,13 @@ export class UsersOpenComponent
 			this.R.navigate(['/home']);
 		}
 	}
-
+  public PrintCard() {
+    const valid = prompt('Escriba la vigencia para la credencial', this.CardOptions.Valid);
+    if (valid !== '') {
+      this.CardOptions.Valid = valid;
+    }
+    setTimeout(() => {this.T.Print('printable-cards', 'print-user');}, 500);
+  }
 	//#region Getters
 		private GetUserInfo()
 		{
@@ -135,7 +148,7 @@ export class UsersOpenComponent
 			this.S.ShowLoading( this.$.Me.id == this.Id ? 'Cargando tus datos...' : 'Obteniendo datos de usuario...' );
 
 			//	Cargamos usuario
-			this.W.Web( 'users', 'get', 
+			this.W.Web( 'users', 'get',
 			'id=' + ( (this.$.isAdmin() && this.$.Me.status == this.$.ACTIVE) ? this.Id : this.$.Me.id ),
 			(u)=>
 			{
@@ -154,12 +167,12 @@ export class UsersOpenComponent
 						m = (birthday.getMonth()+1),
 						d = birthday.getDate();
 					this.HUMAN_BIRTHDAY = y + "-" + ( m > 9 ? m : '0' + m) + "-" + ( d > 9 ? d : '0' + d);
-					
+
 					this.GetPictures(() => {
 						this.GetPlatformInfo(() => {
 							this.GetStats();
-							/*() => { 
-								this.GetLocation(); 
+							/*() => {
+								this.GetLocation();
 							});*/
 						});
 					});
@@ -173,9 +186,9 @@ export class UsersOpenComponent
 		ChartData = [];
 		ChartLabels = [];
 		ChartOptions = { scaleShowVerticalLines: false, responsive: true }
-		ChartColors = 
+		ChartColors =
 		[
-			{ 
+			{
 				backgroundColor: '#4dabf5',
 				borderColor: '#1769aa',
 				hoverBackgroundColor: '#2196f3',
@@ -191,7 +204,7 @@ export class UsersOpenComponent
 				this.S.ShowLoading( 'Leyendo actividad...' );
 
 				//	Platica
-				this.W.Web('users', 'stats', 'id=' + this.User.uid, (s) => 
+				this.W.Web('users', 'stats', 'id=' + this.User.uid, (s) =>
 				{
 					//	Listo!
 					this.S.ClearState();
@@ -206,7 +219,7 @@ export class UsersOpenComponent
 
 					}
 
-					callback(); 
+					callback();
 
 				},
 				(e)=> { this.S.ShowError("Se perdió la conexión", 0);});
@@ -221,15 +234,15 @@ export class UsersOpenComponent
 
 			this.W.Web('categories', 'list', 'type=courses',
 			(r) => {
-				
+
 				if( r.status == this.S.SUCCESS )
 					this.COURSES = r.data;
 				else
 					this.COURSES = [];
-				
+
 				this.S.ClearState();
 			},
-			(e)=> { this.S.ShowError("Se perdió la conexión", 0);});	
+			(e)=> { this.S.ShowError("Se perdió la conexión", 0);});
 		}
 		private GetPlatformInfo( callback : () => void = () => {} )
 		{
@@ -300,9 +313,9 @@ export class UsersOpenComponent
 		{
 			this.W.Web('users', 'save', 'data=' + JSON.stringify(this.User), (r) =>
 			{
-				this.S.ShowSuccess( 
-					(this.Id > 0 
-					? 'Se actualizó la información de ' + this.User.firstname 
+				this.S.ShowSuccess(
+					(this.Id > 0
+					? 'Se actualizó la información de ' + this.User.firstname
 					: 'Se ha creado el expediente de ' + this.User.firstname + ' correctamente, espere...')
 				);
 
@@ -316,8 +329,8 @@ export class UsersOpenComponent
 						this.SetOption('goto', '');
 						if( goto != '' )
 							go = goto + r.data.uid
-						
-						setTimeout(() => { this.R.navigate([ go ]); }, 2000 );		
+
+						setTimeout(() => { this.R.navigate([ go ]); }, 2000 );
 					}
 					//	Si es el id del usuario, recargamos la aplicacion
 					else if( this.Id == this.$.Me.id)
@@ -344,7 +357,7 @@ export class UsersOpenComponent
 			if(Pic != this.User.pid)
 			{
 				this.S.ShowLoading('Cambiando imagen de ' + this.User.firstname + '...');
-				this.W.Web('users', 'set-picture', 
+				this.W.Web('users', 'set-picture',
 					'id=' + Pic.id +
 					'&action=set' +
 					'&uid=' + this.User.id,
@@ -366,7 +379,7 @@ export class UsersOpenComponent
 			if(confirm("Esta a punto de eliminar una imagen. ¿Continuar?"))
 			{
 				this.S.ShowLoading('Borrando imagen de ' + this.User.firstname + '...');
-				this.W.Web('users', 'set-picture', 
+				this.W.Web('users', 'set-picture',
 					'id=' + Pic.id +
 					'&action=delete' +
 					'&uid=' + this.User.id,
@@ -382,7 +395,7 @@ export class UsersOpenComponent
 									this.Pictures.splice(i, i+1);
 									break;
 								}
-							
+
 							if(this.User.pid == Pic.id)
 							{
 								this.User.pid = this.Pictures[0].id;
@@ -403,14 +416,14 @@ export class UsersOpenComponent
 			}
 		}
 	}
-	public UploadPicture(event) 
+	public UploadPicture(event)
 	{
 		//	Si se ha seleccionado un archivo
 		if(event.target.files.length)
 		{
 			//	Empecemos...
 			let file = event.target.files[0];
-			this.S.ShowLoading("Subiendo archivo " + file.name + "...");			
+			this.S.ShowLoading("Subiendo archivo " + file.name + "...");
 
 			//	Checamos que pese lo correcto
 			if( file.size > 3072000 )
@@ -422,15 +435,15 @@ export class UsersOpenComponent
 				let	reader = new FileReader();
 
 				//	Le pegamos el evento...
-				reader.onload = () => 
+				reader.onload = () =>
 				{
 					//	Preparamos el envio
-					let data = 
+					let data =
 					{
 						content: reader.result,
 						name:  file.name
 					};
-					
+
 					//	Lo enviamos...
 					this.W.Web('users', 'upload', 'uid=' + this.User.id + '&data=' + JSON.stringify(data), (r) =>
 					{
@@ -503,9 +516,9 @@ export class UsersOpenComponent
 				this.User.uid = 0;
 			}
 		}
-	
-	
-	
+
+
+
 	/**
 	 * Devuelve un valor si es que este coincide con uno especifico dentro de un array de objetos
 	 * @param TheArray El array de objetos que se va a mapear

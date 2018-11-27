@@ -327,7 +327,7 @@
 <div class="row">
 	<p>
 		<a (click)="Save()" class="button primary">{{Id < 1 ? 'Agregar usuario' : 'Actualizar'}}</a>
-		<a *ngIf="Id > 0" (click)="T.Print('printable-cards', 'print-user')" class="button separe-left" title="Imprimir credencial"><span class="icon-print"></span> Credencial</a>
+		<a *ngIf="Id > 0" (click)="PrintCard()" class="button separe-left" title="Imprimir credencial"><span class="icon-print"></span> Credencial</a>
 	</p>
 </div>
 
