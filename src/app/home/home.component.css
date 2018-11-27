@@ -58,6 +58,8 @@ h2 { color: #555; font-size: 1rem; margin: 0; }
 .birthdays .item.disabled.now .cal .num { color: #AAA }
 
 .birthdays .item .data { display: inline-block; overflow: hidden; }
+.birthdays .item .data > a { color: #333; }
+.birthdays .item .data > a:hover { text-decoration: underline; }
 .birthdays .item img { display: inline-block; overflow: hidden; background-color: #F1F1F1; border: solid 1px #DDD; margin-right: 10px; height: 50px; width: 43px; }
 .birthdays .item.disabled img { filter: grayscale(1); }
 .data > div:last-of-type { font-size: .8rem; color: #888; }

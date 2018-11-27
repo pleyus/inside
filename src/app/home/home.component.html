@@ -21,13 +21,14 @@
     </div>
     <img src="{{ T.CreateUrl(B.filename, 'users') }}">
     <div class="data">
-      <div>{{B.firstname + ' ' + B.lastname}}</div>
+      <a  *ngIf="$.isAdmin()" [routerLink]="['/users/' + B.id]">{{B.firstname + ' ' + B.lastname}}</a>
+      <div *ngIf="!$.isAdmin()">{{B.firstname + ' ' + B.lastname}}</div>
       <div>{{B.course}}{{B.level > 0 ? ' ' + T.Romanize(B.level) : ''}}{{B.status === 0 ? '' : ' (de baja)'}}</div>
     </div>
   </div>
 </div>
 
 <div class="image">
-	<img src="assets/inside.png" alt="Inside v{{$.VERSION}} Beta">
+	<img src="assets/inside.png" alt="Inside v{{$.VERSION}}">
 	<span>v{{$.VERSION}}</span>
 </div>
