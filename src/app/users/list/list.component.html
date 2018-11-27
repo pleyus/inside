@@ -323,7 +323,7 @@
 					$.isAdmin(C) ? 'Administrativo' : (
 					$.isTeacher(C) ? 'Docente' : 'Usuario web'))
 				}}</div>
-				<div *ngIf="C.cid > 0" class="course">{{C.course + ' ' + T.Romanize(C.level)}}</div>
+				<div *ngIf="C.course !== null" class="course">{{C.course + ' ' + T.Romanize(C.level)}}</div>
 				<div *ngIf="C.idnumber.length > 10" class="barcode-error">[INCOMPLETO]</div>
 				<div class="barcode">*{{C.idnumber}}*</div>
 				<div class="idnumber">{{C.idnumber}}</div>
