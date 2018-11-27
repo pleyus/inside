@@ -9,7 +9,7 @@
 			<span class="icon-mail"></span>
 			Mensajes
 			<span *ngIf="S.News.RadioMessages > 0" class="bullet pull-right">
-				{{ S.News.RadioMessages > 9 ? '+9' : S.News.RadioMessages }}
+				{{ S.News.RadioMessages > 99 ? '+99' : S.News.RadioMessages }}
 			</span>
 		</a>
 		<a class="item" *ngIf="$.isAdmin()" routerLinkActive="active" routerLink="guide">

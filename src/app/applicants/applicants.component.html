@@ -11,7 +11,7 @@
 			<span class="icon-database"></span>
 			Registrados
 			<span *ngIf="S.News.Applicants > 0" class="bullet pull-right">
-				{{S.News.Applicants > 9 ? '+9' : S.News.Applicants}}
+				{{S.News.Applicants > 99 ? '+99' : S.News.Applicants}}
 			</span>
 		</a>
 		<a class="item" routerLinkActive="active" routerLink="/applicants/stats">
