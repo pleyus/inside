@@ -6,17 +6,16 @@
 
 <div class="tabs">
 	<header>
-		<a class="item"
-			[class.active]="$.isActive(['/academy']) && !$.isActive(['/academy/checkin'])" routerLink="/academy/checkin">
-			<span class="icon-database"></span>
+		<a class="item" routerLinkActive="active" routerLink="/academy/checkin">
+			<span class="icon-ok"></span>
       Asistencia
 		</a>
 		<a class="item" routerLinkActive="active" routerLink="/academy/sessions">
-			<span class="icon-chart"></span>
+			<span class="icon-calendar"></span>
 			Carga academica
     </a>
     <a class="item" routerLinkActive="active" routerLink="/academy/sessions">
-			<span class="icon-chart"></span>
+			<span class="icon-group"></span>
 			Grupos
     </a>
 	</header>
