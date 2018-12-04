@@ -63,10 +63,10 @@ input[type="text"], textarea { border-left: 7px solid #AAA; outline: none; }
 	content: '';
 	clear: both;
 }
-.tabs .item { float: left; padding: 1rem; text-decoration: none; cursor: pointer; border-top-left-radius: .2rem; border-top-right-radius: .2rem; font-weight: 600; color: #333; }
-.tabs .item:hover { color: #1f7bb1; background-color: #F1F1F1; }
-.tabs .item.active { color: #FFF; background-color: #1f7bb1; }
-.tabs .item span.bullet { margin-left: .5rem; }
+.tabs > header > .item { float: left; padding: 1rem; text-decoration: none; cursor: pointer; border-top-left-radius: .2rem; border-top-right-radius: .2rem; font-weight: 600; color: #333; }
+.tabs > header > .item:hover { color: #1f7bb1; background-color: #F1F1F1; }
+.tabs > header > .item.active { color: #FFF; background-color: #1f7bb1; }
+.tabs > header > .item span.bullet { margin-left: .5rem; }
 .tab-body { display: block; border: solid 1px #F1F1F1; min-height: 12rem; padding: 1rem; }
 .tab-body::after { display: block; content: ''; clear: both; }
 
