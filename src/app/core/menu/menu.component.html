@@ -20,6 +20,13 @@
 		<span *ngIf="S.News.Applicants > 0" class="bullet pull-right">
 			{{S.News.Applicants > 99 ? '+99' : S.News.Applicants}}
 		</span>
+  </a>
+
+  <a
+		*ngIf="$.isAdmin()"
+		class="icon icon-applicant"
+		routerLinkActive="active" routerLink="/academy">
+		Academico
 	</a>
 
 	<a

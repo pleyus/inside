@@ -1,0 +1,26 @@
+<div class="row" id="header">
+	<div class="title row">
+		<h1>Academico</h1>
+	</div>
+</div>
+
+<div class="tabs">
+	<header>
+		<a class="item"
+			[class.active]="$.isActive(['/academy']) && !$.isActive(['/academy/checkin'])" routerLink="/academy/checkin">
+			<span class="icon-database"></span>
+      Asistencia
+		</a>
+		<a class="item" routerLinkActive="active" routerLink="/academy/sessions">
+			<span class="icon-chart"></span>
+			Carga academica
+    </a>
+    <a class="item" routerLinkActive="active" routerLink="/academy/sessions">
+			<span class="icon-chart"></span>
+			Grupos
+    </a>
+	</header>
+	<div class="tab-body">
+		<router-outlet></router-outlet>
+	</div>
+</div>

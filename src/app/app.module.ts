@@ -41,6 +41,8 @@ import { LoginComponent } from './core/login/login.component';
 import { CodersdayComponent } from './core/holidays/codersday/codersday.component';
 import { HappyBirthdayComponent } from './core/holidays/happy-birthday/happy-birthday.component';
 import { ScriptHackComponent } from './core/script-hack/script-hack.component';
+import { AcademyComponent } from './academy/academy.component';
+import { CheckinComponent } from './academy/checkin/checkin.component';
 
 const appRoutes: Routes = [
   {
@@ -51,6 +53,14 @@ const appRoutes: Routes = [
       { path: 'list', component: ApplicantsListComponent },
       { path: 'stats', component: ApplicantsStatsComponent },
       { path: ':id', component: ApplicantsOpenComponent }
+    ]
+  },
+  {
+    path: 'academy',
+    component: AcademyComponent,
+    children: [
+      { path: '', redirectTo: 'checkin', pathMatch: 'full' },
+      { path: 'checkin', component: CheckinComponent }
     ]
   },
 
@@ -127,7 +137,9 @@ const appRoutes: Routes = [
     LoginComponent,
     CodersdayComponent,
     HappyBirthdayComponent,
-    ScriptHackComponent
+    ScriptHackComponent,
+    AcademyComponent,
+    CheckinComponent
   ],
 
   imports: [
