@@ -237,13 +237,6 @@
 						<div class="text">Radio</div>
 						<input type="checkbox" id="checked-payment" [(ngModel)]="User.capabilities.radio" />
 					</label>
-					<label class="checkbox" title="Recepción de mensajes de la página de contacto">
-						<div class="mark {{User.capabilities.messages ? 'checked' : ''}}">
-							<span class="icon-ok"></span>
-						</div>
-						<div class="text">Mensajes</div>
-						<input type="checkbox" id="checked-payment" [(ngModel)]="User.capabilities.messages" />
-					</label>
 					<label class="checkbox" title="Administrador de Feedbacks">
 						<div class="mark {{User.capabilities.feedback ? 'checked' : ''}}">
 							<span class="icon-ok"></span>
@@ -258,8 +251,6 @@
 						<div class="text">Cuentas</div>
 						<input type="checkbox" id="checked-payment" [(ngModel)]="User.capabilities.user" />
 					</label>
-
-
 				</p>
 			</div>
 

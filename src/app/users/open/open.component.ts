@@ -69,7 +69,6 @@ export class UsersOpenComponent
 				institutions: 0,
 				radio: 0,
 				docs: 0,
-				messages: 0,
 				user: 0,
 				feedback: 0
 			}
