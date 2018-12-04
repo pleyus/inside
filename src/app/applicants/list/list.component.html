@@ -19,7 +19,7 @@
 			<div class="dropdown-content" (click)="search()">
 				<a (click)="setFilter('')" title="Muestra todos los aspirantes">
 					<span class="icon-{{isFilter('') ? 'ok' : 'noicon'}}"></span>
-					Todos 
+					Todos
 				</a>
 				<a (click)="setFilter('active')" title="Muestra solamente los inscritos">
 					<span class="icon-{{isFilter('active') ? 'ok' : 'noicon'}}"></span>
@@ -41,7 +41,7 @@
 				</a>
 
 				<span class="separator">Otros</span>
-				
+
 				<a (click)="setFilter('excluded')" title="Muestra solo aquellos que se han descartado de aspirantes">
 					<span class="icon-{{isFilter('excluded') ? 'ok' : 'noicon'}}"></span>
 					Descartados
@@ -71,7 +71,7 @@
 	</div>
 
 	<div class="col-2 not-labeled">
-		<a *ngIf="$.isAdmin()" title="Registrar nuevo..." class="button success pull-right" [routerLink]="[ '/applicants/0' ]">Nuevo</a>
+		<a *ngIf="$.isAdmin()" title="Registrar nuevo..." class="button success pull-right" [routerLink]="[ '/applicants/open/0' ]">Nuevo</a>
 	</div>
 
 </div>
@@ -106,7 +106,7 @@
 			<th class="col-2"> </th>
 		</thead>
 		<tbody>
-			<a *ngFor="let A of Applicants" class="row" [routerLink]="['/applicants/' + A.id]">
+			<a *ngFor="let A of Applicants" class="row" [routerLink]="['/applicants/open/' + A.id]">
 				<td class="col-1" title="Fecha de registro: {{ A.at*1000 | date: 'EEE dd/MMM/yyyy hh:mm:ss' }}">{{ A.at*1000 | date: 'dd/MMM' }}</td>
 				<td class="col-3">{{ A.firstname + ' ' + A.lastname }}</td>
 				<td class="col-1"><span *ngIf="A.note_at > 0" title="{{ GetTaggedTitle(A) }}" class="tag {{ GetTaggedClass(A) }}">{{ A.note_at * 1000 | date : 'dd/MMM' }}</span> </td>
@@ -115,17 +115,17 @@
 					<span *ngIf="A.type == $.T_STUDENT && A.status == $.ACTIVE" title="Ya se ha inscrito, buen trabajo" class="icon icon-user color-special"></span>
 					<span title="{{ A.mid > 0 ? 'Ya se cuenta con su ubicación' : 'Aun no esta localizado' }}" class="icon icon-location state-{{ A.mid > 0 ? 1 : 0}}"></span>
 					<span title="{{ A.tutor_phone != '' ? 'Telefonos completos' : 'Falta el telefono del tutor o alternativo' }}" class="icon icon-phone state-{{ A.tutor_phone != '' ? 1 : 0}}"></span>
-					<span 
-						title="{{ A.campaign < 0 ? 'Registrado por un administrador' : (A.campaign == 0 ? 'Autoregistro' : 'Campaña pagada')}}" 
+					<span
+						title="{{ A.campaign < 0 ? 'Registrado por un administrador' : (A.campaign == 0 ? 'Autoregistro' : 'Campaña pagada')}}"
 						class="icon icon-dot-circled {{ A.campaign < 0 ? 'color-info' : (A.campaign == 0 ? 'state-0' : 'color-active')}}">
 						</span>
 				</td>
-			</a> 
-<!-- 
+			</a>
+<!--
 			<ng-container *ngIf="isView('tracker')">
 				<div *ngFor="let A of Applicants" class="applicant col-6 {{A.note_saved > 0 ? 'tracked' : ''}}">
 					<div class="header">
-						<span *ngIf="A.type == $.T_STUDENT && A.status == $.ACTIVE" title="Ya se ha inscrito, buen trabajo" class="icon icon-user color-special"></span> 
+						<span *ngIf="A.type == $.T_STUDENT && A.status == $.ACTIVE" title="Ya se ha inscrito, buen trabajo" class="icon icon-user color-special"></span>
 						<a [routerLink]="[A.id]">{{ A.firstname + ' ' + A.lastname }}</a>
 					</div>
 					<div class="date">{{ A.course }} <i>|</i> {{ A.at*1000 | date: 'dd/MM/yy' }}</div>

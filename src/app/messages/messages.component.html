@@ -1,18 +1,10 @@
-<div class="row" id="header">
-	<div class="title row">
-		<h1>Mensajes</h1>
-	</div>
-</div>
-<p>
-	Aqui llegan los mensajes enviados desde el apartado de contacto del sitio web.
-</p>
-
+<p>Aqui llegan los mensajes enviados desde nuestro sitio web, del apartado <i><b>Contacto</b></i></p>
 <div class="col-4 left-container">
 	<div class="sbox">
 		<span class="icon-search"></span>
 		<input type="text" (keyup)="Search($event)" [(ngModel)]="search_string" placeholder="Busqueda en mensajes...">
 	</div>
-	
+
 	<div class="list">
 		<div *ngFor="let M of Messages; let i = index" class="row{{ M.id == Message.id ? ' selected' : '' }}{{M.seen_at > 0 ? '' : ' new'}}" (click)="SelectMessage(i)">
 			<h1>
@@ -29,7 +21,7 @@
 	</div>
 
 	<a class="link box center" *ngIf="LoadMore && Messages.length > 0" (click)="GetMessages( 'more' )">
-		Mostrar mas 
+		Mostrar mas
 	</a>
 </div>
 <div class="view col-8">
@@ -55,12 +47,12 @@
 		<button (click)="SelectMessage()" class="button">Cerrar</button>
 	</div>
 	<div class="response" *ngIf="Message.id > 0 && false">
-		<div class="col-6"> 
+		<div class="col-6">
 			<textarea *ngIf="Message.response == ''" [(ngModel)]="Message.response"></textarea>
 			<p *ngIf="Message.response != ''">{{ Message.response }}</p>
 		</div>
 		<div class="col-6">
-			
+
 		</div>
 	</div>
 </div>

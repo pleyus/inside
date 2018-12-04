@@ -14,11 +14,11 @@
 	</a>
 	<a
 		*ngIf="$.isAdmin() && $.CanDo('applicants')"
-		class="icon icon-applicant"
+		class="icon icon-users"
 		routerLinkActive="active" routerLink="/applicants">
 		Aspirantes
-		<span *ngIf="S.News.Applicants > 0" class="bullet pull-right">
-			{{S.News.Applicants > 99 ? '+99' : S.News.Applicants}}
+		<span *ngIf="S.News.Applicants > 0 || S.News.Messages > 0" class="bullet pull-right">
+			{{S.News.Applicants + S.News.Messages > 99 ? '+99' : S.News.Applicants + S.News.Messages}}
 		</span>
   </a>
 
@@ -27,16 +27,6 @@
 		class="icon icon-applicant"
 		routerLinkActive="active" routerLink="/academy">
 		Academico
-	</a>
-
-	<a
-		*ngIf="$.isAdmin() && $.CanDo('messages')"
-		class="icon icon-inbox"
-		routerLinkActive="active" routerLink="/inbox">
-		Mensajes
-		<span *ngIf="S.News.Messages > 0" class="bullet pull-right">
-			{{S.News.Messages > 99 ? '+99' : S.News.Messages}}
-		</span>
 	</a>
 
 	<a

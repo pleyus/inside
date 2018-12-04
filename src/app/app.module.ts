@@ -52,7 +52,8 @@ const appRoutes: Routes = [
       { path: '', redirectTo: 'list', pathMatch: 'full' },
       { path: 'list', component: ApplicantsListComponent },
       { path: 'stats', component: ApplicantsStatsComponent },
-      { path: ':id', component: ApplicantsOpenComponent }
+      { path: 'inbox', component: MessagesComponent },
+      { path: 'open/:id', component: ApplicantsOpenComponent }
     ]
   },
   {
@@ -95,7 +96,6 @@ const appRoutes: Routes = [
     ]
   },
 
-  { path: 'inbox', component: MessagesComponent },
   // { path: 'login', component: LoginComponent },
 
   { path: 'feedback', component: FeedbackListComponent },

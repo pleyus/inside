@@ -14,8 +14,8 @@ import { WebService, AppStatus, Configuration } from './../../app.service';
 export class ApplicantsOpenComponent {
 
 	//	Información sobre el aspirante
-	public Applicant = 
-	{ 
+	public Applicant =
+	{
 		id: 0,
 		uid: 0,
 		via: 0,
@@ -30,28 +30,28 @@ export class ApplicantsOpenComponent {
 			firstname: '',
 			lastname: '',
 			sex: 0,
-	
+
 			personal_phone: '',
 			tutor_phone: '',
 			email: '',
-	
+
 			cid: 0,
 			at: 0,
-			
+
 			rid: 0,
 			regby: {
 				id: 0,
 				firstname: '',
 				lastname: '',
 			},
-	
+
 			lid: 0,
 			location: null,
 			address: '',
-	
+
 			institution: null,
 			iid: 0,
-			
+
 			type: this.$.T_STUDENT,
 			status: this.$.IS_APPLICANT
 		}
@@ -60,36 +60,36 @@ export class ApplicantsOpenComponent {
 	Id = 0;
 	ContactId = 0;
 
-	
+
 	public NewNote = "";
 
 	public Courses = [];
 	public Vias = [];
 	public check_excluded = false;
-	
-	constructor( 
-		private W : WebService, 
-		private R : ActivatedRoute, 
-		public $ : AppComponent, 
+
+	constructor(
+		private W : WebService,
+		private R : ActivatedRoute,
+		public $ : AppComponent,
 		private RT : Router,
 		private S : AppStatus,
 		private C: Configuration
 	){
-		R.params.subscribe( params => 
+		R.params.subscribe( params =>
 			{
 				this.Id = params['id'];
 				this.init();
 			} );
-		
+
 	}
-	
-	init() 
+
+	init()
 	{
 		if( this.$.isAdmin() && this.$.CanDo('applicants') )
 		{
 			this.getCategories('vias'); // Vias
 			this.getCategories('courses'); // Vias
-			
+
 			if(this.Id > 0)
 				this.getApplicant();
 			else
@@ -101,7 +101,7 @@ export class ApplicantsOpenComponent {
 					this.Applicant.user.email = this.GetOption('pre-em');
 					this.Applicant.user.at = this.GetOption('pre-at');
 					this.ContactId = this.GetOption('pre-contact-id');
-	
+
 					this.SetOption('pre-fn', '');
 					this.SetOption('pre-ln', '');
 					this.SetOption('pre-ph', '');
@@ -111,7 +111,7 @@ export class ApplicantsOpenComponent {
 				}
 			}
 		}
-		
+
 		else
 		{
 			this.S.ShowError( 'No tienes autorización para modificar los aspirantes', 0 );
@@ -123,9 +123,9 @@ export class ApplicantsOpenComponent {
 	{
 		this.S.ShowLoading('Cargando aspirante...');
 
-		
+
 		this.W.Web('applicants', 'get', 'id=' + this.Id,
-		(a) => 
+		(a) =>
 		{
 			this.S.ClearState();
 			if( a.status == this.S.SUCCESS )
@@ -145,12 +145,12 @@ export class ApplicantsOpenComponent {
 	 */
 	private getCategories( type : string ) : void
 	{
-		this.W.Web('categories', 'list', 'type=' + type, (r) => 
+		this.W.Web('categories', 'list', 'type=' + type, (r) =>
 		{
 			let tmp = [];
 			if(r.status == this.S.SUCCESS)
 				tmp = r.data;
-			
+
 			if(type == 'vias') this.Vias = tmp;
 			else if(type == 'courses') this.Courses = tmp;
 			else if(type == 'courses') this.Courses = tmp;
@@ -175,7 +175,7 @@ export class ApplicantsOpenComponent {
 			else if(this.Applicant.user.id > 0 && this.Applicant.id > 0)
 				this.SaveNote( () => this.do_update() );
 			else
-				this.RT.navigate(['/applicants/']);
+				this.RT.navigate(['/applicants/open/']);
 		}
 		else
 			this.S.ShowWarning(
@@ -187,57 +187,57 @@ export class ApplicantsOpenComponent {
 	}
 	private do_new()
 	{
-		this.W.Web('applicants', 'save', 
-			'data=' + JSON.stringify( this.Applicant ) + 
-			(this.ContactId > 0 ? '&contact-id=' + this.ContactId : ''), 
-			r => 
+		this.W.Web('applicants', 'save',
+			'data=' + JSON.stringify( this.Applicant ) +
+			(this.ContactId > 0 ? '&contact-id=' + this.ContactId : ''),
+			r =>
 			{
 				//	Si contesta con 1
 				if(r.status == this.S.SUCCESS)
 				{
-					
+
 					//	Mostramos el mensaje de guardado
 					this.S.ShowSuccess( 'Se guardó correctamente la información de ' + this.Applicant.user.firstname + ', espere...' );
-		
+
 					//	Ponemos un temporizador para quitar el mensaje
-					setTimeout(() => 
+					setTimeout(() =>
 					{
 						//	Si es nuevo, cargamos el chucho
 						if(this.Id < 1)
-						{ 
-							let go = '/applicants/' + r.data.id,
+						{
+							let go = '/applicants/open/' + r.data.id,
 								goto = this.GetOption('goto');
-		
+
 							if( goto != '' )
 							{
 								go = goto + r.data.uid
 								this.SetOption('goto', '');
 							}
-		
-							setTimeout(() => { this.RT.navigate([ go ]); }, 2000 );		
+
+							setTimeout(() => { this.RT.navigate([ go ]); }, 2000 );
 						}
-							
+
 					}, 2000);
 				}
 				else
 					this.S.ShowError(r.data,0);
-		
+
 			},
 			(e)=> { this.S.ShowError("Se perdió la conexión", 0);});
 	}
 	private do_update()
 	{
-		this.W.Web('applicants', 'save', 
-			'data=' + JSON.stringify( this.Applicant ) + 
-			(this.ContactId > 0 ? '&contact-id=' + this.ContactId : ''), 
-			r => 
+		this.W.Web('applicants', 'save',
+			'data=' + JSON.stringify( this.Applicant ) +
+			(this.ContactId > 0 ? '&contact-id=' + this.ContactId : ''),
+			r =>
 			{
 				//	Si contesta con 1
 				if(r.status == this.S.SUCCESS)
 					this.S.ShowSuccess( 'Cambios guardados correctamente...' );
 				else
 					this.S.ShowAlert(r.data, r.status, 0);
-	
+
 			},
 			(e)=> { this.S.ShowError("Se perdió la conexión", 0);});
 	}
@@ -255,15 +255,15 @@ export class ApplicantsOpenComponent {
 			{
 				//	Loading...
 				this.S.ShowLoading('Eliminando a ' + this.Applicant.user.firstname + ' de la lista de aspirantes...');
-				
+
 				//	Hablamos con la api para que "borre" al id
-				this.W.Web('applicants', 'delete', 'id=' + this.Id, (r) => 
+				this.W.Web('applicants', 'delete', 'id=' + this.Id, (r) =>
 				{
 					//	Si contesta con 1
 					if(r.status == this.S.SUCCESS)
 						//	Redireccionamos a aplicantes
 						this.RT.navigate(['/applicants']);
-			
+
 					else
 						this.S.ShowError(r.data,0);
 				});
@@ -294,10 +294,10 @@ export class ApplicantsOpenComponent {
 				else
 				{
 					this.S.ShowError('No se pudieron cargar las notas');
-					this.Applicant.notes = []; 
+					this.Applicant.notes = [];
 				}
 				callback();
-					
+
 			});
 		}
 		else
@@ -342,19 +342,19 @@ export class ApplicantsOpenComponent {
 		});
 	}
 
-	public GoBack() : void 
+	public GoBack() : void
 	{
 		this.RT.navigate(['/applicants']);
 	}
 
 	InstitutionSelected(item){
-		this.Applicant.user.iid = 
-			item !== null 
-			? item.id 
+		this.Applicant.user.iid =
+			item !== null
+			? item.id
 			: 0;
 	}
 	LocationSelected(item){
-		this.Applicant.user.lid = 
+		this.Applicant.user.lid =
 			item !== null
 			? item.id
 			: 0;

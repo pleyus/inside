@@ -7,14 +7,23 @@
 <div class="tabs">
 	<header>
 		<a class="item"
-			[class.active]="$.isActive(['/applicants']) && !$.isActive(['/applicants/stats'])" routerLink="/applicants/list">
+			[class.active]="$.isActive(['/applicants/list']) || $.isActive(['/applicants/open'])" routerLink="/applicants/list">
 			<span class="icon-database"></span>
 			Registrados
 			<span *ngIf="S.News.Applicants > 0" class="bullet pull-right">
 				{{S.News.Applicants > 99 ? '+99' : S.News.Applicants}}
 			</span>
+    </a>
+    <a class="item"
+			[class.active]="$.isActive(['/applicants/inbox'])" routerLink="/applicants/inbox">
+			<span class="icon-inbox"></span>
+			Mensajes
+			<span *ngIf="S.News.Messages > 0" class="bullet pull-right">
+				{{S.News.Messages > 99 ? '+99' : S.News.Messages}}
+			</span>
 		</a>
-		<a class="item" routerLinkActive="active" routerLink="/applicants/stats">
+    <a class="item"
+      [class.active]="$.isActive(['/applicants/stats'])" routerLink="/applicants/stats">
 			<span class="icon-chart"></span>
 			Estadisticas
 		</a>

@@ -32,7 +32,7 @@ export class MessagesComponent implements OnInit {
 
 	GetMessages(making = 'get'){
 		const search = this.search_string;
-		
+
 		if (making !== 'more')
 			this.SetOption('last', 0);
 
@@ -55,26 +55,26 @@ export class MessagesComponent implements OnInit {
 
 
 			// Cuando conteste
-			(r): void => 
+			(r): void =>
 			{
 				this.S.ClearState();
-				
+
 				// Revisamos que nos diga 1
-				if (r.status === 1) 
+				if (r.status === 1)
 					if( typeof r.data == 'object' )
 					{
 						this.Messages =
 							making === 'more'
 								? this.Messages.concat(r.data)
 								: r.data;
-	
+
 						this.LoadMore = r.data.length > 9;
 					}
 					else
 						this.S.ShowWarning('No se pudo completar la consulta. Intente de nuevo en un momento', 0)
-				else 
+				else
 					this.S.ShowError(r.data, 0);
-				
+
 				this.SetOption('last', this.Messages.length);
 
 			});
@@ -105,17 +105,17 @@ export class MessagesComponent implements OnInit {
 				this.Message = this.Messages[index];
 			else
 				this.W.Web('messages', 'seen', 'id=' + this.Messages[index].id,(r) => {
-					
+
 					if(r.status !== this.S.SUCCESS)
 						this.S.ShowAlert(r.data, r.status);
-					else 
+					else
 					{
 						this.Messages[index].seen_at = r.data.at;
 						this.Messages[index].seen_by = r.data.uid;
 					}
 					this.Message = this.Messages[index];
-	
-				});			
+
+				});
 		}
 	}
 
@@ -139,7 +139,7 @@ export class MessagesComponent implements OnInit {
 
 		if(this.search_string.length === 0 || e.keyCode === 27)
 			this.GetMessages();
-		
+
 		else
 			this.Timer = setTimeout(() => { this.GetMessages('search'); } , 500)
 	}
@@ -182,7 +182,7 @@ export class MessagesComponent implements OnInit {
 	}
 	ToApplicant(){
 		if(this.Message.aid > 0)
-			this.R.navigate(['/applicants/' + this.Message.aid]);
+			this.R.navigate(['/applicants/open/' + this.Message.aid]);
 		else
 		{
 			this.SetOption('pre-fn', this.Message.firstname, 'applicants');
@@ -191,8 +191,8 @@ export class MessagesComponent implements OnInit {
 			this.SetOption('pre-em', this.Message.email, 'applicants');
 			this.SetOption('pre-at', this.Message.at, 'applicants');
 			this.SetOption('pre-contact-id', this.Message.id, 'applicants');
-	
-			this.R.navigate(['/applicants/0']);
+
+			this.R.navigate(['/applicants/open/0']);
 		}
 	}
 
@@ -211,7 +211,7 @@ export class MessagesComponent implements OnInit {
 			R.navigate(['/home']);
 		}
 	}
-	
+
 	ngOnInit() {
 	}
 

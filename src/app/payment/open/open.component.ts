@@ -191,7 +191,7 @@ export class PaymentOpenComponent {
     // Aspirante
     if (num === 0) {
       this.SetOption('goto', '/payment/0/');
-      this.RT.navigate(['/applicants/0']);
+      this.RT.navigate(['/applicants/open/0']);
     }
 
     // Usuario normal
