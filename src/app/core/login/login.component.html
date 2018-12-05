@@ -10,7 +10,7 @@
         <label for="user">Usuario</label>
         <div class="sbox">
           <span class="icon-user"></span>
-          <input class="required" id="user" type="text" [(ngModel)]="Username" placeholder="Ej: {{Placeholder}}">
+          <input (keyup.enter)="Login()" class="required" id="user" type="text" [(ngModel)]="Username" placeholder="Ej: {{Placeholder}}">
         </div>
       </div>
     </div>
@@ -20,7 +20,7 @@
         <label for="pass">Contraseña</label>
         <div class="sbox">
           <span class="icon-asterisk password {{ShowPass ? 'show' : ''}}" title="Mostrar contraseña" (click)="ShowPass = !ShowPass"></span>
-          <input class="required" id="pass" type="{{ ShowPass ? 'text' : 'password'}}" [(ngModel)]="Password">
+          <input (keyup.enter)="Login()" class="required" id="pass" type="{{ ShowPass ? 'text' : 'password'}}" [(ngModel)]="Password">
         </div>
       </div>
     </div>
