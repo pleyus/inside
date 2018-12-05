@@ -1,0 +1,49 @@
+.item { border-bottom: solid 1px #DDD; margin-bottom: 10px; }
+.item::after { content: ''; display: block; clear: both; }
+.item:last-of-type { border: none; }
+.item > *, .clickable > * { padding-top: 0; }
+.clickable { cursor: pointer; padding: 0; }
+
+.time { font-size: 1.4rem; text-align: center; font-weight: 600; }
+
+.img {
+  height: 50px;
+  background-color: #F1F1F1;
+  border: solid 1px #DDD;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.info > * { margin: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.info h1 { font-size: 1rem; font-weight: 600; }
+.info h2 { font-size: .8rem; color: #666; font-weight: normal; }
+.info h3 { font-size: .7rem; color: #666; font-weight: normal; font-style: italic; }
+
+.course { font-size: 1.5rem; text-align: center; }
+
+.check { font-size: 1.5rem; }
+.check span { border: solid 1px #DDD; background-color: #FDFDFD; cursor: pointer; text-align: center; }
+.check span:not(.active):hover { background-color: #1F7BB1; color: #FFF; }
+.check span.active.green { background-color: rgb(31, 160, 42); color: #FFF; }
+.check span.active.red { background-color: rgb(160, 31, 31); color: #FFF; }
+.check span:last-of-type { border-left: none;}
+
+
+.item .col-1 {width: 8.33%;}
+.item .col-2 {width: 16.66%;}
+.item .col-3 {width: 25%;}
+.item .col-4 {width: 33.33%;}
+.item .col-5 {width: 41.66%;}
+.item .col-6 {width: 50%;}
+.item .col-7 {width: 58.33%;}
+.item .col-8 {width: 66.66%;}
+.item .col-9 {width: 75%;}
+.item .col-10 {width: 83.33%;}
+.item .col-11 {width: 91.66%;}
+.item .col-12 {width: 100%;}
+
+@media only screen and (max-width: 600px) {
+  .img, .course { display: none; }
+  .item .col-2 {width: 33.33%;}
+}

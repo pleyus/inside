@@ -57,7 +57,7 @@ input[type="text"], textarea { border-left: 7px solid #AAA; outline: none; }
 	cursor: pointer;
 }
 
-.tabs { display: block; padding: 1rem 0; }
+.tabs { display: block; padding: 1rem 0; min-width: 320px; }
 .tabs > header::after {
 	display: block;
 	content: '';

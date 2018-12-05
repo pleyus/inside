@@ -1,21 +1,30 @@
 <div class="checks">
   <div class="col-8">
-    <div class="item">
-      <div class="time">
-        <span>07</span>
-        <span>00</span>
+    <div class="item" *ngFor="let S of Sessions">
+      <div (click)="CheckIn(S, 0)" class="clickable col-10">
+        <div class="time col-1"> {{S.h > 9 ? S.h : '0' + S.h}}<br>{{S.m > 9 ? S.m : '0' + S.m}} </div>
+        <div class="img col-1"></div>
+        <div class="info col-9">
+          <h1>{{S.subject}}</h1>
+          <h2>{{S.teacher}}</h2>
+          <h3>{{S.classroom}}</h3>
+        </div>
+        <div class="course col-1">
+          <span class="icon-star"></span><br>
+          {{S.level}}
+        </div>
       </div>
-      <div class="img"></div>
-      <div class="info">
-        <h1>Materia aqui</h1>
-        <h2>Docente de este lado</h2>
-        <h3>Aula</h3>
-      </div>
-      <div class="course">
-        <div class="logo"></div>
-        <div class="level">IV</div>
+      <div class="check col-2">
+        <span (click)="CheckIn(S, 1)" class="green icon-ok col-6 {{S.checkin === 1 ? 'active' : ''}}"></span>
+        <span (click)="CheckIn(S, 2)" class="red icon-close col-6 {{S.checkin === 2 ? 'active' : ''}}"></span>
       </div>
     </div>
   </div>
-  <div class="col-4"></div>
+  <div class="col-4">
+    <ng-container *ngIf="Session !== null">
+      <h1>{{Session.subject}}</h1>
+      <h2>{{Session.teacher}}</h2>
+      <h3>{{Session.classroom}}</h3>
+    </ng-container>
+  </div>
 </div>
