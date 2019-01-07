@@ -325,7 +325,7 @@
 <section id="printable-cards">
 	<div class="card" *ngIf="User.id > 0">
 			<img [src]="'assets/card-base.jpg'" class="base">
-			<img class="photo" *ngIf="T.CreateUrl(User.picture.filename, 'users') != ''" [src]="T.CreateUrl(User.picture.filename, 'users')">
+			<img class="photo" *ngIf="T.CreateUrl(User.picture !== null ? User.picture.filename : null, 'users') != ''" [src]="T.CreateUrl(User.picture.filename, 'users')">
 			<div class="name">
 				<div class="firstname">
 					{{User.firstname}}
