@@ -8,8 +8,8 @@
 	<header>
 		<a class="item"
 			[class.active]="$.isActive(['/applicants/list']) || $.isActive(['/applicants/open'])" routerLink="/applicants/list">
-			<span class="icon-database"></span>
-			Registrados
+			<span class="icon-users"></span>
+			Aspirantes
 			<span *ngIf="S.News.Applicants > 0" class="bullet pull-right">
 				{{S.News.Applicants > 99 ? '+99' : S.News.Applicants}}
 			</span>
