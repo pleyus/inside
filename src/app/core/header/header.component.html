@@ -5,19 +5,16 @@
     </a>
 
     <a (click)="MenuClick(false)"
-      class="icon-user"
       *ngIf="!$.isAdmin()"
       routerLinkActive="active" routerLink="/me">
       Perfil
     </a>
     <a (click)="MenuClick(false)"
-      class="icon-payment"
       *ngIf="($.isAdmin() && $.CanDo('payment')) || $.isStudent()"
       routerLinkActive="active" routerLink="/payment">
       {{$.isStudent() ? 'Mis ' : ''}}Pagos
     </a>
     <a (click)="MenuClick(false)"
-      class="icon-feedback"
       *ngIf="$.isAdmin() && $.CanDo('applicants')"
       routerLinkActive="active" routerLink="/applicants">
       Difusión
@@ -27,14 +24,12 @@
     </a>
 
     <a (click)="MenuClick(false)"
-      class="icon-applicant"
       *ngIf="$.isAdmin()"
       routerLinkActive="active" routerLink="/academy">
       Academico
     </a>
 
     <a (click)="MenuClick(false)"
-      class="icon-tags"
       *ngIf="$.isAdmin() && (
         $.CanDo('institutions')
         || $.CanDo('courses')
@@ -47,14 +42,12 @@
 
 
     <a (click)="MenuClick(false)"
-      class="icon-users"
       *ngIf="$.isAdmin() && $.CanDo('user')"
       routerLinkActive="active" routerLink="/users">
       Usuarios
     </a>
 
     <a (click)="MenuClick(false)"
-      class="icon-mic"
       *ngIf="($.isAdmin() && $.CanDo('radio')) || $.Me.radio.length > 0"
       [class.active]="$.isActive(['/radio'])"
       [routerLink]="['/radio', $.ST.radio]">
