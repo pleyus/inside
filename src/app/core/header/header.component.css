@@ -1,39 +1,115 @@
 header {
 	border-bottom: solid 1px #DDD;
-	overflow: hidden;
 	background-color: #F1F1F1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
 }
-header .user-name {
+
+header::after { content: ''; display: block; clear: both; }
+
+/* Menu de navegación */
+  .logo img {
+    margin-right: 1rem;
+    width: 80px;
+    height: 35px;
+    padding: 0;
+    float: left;
+    margin-top: 8px;
+    filter: grayscale(1);
+    transition: filter 200ms;
+  }
+  .logo:hover img {
+    filter: grayscale(0);
+    transition: filter 200ms;
+  }
+  /* Add a black background color to the top navigation */
+  nav { padding: 0; z-index: 1; }
+
+  /* Style the links inside the navigation bar */
+  nav a:not(.logo):not(.userinfo) {
+    float: left;
+    text-align: center;
+    padding: 15px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    color: inherit;
+    line-height: 20px;
+    transition: background-color 200ms, color 200ms;
+  }
+  a:not(.mini) { display: block; }
+
+  /* Change the color of links on hover */
+  nav a:not(.logo):not(.active):not(.userinfo):hover {
+    background-color: #1f7bb1;
+    color: #FFF;
+    transition: background-color 200ms, color 200ms;
+  }
+
+  /* Add an active class to highlight the current page */
+  .active {
+    background-color: #1f7bb1;
+    color: #FFF !important;
+  }
+
+  /* Hide the link that should open and close the topnav on small screens */
+  .mini {
+    display: none;
+    cursor: pointer;
+    float: right !important;
+    z-index: 1;
+  }
+
+ /* When the screen is less than 600 pixels wide, hide all links, except for the first one ("Home"). Show the link that contains should open and close the topnav (.mini) */
+ @media screen and (max-width: 600px) {
+  nav a:not(.logo):not(.mini) {display: none}
+
+  .mini {
+    display: block;
+  }
+
+  nav.responsive {
+    position: relative;
+  }
+  nav.responsive img { float: none; }
+  nav.responsive a.mini {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  nav.responsive a {
+    float: none !important;
+    display: block !important;
+    text-align: left !important;
+  }
+
+  .userinfo span {
+    float: left !important;
+    margin: 5px 15px 5px 5px !important;
+  }
+}
+
+
+.userinfo {
 	font-weight: 600;
-	padding-top: 15px;
 	float: right;
-	text-decoration: none;
+  text-decoration: none;
+  color: #333;
+  cursor: pointer;
+  line-height: 50px;
 }
-header .user-name a {
-	color: #333;
-}
-header .user-name span {
-	cursor: pointer;
-	margin-right: .5rem;
-}
-header .user-image {
-	width: 40px;
+.userinfo span {
+  width: 40px;
 	height: 40px;
 	padding: 0;
 	border-radius: 100px;
 	float: right;
 	margin: 5px 5px 5px 15px;
 	background-size: cover;
-	background-position: center;
+  background-position: center;
 }
-header .inside {
-	width: 80px;
-	height: 35px;
-	padding: 0;
-	float: left;
-	margin-top: 8px;
-}
-
 .holidays {
   display: block;
   float: right;
@@ -41,5 +117,5 @@ header .inside {
 }
 
 @media screen and (max-width: 500px) {
-  header .user-name { display: none; }
+  .userinfo { display: none; }
 }

@@ -1,5 +1,87 @@
 <header>
-	<div class="col-12">
+  <nav class="wrap" [class.responsive]="MENU_RESPONSIVE">
+    <a (click)="MenuClick(false)" class="logo" routerLink="/home">
+      <img class="inside" src="assets/inside.png" />
+    </a>
+
+    <a (click)="MenuClick(false)"
+      class="icon-user"
+      *ngIf="!$.isAdmin()"
+      routerLinkActive="active" routerLink="/me">
+      Perfil
+    </a>
+    <a (click)="MenuClick(false)"
+      class="icon-payment"
+      *ngIf="($.isAdmin() && $.CanDo('payment')) || $.isStudent()"
+      routerLinkActive="active" routerLink="/payment">
+      {{$.isStudent() ? 'Mis ' : ''}}Pagos
+    </a>
+    <a (click)="MenuClick(false)"
+      class="icon-feedback"
+      *ngIf="$.isAdmin() && $.CanDo('applicants')"
+      routerLinkActive="active" routerLink="/applicants">
+      Difusión
+      <span *ngIf="S.News.Applicants > 0 || S.News.Messages > 0" class="bullet pull-right">
+        {{S.News.Applicants + S.News.Messages > 99 ? '+99' : S.News.Applicants + S.News.Messages}}
+      </span>
+    </a>
+
+    <a (click)="MenuClick(false)"
+      class="icon-applicant"
+      *ngIf="$.isAdmin()"
+      routerLinkActive="active" routerLink="/academy">
+      Academico
+    </a>
+
+    <a (click)="MenuClick(false)"
+      class="icon-tags"
+      *ngIf="$.isAdmin() && (
+        $.CanDo('institutions')
+        || $.CanDo('courses')
+        || $.CanDo('vias')
+        ||$.CanDo('campaigns'))"
+      [class.active]="$.isActive(['/categories'])"
+      [routerLink]="['/categories', $.ST.categories]">
+      Categorias
+    </a>
+
+
+    <a (click)="MenuClick(false)"
+      class="icon-users"
+      *ngIf="$.isAdmin() && $.CanDo('user')"
+      routerLinkActive="active" routerLink="/users">
+      Usuarios
+    </a>
+
+    <a (click)="MenuClick(false)"
+      class="icon-mic"
+      *ngIf="($.isAdmin() && $.CanDo('radio')) || $.Me.radio.length > 0"
+      [class.active]="$.isActive(['/radio'])"
+      [routerLink]="['/radio', $.ST.radio]">
+      Studio3.3
+      <span *ngIf="S.News.RadioMessages > 0" class="bullet pull-right">
+        {{S.News.RadioMessages > 99 ? '+99' : S.News.RadioMessages}}
+      </span>
+    </a>
+
+    <!-- Imagen de usuario y nombre -->
+    <a (click)="MenuClick(false)" class="userinfo" routerLink="/me" *ngIf="$.Me.id > 0">
+      <span
+        title="Imagen actual de {{$.Me.firstname}} {{$.Me.pid > 0 ? '' : '(Sin imagen)'}}"
+        [ngStyle]="{'background-image':'url(' + T.CreateUrl($.Me.pid > 0 ? $.Me.picture.filename : $.Me.image, 'users') + ')'}"></span>
+      {{ $.Me.firstname + ' ' + $.Me.lastname }}
+    </a>
+
+    <a class="mini" (click)="MenuClick()">
+      <span class="icon-menu"></span>
+    </a>
+  </nav>
+  <div class="holidays">
+      <app-codersday></app-codersday>
+      <app-happy-birthday [(User)]="$.Me"></app-happy-birthday>
+  </div>
+
+	<!-- <div class="col-12">
 		<a routerLink="/home">
 			<img class="inside" src="assets/inside.png" />
 		</a>
@@ -16,5 +98,5 @@
         <app-codersday></app-codersday>
         <app-happy-birthday [(User)]="$.Me"></app-happy-birthday>
     </div>
-	</div>
+	</div> -->
 </header>

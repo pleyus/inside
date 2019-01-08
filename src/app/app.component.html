@@ -19,25 +19,20 @@
 <ng-container *ngIf="!Loading">
   <ng-container *ngIf="Me.id > 0">
     <section id="viewer" (mousemove)="S.Alive($event)">
+
       <app-core-header></app-core-header>
 
-      <section class="row wrap">
-
-        <core-menu></core-menu>
-
-        <div id="content" class="col-10">
-            <router-outlet></router-outlet>
-        </div>
-
+      <section class="wrap main">
+        <router-outlet></router-outlet>
       </section>
 
       <footer>
-      <p>Universidad Tamazunchale – {{Now() | date: 'yyyy'}}</p>
-      <p>
-        <a class="link" href="https://unitam.edu.mx/plataforma/">Plataforma</a> |
-        <a class="link" href="https://unitam.edu.mx/web/">Sitio web</a> |
-        <a class="link" href="https://facebook.com/UNITAM?ref=inside-unitam">Facebook</a>
-      </p>
+        <p>Universidad Tamazunchale – {{Now() | date: 'yyyy'}}</p>
+        <p>
+          <a class="link" href="https://unitam.edu.mx/plataforma/">Plataforma</a> |
+          <a class="link" href="https://unitam.edu.mx/web/">Sitio web</a> |
+          <a class="link" href="https://facebook.com/UNITAM?ref=inside-unitam">Facebook</a>
+        </p>
       </footer>
     </section>
     <div id="printer"></div>
