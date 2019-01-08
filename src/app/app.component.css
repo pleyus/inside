@@ -1,10 +1,4 @@
 .main { margin-top: 51px;}
-.main > * > h1 { height: 30px; margin: 10px 0 20px; }
-.main > * > h1 a { font-weight: normal; font-size: 1rem; margin-left: 20px; vertical-align: middle; color: #1F7BB1; border-left: solid 5px transparent; padding: 5px; border-radius: 5px; }
-.main > * > h1 a:hover { border-left: solid 5px #1F7BB1; }
-
-.main #header .title > h1 { font-size: 2rem; font-weight: 600; margin: 1rem 0; line-height: 2.5rem }
-.main #header .buttons { text-align: right; }
 
 .main.loggin { text-align: center; border: none; width: 100%; }
 .main.loggin a { color: #1F7BB1; }
