@@ -1,0 +1,44 @@
+<h1>Vias de difusión</h1>
+<p>Agregue las posibles respuestas a la pregunta <i>¿Como supo de nosotros?</i></p>
+
+<div class="row">
+  <div class="group col-5">
+
+    <h1>{{Category.name == '' ? '«Nuevo elemento»' : Category.name}}</h1>
+
+    <p class="row" title="Es el nombre que se mostrará en las listas desplegables">
+      <label for="name">Nombre</label>
+      <input class="required col-12" maxlength="100" type="text" [(ngModel)]="Category.name" placeholder="Nombre para mostrar">
+    </p>
+  </div>
+
+  <div class="group col-7">
+    <h1>Vias de difusión registradas</h1>
+
+    <div class="table fit short">
+      <table>
+        <thead>
+            <th class="col-12">Nombre</th>
+        </thead>
+
+        <tbody>
+          <div *ngIf="List.length < 1" class="empty">
+            No hay elementos en la lista
+          </div>
+          <a *ngFor="let Item of List" class="row link" (click)="SetCategory(Item)">
+            <div class="col-12">{{Item.name}}</div>
+          </a>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+<div class="row">
+  <p class="action-buttons">
+    <a (click)="Save()" class="button {{Category.id > 0 ? 'primary' : 'success'}}">{{Category.id > 0 ? 'Actualizar' : 'Crear nuevo'}}</a>
+    <a *ngIf="Category.id > 0" (click)="Category = { id: 0, name: '', slug: '' }" class="button">Cancelar</a>
+    <a *ngIf="Category.id > 0" (click)="Delete()" title="Eliminar categoria" class="icon-trash button separe-left"></a>
+  </p>
+</div>
+

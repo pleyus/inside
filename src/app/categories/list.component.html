@@ -2,7 +2,7 @@
 	<div class="title row">
 		<h1>{{Title}}</h1>
 		<p>
-			Permite administrar las categorias o indicadores disponibles del sitio 
+			Permite administrar las categorias o indicadores disponibles del sitio
 			(regularmente son los elementos que aparecen en las listas desplegables)
 		</p>
 	</div>
@@ -12,10 +12,6 @@
 		<a *ngIf="$.CanDo('courses')" class="item" routerLinkActive="active" routerLink="courses">
 			<span class="icon-book"></span>
 			Especialidades
-		</a>
-		<a *ngIf="$.CanDo('vias')" class="item" routerLinkActive="active" routerLink="vias">
-			<span class="icon-share"></span>
-			Vias de difusión
 		</a>
 		<a *ngIf="$.CanDo('campaigns')" class="item" routerLinkActive="active" routerLink="campaigns">
 			<span class="icon-flag-checkered"></span>

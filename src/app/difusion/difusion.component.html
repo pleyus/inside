@@ -7,15 +7,14 @@
 <div class="tabs">
 	<header>
 		<a class="item"
-			[class.active]="$.isActive(['/applicants/list']) || $.isActive(['/applicants/open'])" routerLink="/applicants/list">
+			[class.active]="$.isActive(['/difusion/applicants'])" routerLink="/difusion/applicants">
 			<span class="icon-users"></span>
 			Aspirantes
 			<span *ngIf="S.News.Applicants > 0" class="bullet pull-right">
 				{{S.News.Applicants > 99 ? '+99' : S.News.Applicants}}
 			</span>
     </a>
-    <a class="item"
-			[class.active]="$.isActive(['/applicants/inbox'])" routerLink="/applicants/inbox">
+    <a class="item" [class.active]="$.isActive(['/difusion/inbox'])" routerLink="/difusion/inbox">
 			<span class="icon-inbox"></span>
 			Mensajes
 			<span *ngIf="S.News.Messages > 0" class="bullet pull-right">
@@ -23,10 +22,15 @@
 			</span>
 		</a>
     <a class="item"
-      [class.active]="$.isActive(['/applicants/stats'])" routerLink="/applicants/stats">
+      [class.active]="$.isActive(['/difusion/stats'])" routerLink="/difusion/stats">
 			<span class="icon-chart"></span>
 			Estadisticas
-		</a>
+    </a>
+    <a *ngIf="$.CanDo('vias')" class="item"
+      [class.active]="$.isActive(['/difusion/vias'])" routerLink="/difusion/vias">
+      <span class="icon-share"></span>
+      Vias de difusión
+    </a>
 	</header>
 	<div class="tab-body">
 		<router-outlet></router-outlet>

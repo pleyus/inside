@@ -16,7 +16,7 @@
     </a>
     <a (click)="MenuClick(false)"
       *ngIf="$.isAdmin() && $.CanDo('applicants')"
-      routerLinkActive="active" routerLink="/applicants">
+      routerLinkActive="active" routerLink="/difusion">
       Difusión
       <span *ngIf="S.News.Applicants > 0 || S.News.Messages > 0" class="bullet pull-right">
         {{S.News.Applicants + S.News.Messages > 99 ? '+99' : S.News.Applicants + S.News.Messages}}
@@ -73,23 +73,4 @@
       <app-codersday></app-codersday>
       <app-happy-birthday [(User)]="$.Me"></app-happy-birthday>
   </div>
-
-	<!-- <div class="col-12">
-		<a routerLink="/home">
-			<img class="inside" src="assets/inside.png" />
-		</a>
-		<div
-			class="user-image right"
-			title="Imagen actual de {{$.Me.firstname}} {{$.Me.pid > 0 ? '' : '(Sin imagen)'}}"
-      [ngStyle]="{'background-image':'url(' + T.CreateUrl($.Me.pid > 0 ? $.Me.picture.filename : $.Me.image, 'users') + ')'}"></div>
-
-    <div class="user-name">
-      <a routerLink="/me" *ngIf="$.Me.id > 0">{{ $.Me.firstname + ' ' + $.Me.lastname }}</a>
-    </div>
-
-    <div class="holidays">
-        <app-codersday></app-codersday>
-        <app-happy-birthday [(User)]="$.Me"></app-happy-birthday>
-    </div>
-	</div> -->
 </header>

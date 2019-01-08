@@ -10,8 +10,8 @@ import { ChartsModule } from 'ng2-charts';
 import { Tools, WebService, AppStatus, Configuration } from './app.service';
 
 import { AppComponent } from './app.component';
-import { ApplicantsListComponent } from './applicants/list/list.component';
-import { ApplicantsOpenComponent } from './applicants/open/open.component';
+import { ApplicantsListComponent } from './difusion/list/list.component';
+import { ApplicantsOpenComponent } from './difusion/open/open.component';
 import { PaymentListComponent } from './payment/list/list.component';
 import { PaymentOpenComponent } from './payment/open/open.component';
 import { HomeComponent } from './home/home.component';
@@ -35,23 +35,25 @@ import { UsersNormalViewComponent } from './users/list/view-normal/view-normal.c
 import { UsersContactsViewComponent } from './users/list/view-contacts/view-contacts.component';
 import { AdminComponent } from './library/admin/admin.component';
 import { MessagesComponent } from './messages/messages.component';
-import { ApplicantsComponent } from './applicants/applicants.component';
-import { ApplicantsStatsComponent } from './applicants/stats/stats.component';
+import { ApplicantsComponent } from './difusion/difusion.component';
+import { ApplicantsStatsComponent } from './difusion/stats/stats.component';
 import { LoginComponent } from './core/login/login.component';
 import { CodersdayComponent } from './core/holidays/codersday/codersday.component';
 import { HappyBirthdayComponent } from './core/holidays/happy-birthday/happy-birthday.component';
 import { ScriptHackComponent } from './core/script-hack/script-hack.component';
 import { AcademyComponent } from './academy/academy.component';
 import { CheckinComponent } from './academy/checkin/checkin.component';
+import { ViasComponent } from './difusion/vias/vias.component';
 
 const appRoutes: Routes = [
   {
-    path: 'applicants',
+    path: 'difusion',
     component: ApplicantsComponent,
     children: [
-      { path: '', redirectTo: 'list', pathMatch: 'full' },
-      { path: 'list', component: ApplicantsListComponent },
+      { path: '', redirectTo: 'applicants', pathMatch: 'full' },
+      { path: 'applicants', component: ApplicantsListComponent },
       { path: 'stats', component: ApplicantsStatsComponent },
+      { path: 'vias', component: ViasComponent },
       { path: 'inbox', component: MessagesComponent },
       { path: 'open/:id', component: ApplicantsOpenComponent }
     ]
@@ -139,7 +141,8 @@ const appRoutes: Routes = [
     HappyBirthdayComponent,
     ScriptHackComponent,
     AcademyComponent,
-    CheckinComponent
+    CheckinComponent,
+    ViasComponent
   ],
 
   imports: [
