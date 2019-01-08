@@ -1,18 +1,3 @@
-<div class="row" id="header">
-	<div class="title row">
-		<h1>{{
-			Pay.concept != ''
-			? Pay.concept
-			:(
-				$.isAdmin()
-				? 'Pago nuevo'
-				: '¿Que haces aqui?'
-			)
-		}}</h1>
-	</div>
-
-</div>
-
 <div *ngIf="$.isAdmin()">
 	<div class="row">
 		<div class="group col-6">

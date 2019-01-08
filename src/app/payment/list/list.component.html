@@ -1,9 +1,5 @@
-<div class="row" id="header">
-	<div class="title row">
-		<h1>{{Title}}</h1>
-	</div>
-
-	<div class="filter">
+<div class="row">
+  <div class="filter">
 		<div class="col-4">
 			<label for="sbox">Busqueda</label>
 			<div class="sbox">
@@ -58,55 +54,6 @@
 				</a>
 		</div>
 	</div>
-	<!-- <div class="row filter">
-		<div class="col-4 sbox">
-			<span class="icon icon-search"></span>
-			<input type="text" (keyup)="search()" [(ngModel)]="search_string" placeholder="Búsqueda...">
-		</div>
-
-		<div class="col-3" *ngIf="$.isAdmin()">
-			<div class="dropdown">
-				<button class="dropbtn">
-					{{ FilterText()}} <span class="icon-down-open"></span>
-				</button>
-				<div class="dropdown-content" (click)="search()">
-					<a (click)="setFilter(-1)">
-						<span class="icon-{{isFilter(-1) ? 'ok' : 'noicon'}}"></span>
-						Todos
-					</a>
-					<a (click)="setFilter($.PAID)">
-						<span class="icon-{{isFilter($.PAID) ? 'ok' : 'noicon'}}"></span>
-						Pagados
-					</a>
-					<a (click)="setFilter($.UNPAID)">
-						<span class="icon-{{isFilter($.UNPAID) ? 'ok' : 'noicon'}}"></span>
-						Pendientes
-					</a>
-				</div>
-			</div>
-		</div>
-		<div class="col-5">
-			<a
-				*ngIf="Checkeds() > 0"
-				title="Imprimir pagos seleccionados"
-				class="button pull-right separe-left"
-				(click)="T.Print('printable', 'psv')">
-					Imprimir
-				</a>
-			<a *ngIf="$.isAdmin() && Result > 0"
-				title="{{ 'Registrar pago para ' + Pays[0].name + '...'}}"
-				class="pull-right button primary"
-				[routerLink]="[ '0/' + Result ]">
-					Nuevo para {{ Pays[0].firstname }}
-				</a>
-			<a *ngIf="$.isAdmin() && Result < 1"
-				title="Registrar nuevo pago"
-				class="pull-right button"
-				routerLink="0">
-					Nuevo
-				</a>
-		</div>
-	</div> -->
 
 </div>
 
