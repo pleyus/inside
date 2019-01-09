@@ -17,3 +17,7 @@ label.input { font-weight: 600; font-size: 1.2rem; padding-top: 5px; color: #333
 input.money {
 	margin-right: 20px;
 }
+.table { padding: 0 !important; }
+.table table { min-width: auto; }
+.table tbody { height: 320px; }
+.box { padding: 10px !important; }

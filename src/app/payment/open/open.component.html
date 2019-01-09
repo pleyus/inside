@@ -1,6 +1,6 @@
 <div *ngIf="$.isAdmin()">
 	<div class="row">
-		<div class="group col-6">
+		<div class="group col-4">
 			<h1>Datos del pago</h1>
 
 			<!-- Nombre -->
@@ -51,10 +51,14 @@
 					<label for="charge">Total</label>
 					<label class="input">{{ (Pay.amount + Pay.charge) | currency : 'USD' : 'symbol'}}</label>
 				</p>
-			</div>
+      </div>
+
+      <!-- Info de pagos -->
+			<p *ngIf="Pay.gid > 1" class="paid"> <span class="icon-feather"></span> Registrado por <b title="{{Pay.generator.firstname + ' ' + Pay.generator.lastname}}">{{Pay.generator.firstname}}</b> <i>{{Pay.at > 0 ? ' – ' + (Pay.at*1000 | date: 'EEE, dd/MMM/yyyy HH:mm') : ''}}</i></p>
+			<p *ngIf="Pay.cid > 1" class="paid"> <span class="icon-money"></span> Verificado por <b title="{{Pay.collector.firstname + ' ' + Pay.collector.lastname}}">{{Pay.collector.firstname}}</b> <i>{{Pay.cat > 0 ? ' – ' + (Pay.cat*1000 | date: 'EEE, dd/MMM/yyyy HH:mm') : ''}}</i></p>
 
 		</div>
-		<div class="group col-6">
+		<div class="group col-3">
 
 			<h1>Otro</h1>
 
@@ -89,11 +93,35 @@
 				<textarea *ngIf="check_pay" class="col-12" name="payment" id="payment" [(ngModel)]="Pay.payment" placeholder="(Opcional)&#10;Describa como se realizó el pago: &#10;&#10;  –Numero del boucher de pago&#10;  –Pago en efectivo"></textarea>
 			</div>
 
-			<!-- Info de pagos -->
-			<p *ngIf="Pay.gid > 1" class="paid"> <span class="icon-feather"></span> Registrado por <b title="{{Pay.generator.firstname + ' ' + Pay.generator.lastname}}">{{Pay.generator.firstname}}</b> <i>{{Pay.at > 0 ? ' – ' + (Pay.at*1000 | date: 'EEE, dd/MMM/yyyy HH:mm') : ''}}</i></p>
-			<p *ngIf="Pay.cid > 1" class="paid"> <span class="icon-money"></span> Verificado por <b title="{{Pay.collector.firstname + ' ' + Pay.collector.lastname}}">{{Pay.collector.firstname}}</b> <i>{{Pay.cat > 0 ? ' – ' + (Pay.cat*1000 | date: 'EEE, dd/MMM/yyyy HH:mm') : ''}}</i></p>
-		</div>
+    </div>
+    <div class="group col-5">
+
+			<h1>{{Pay.uid > 0 ? 'Ultimos pagos de ' + Pay.user.firstname : '(Otros pagos)'}}</h1>
+      <div class="table">
+        <table>
+          <thead>
+            <th class="col-0-5"></th>
+            <th class="col-2">Fecha</th>
+            <th class="col-6-5">Concepto</th>
+            <th class="col-3">Monto</th>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let P of Pays" class="row">
+              <a routerLink="/payment/{{P.id}}">
+                <td class="col-0-5"><span class="icon icon-flag state-{{P.status}}"></span></td>
+                <td class="col-2">{{ P.at*1000 | date: 'dd/MM/yy'}}</td>
+                <td class="col-6-5">{{P.concept}}</td>
+                <td class="col-3">{{P.amount | currency : 'USD' : 'symbol' }}</td>
+              </a>
+            </tr>
+            <div class="empty" *ngIf="Pays.length < 1">No hay pagos para mostrar</div>
+          </tbody>
+        </table>
+      </div>
+    <div *ngIf="LoadMore" (click)="GetUserPayments( 'more' )" class="link box center">Mostrar más</div>
 	</div>
+</div>
 
 	<div class="action-buttons">
 		<a *ngIf="Pay.status != 2" (click)="Save()" class="button {{ Pay.amount < 0 ? 'primary' : 'success' }}">{{Id < 1 ? 'Crear ficha' : 'Actualizar'}}</a>

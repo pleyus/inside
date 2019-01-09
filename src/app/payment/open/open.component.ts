@@ -45,6 +45,9 @@ export class PaymentOpenComponent {
     'Baja definitiva'
   ];
 
+  public Last = 0;
+  public LoadMore = true;
+  public Pays = [];
 
   check_pay = false;
 
@@ -67,6 +70,7 @@ export class PaymentOpenComponent {
   }
 
   init() {
+    this.Last = 0;
     // Verificamos que seamos admin
     if ( this.$.isAdmin() && this.$.CanDo('payment') ) {
       // Revisamos si se va a crear una ficha para determinado usuario
@@ -81,6 +85,7 @@ export class PaymentOpenComponent {
 
             this.Pay.user = r.data;
             this.Pay.uid = this.UID;
+
           } else {
             this.RT.navigate(['/payment/0']);
           }
@@ -122,6 +127,7 @@ export class PaymentOpenComponent {
           this.Pay = r.data;
           this.Id = this.Pay.id;
           this.check_pay = this.Pay.cid > 1;
+          this.GetUserPayments();
         } else {
           this.RT.navigate(['/payment/0']);
         }
@@ -204,6 +210,34 @@ export class PaymentOpenComponent {
   UserSelected(item) {
     this.Pay.user = item !== null ? item : null;
     this.Pay.uid = item !== null ? item.id : 0;
+    this.GetUserPayments();
+  }
+  public GetUserPayments(making = '') {
+    if (this.Pay.uid > 0) {
+      // Loading...
+      this.S.ShowLoading('Cargando ultimos pagos de ' + this.Pay.user.name + '...');
+
+      // Hablamos con la api para que guarde data
+      this.W.Web('payment', 'list', 'id=' + this.Pay.uid + '&last=' + this.Last, (r) => {
+        this.S.ClearState();
+
+        if (r.status === this.S.SUCCESS) {
+            this.Pays =
+              making === 'more'
+              ? this.Pays.concat(r.data)
+              : r.data;
+        } else {
+          this.S.ShowError(r.data, 0);
+        }
+
+        this.Last = this.Pays.length;
+        this.LoadMore = r.data.length >= 10;
+      },
+      (e) => { this.S.ShowError('Se perdió la conexión', 0); });
+    } else {
+      this.S.ShowWarning('No se puede crear la ficha, hay campos que son requeridos.', 0);
+    }
+
   }
   private GoBack(): void  {
     this.RT.navigate(['/Pays']);
