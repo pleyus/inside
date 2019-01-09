@@ -55,7 +55,7 @@ const appRoutes: Routes = [
       { path: 'stats', component: ApplicantsStatsComponent },
       { path: 'vias', component: ViasComponent },
       { path: 'inbox', component: MessagesComponent },
-      { path: 'open/:id', component: ApplicantsOpenComponent }
+      { path: 'applicants/:id', component: ApplicantsOpenComponent }
     ]
   },
   {

@@ -71,7 +71,7 @@
 	</div>
 
 	<div class="col-2 not-labeled">
-		<a *ngIf="$.isAdmin()" title="Registrar nuevo..." class="button success pull-right" [routerLink]="[ '/applicants/open/0' ]">Nuevo</a>
+		<a *ngIf="$.isAdmin()" title="Registrar nuevo..." class="button success pull-right" [routerLink]="[ 0 ]">Nuevo</a>
 	</div>
 
 </div>
@@ -106,7 +106,7 @@
 			<th class="col-2"> </th>
 		</thead>
 		<tbody>
-			<a *ngFor="let A of Applicants" class="row" [routerLink]="['/applicants/open/' + A.id]">
+			<a *ngFor="let A of Applicants" class="row" [routerLink]="[A.id]">
 				<td class="col-1" title="Fecha de registro: {{ A.at*1000 | date: 'EEE dd/MMM/yyyy hh:mm:ss' }}">{{ A.at*1000 | date: 'dd/MMM' }}</td>
 				<td class="col-3">{{ A.firstname + ' ' + A.lastname }}</td>
 				<td class="col-1"><span *ngIf="A.note_at > 0" title="{{ GetTaggedTitle(A) }}" class="tag {{ GetTaggedClass(A) }}">{{ A.note_at * 1000 | date : 'dd/MMM' }}</span> </td>
