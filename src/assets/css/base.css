@@ -22,7 +22,12 @@ input[type="text"].small { width: 25% !important; }
 .separe-top { margin-top: 1rem !important; }
 .box { background-color: #F1F1F1; padding: 10px; display: block; clear: both; }
 
-
+.title {
+  font-size: 2rem;
+  margin: 0 0 1rem;
+  border-bottom: 1px solid #DDD;
+  padding: 0 0 2rem;
+}
 .wrap { max-width: 95%; margin: 0 auto; padding: 1rem 0; }
 
 .hide { display: none !important; }
