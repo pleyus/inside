@@ -7,7 +7,7 @@
 		<label for="to">Hasta</label>
 		<input [(ngModel)]="DATE_UNTIL" value="{{$.Now() | date: 'yyyy-MM-dd' }}" max="{{$.Now() | date: 'yyyy-MM-dd' }}" type="date" id="to">
 	</div>
-	<div class="col-6">
+	<div class="block not-labeled col-6">
 		<a class="button primary pull-right" (click)="Update()">Actualizar</a>
 	</div>
 </div>
