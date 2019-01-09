@@ -68,15 +68,15 @@
 					<input type="checkbox" id="checked-all" (click)="CheckAll()">
 				</label>
 			</th>
-			<th title="Ordenar por numero de folio" class="col-1-5 order" (click)="Order('p.id')">
+			<th class="col-1 order" title="Ordenar por numero de folio" (click)="Order('p.id')">
 				Folio
 				<span *ngIf="_OrderBy == 'p.id'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
 			</th>
-			<th title="Ordenar por fecha de creación" class="col-1 order" (click)="Order('p.at')">
+			<th class="col-1 order" title="Ordenar por fecha de creación" (click)="Order('p.at')">
 				Fecha
 				<span *ngIf="_OrderBy == 'p.at'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
 			</th>
-			<th title="Ordenar por nombre" class="col-2-5">
+			<th class="col-2-5" title="Ordenar por nombre">
 				<div class="order" (click)="Order('u.firstname')">
 					Nombre
 					<span *ngIf="_OrderBy == 'u.firstname'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
@@ -87,15 +87,15 @@
 					<span *ngIf="_OrderBy == 'u.lastname'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
 				</div>
 			</th>
-			<th title="Ordenar por concepto de pago" class="col-2-5 order" (click)="Order('p.concept')">
+			<th class="col-4 order" title="Ordenar por concepto de pago" (click)="Order('p.concept')">
 				Concepto
 				<span *ngIf="_OrderBy == 'p.concept'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
 			</th>
-			<th title="Ordenar por clave de referencia" class="col-2-5 order" (click)="Order('p.ref')">
+			<th class="col-1-5 order" title="Ordenar por clave de referencia" (click)="Order('p.ref')">
 				Referencia
 				<span *ngIf="_OrderBy == 'p.ref'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
 			</th>
-			<th title="Ordenar por monto total" class="col-1-5 order" (click)="Order('amount')">
+			<th class="col-1-5 order" title="Ordenar por monto total" (click)="Order('amount')">
 				Monto
 				<span *ngIf="_OrderBy == 'amount'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
 			</th>
@@ -113,11 +113,11 @@
 					</label>
 				</td>
 				<a routerLink="{{P.id}}">
-					<td class="col-1-5"> <span class="icon icon-flag state-{{P.status}}"></span> {{ ("00000"+P.id).slice(-6) }}</td>
+					<td class="col-1"> <span class="icon icon-flag state-{{P.status}}"></span> {{ ("00000"+P.id).slice(-6) }}</td>
 					<td class="col-1">{{ P.at*1000 | date: 'dd/MM/yy'}}</td>
 					<td class="col-2-5">{{P.name}}</td>
-					<td class="col-2-5">{{P.concept}}</td>
-					<th class="col-2-5 monospace">{{P.ref}}</th>
+					<td class="col-4">{{P.concept}}</td>
+					<th class="col-1-5 monospace">{{P.ref}}</th>
 					<td class="col-1-5">{{P.amount | currency : 'USD' : 'symbol' }}</td>
 				</a>
 			</tr>
