@@ -85,6 +85,7 @@ export class PaymentOpenComponent {
 
             this.Pay.user = r.data;
             this.Pay.uid = this.UID;
+            this.GetUserPayments();
 
           } else {
             this.RT.navigate(['/payment/0']);
