@@ -126,7 +126,13 @@
 	<div class="action-buttons">
 		<a *ngIf="Pay.status != 2" (click)="Save()" class="button {{ Pay.amount < 0 ? 'primary' : 'success' }}">{{Id < 1 ? 'Crear ficha' : 'Actualizar'}}</a>
 		<a *ngIf="Id > 0" class="button" (click)="T.Print('printable', 'ppc')">Imprimir</a>
-		<a *ngIf="Id > 0 && !check_pay" (click)="Delete()" title="Eliminar ficha actual" class="icon icon-trash button separe-left"></a>
+    <a *ngIf="Id > 0 && !check_pay" (click)="Delete()" title="Eliminar ficha actual" class="icon icon-trash button separe-left"></a>
+    <a *ngIf="Pay.uid > 0 && this.Id > 0"
+      title="{{ 'Registrar pago para ' + Pay.user.firstname + '...'}}"
+      class="pull-right button primary"
+      [routerLink]="[ '/payment/0/' + Pay.uid ]">
+        Nuevo para {{ Pay.user.firstname }}
+      </a>
 	</div>
 
 	<div id="printable">
