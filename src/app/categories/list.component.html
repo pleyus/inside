@@ -1,13 +1,4 @@
-<div class="row" id="header">
-	<div class="title row">
-		<h1>{{Title}}</h1>
-		<p>
-			Permite administrar las categorias o indicadores disponibles del sitio
-			(regularmente son los elementos que aparecen en las listas desplegables)
-		</p>
-	</div>
-</div>
-<div class="tabs">
+<div class="tabs left">
 	<header>
 		<a *ngIf="$.CanDo('courses')" class="item" routerLinkActive="active" routerLink="courses">
 			<span class="icon-book"></span>

@@ -9,20 +9,15 @@ import { AppStatus } from '../app.service';
   styleUrls: ['./list.component.css']
 })
 export class CategoriesListComponent {
-	Title = "Administrador de Categorias";
 
-	constructor(
-		public $ : AppComponent,
-		private R : Router,
-		private S : AppStatus
-	) 
-	{ 
-		if(!$.isAdmin())
-		{
-			this.S.ShowError('Solo los administradores pueden entrar a las categorías', 2000);
-			this.R.navigate(['/home']);
-		}
-		//this.$.SetOption('selected.tab', 'institution', 'categories');
-	}
-
+  constructor(
+    public $: AppComponent,
+    private R: Router,
+    private S: AppStatus
+  ) {
+    if (!$.isAdmin()) {
+      this.S.ShowError('Solo los administradores pueden entrar a las categorías', 2000);
+      this.R.navigate(['/home']);
+    }
+  }
 }
