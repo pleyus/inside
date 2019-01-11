@@ -100,18 +100,18 @@
       <div class="table">
         <table>
           <thead>
-            <th class="col-0-5"></th>
+            <th class="col-1"></th>
             <th class="col-2">Fecha</th>
-            <th class="col-6-5">Concepto</th>
+            <th class="col-6">Concepto</th>
             <th class="col-3">Monto</th>
           </thead>
 
           <tbody>
             <tr *ngFor="let P of Pays" class="row">
               <a routerLink="/payment/{{P.id}}">
-                <td class="col-0-5"><span class="icon icon-flag state-{{P.status}}"></span></td>
+                <td class="col-1"><span class="icon icon-flag state-{{P.status}}"></span></td>
                 <td class="col-2">{{ P.at*1000 | date: 'dd/MM/yy'}}</td>
-                <td class="col-6-5">{{P.concept}}</td>
+                <td class="col-6">{{P.concept}}</td>
                 <td class="col-3">{{P.amount | currency : 'USD' : 'symbol' }}</td>
               </a>
             </tr>

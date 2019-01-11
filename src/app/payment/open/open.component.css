@@ -18,6 +18,7 @@ input.money {
 	margin-right: 20px;
 }
 .table { padding: 0 !important; }
-.table table { min-width: auto; }
+.table table { min-width: auto; display: block; }
 .table tbody { height: 320px; }
+.table thead { display: flex; }
 .box { padding: 10px !important; }
