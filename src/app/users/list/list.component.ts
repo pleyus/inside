@@ -9,43 +9,104 @@ import { Router } from '@angular/router';
   styleUrls: ['./list.component.css']
 })
 export class UsersListComponent {
-  Title = 'Usuarios';
-  Users = [];
-  LoadMore = true;
 
-  ListOptions = {
-    Title : 'Lista de usuarios',
-    ExtraRows : 5
-  };
-  Cols = [];
-  Columns = 10;
+  //  Variable para lista de usuarios
+    Users = [];      //  Los usuarios obtenidos desde el servidor
+    LoadMore = true; //  Muestra o no el link para cargar mas usuarios
+    Checkeds = [];   //  Es la lista de los usuarios marcados (ckecks)
 
+  //  La lista de carreras que tenemos (para llenar los select box)
   COURSES = [];
 
-  Checkeds = [];
-  MasiveEditor = {
-    sex: { checked: 0, val: 0 },
-    type: {checked: 0, val: 0 },
-    status: {checked: 0, val: 0 },
-    cid: { checked: 0, val: 0 },
-    level: { checked: 0, val: 0 },
-    idnumber: {checked: 0, val: '' }
+  //  Ayuda a mostrar u ocultar los acordeones disponibles en el componente
+  public Acordeon = {
+    card: false,
+    list: false
   };
 
+
+
+
+  //#region  ONCHECKEDS
+
+    //  Al momento de marcar algun usuario de la lista (Checkeds.lenght > 0)
+    //  se muestra por un lado un conjunto de tabs con las cuales se pueden
+    //  realizar acciones sobre los usuarios seleccionados
+
+    public SELECTED_TAB = 'selection';  //  Es la tab seleccionada actualmente
+
+    //#region SELECTED_TAB = 'selection'
+
+      //  Se encarga de almacenar los ids guardados, para posteriormente cargarlos
+      //  desde el metodo GetUsers('load-ids').
+      SavedIds = [];
+
+    //#endregion
+
+    //#region SELECTED_TAB = 'print'
+
+      //  Opciones de la impresión de lista de asistencia
+      ListOptions = {
+
+        // El titulo que llevará la lista
+        Title : 'Asistencia',
+
+        // En caso de necesitarse filas extra al final de la lista.
+        ExtraRows : 5
+
+      };
+
+      //  Es un rango de columnas a imprimir
+      Cols = [];
+
+      //  Opciones de la impresión de credenciales
+      CardOptions = {
+
+        //  Solo imprime usuarios activos (User.status = 0)
+        OnlyActive: true,
+
+        //  Imprime usuarios sin foto
+        WithOutPhoto: false,
+
+        //  Vigencia de la credencial
+        Valid: 'Diciembre 2018'
+      };
+    //#endregion
+
+    //#region SELECTED_TAB = 'edit'
+
+      //  La configuración para poder modificar masivamente los usuarios marcados
+      //  cada propiedad tiene 2 valores
+      //    checked: indica si se va a editar dicha propiedad
+      //    val:     indica el valor a asignar a la propiedad
+      MasiveEditor = {
+        sex: { checked: 0, val: 0 },
+        type: {checked: 0, val: 0 },
+        status: {checked: 0, val: 0 },
+        cid: { checked: 0, val: 0 },
+        level: { checked: 0, val: 0 },
+        idnumber: {checked: 0, val: '' }
+      };
+
+    //#endregion
+  //#endregion
+
+
+
+  //  Define la ordenación de los usuarios en la lista
   _Order = 'DESC';
   _OrderBy = 'idnumber';
 
-  private search_timer;
-  search_string = '';
 
-  PrintType = '';
-  CardOptions = {
-    OnlyActive: true,
-    WithOutPhoto: false,
-    Valid: 'Diciembre 2018'
-  };
 
-  SavedIds = [];
+  //  Variables para busqueda
+
+    //  Permite hacer un pequeño delay al momento de escribir en el cuadro de busqueda
+    //  Es usada como handler de setTimeout(...)
+    private search_timer;
+
+    search_string = '';  // La busqueda que se realiza
+
 
   constructor(
     private W: WebService,
@@ -55,9 +116,13 @@ export class UsersListComponent {
     private S: AppStatus,
     private C: Configuration
   ) {
+    //  Primero se limpian los usuarios que esten en cache
     this.Users = [];
+
+    //  Se reinicia el last de la ultima consulta
     this.SetOption('last', 0);
 
+    //  Revisamos permisos...
     if ($.isAdmin() && $.CanDo('user')) {
       this.init();
     } else {
@@ -66,18 +131,13 @@ export class UsersListComponent {
     }
   }
 
-  private InitCols() {
-    this.Cols = [];
-
-    for (let i = 0; i < this.Columns; i++) {
-      this.Cols.push(i);
-    }
-  }
 
   private init() {
+    //  Cargamos el ultimo orden que se utilizó
     this._Order = this.GetOption('order');
     this._OrderBy = this.GetOption('order_by');
 
+    //  Cargamos las opciones guardadas de la ultima impresion de credenciales
     this.CardOptions.OnlyActive = this.GetOption('card.only-active');
     this.CardOptions.WithOutPhoto = this.GetOption('card.without-photo');
 
@@ -85,22 +145,40 @@ export class UsersListComponent {
     this.SavedIds = this.GetSavedIds();
 
 
+    //  Preparamos la nueva fecha de vigencia de las credenciales
     const m = this.$.Now().getMonth(),
         y = this.$.Now().getFullYear();
 
-    if ( m >= 0 && m < 6 ) {
+    //  Si el mes esta entre enero y junio, postergamos a agosto del mismo año
+    if ( m >= 0 && m <= 6 ) {
       this.CardOptions.Valid = 'Agosto ' + y;
+
+    //  Si el mes es despues de julio y noviembre, postergamos a diciembre del mismo año
     } else if ( m >= 7 && m < 11) {
       this.CardOptions.Valid = 'Diciembre ' + y;
+
+    //  Si no, quiere decir que es diciembre y lo ponemos a agosto del siguiente año.
     } else {
       this.CardOptions.Valid = 'Agosto ' + (y + 1);
     }
 
+    //  Cargamos la ultima busqueda (para mantener la lista anterior)
     this.search_string = this.GetOption('search');
+
+    //  Cargamos la lista de cursos que tenemos, al cargarlos, continuamos con los usuarios.
+    //  Esto debido a que la api nos devuelve el usuario con User.cid (id del curso) y con
+    //  el mismo seleccionamos el curso de un select box, que tiene que estar cargado previamente
     this.GetCourses( () => { this.GetUsers(); } );
-    this.InitCols();
+
+    //  Generamos el rango de columnas de la impresión. (ver la definicion de this.Cols)
+    this.Cols = this.T.Range(10);
+
   }
 
+  /**
+   * Muestra en un Alert (AppStatus) información sobre algun elemento del componente
+   * @param num Numero del bloque de información a mostrar
+   */
   public Info(num) {
     let mess = 'Ahora puedes utilizar comodines de busqueda, estos ayudan a filtrar resultados de las busquedas:<br>' +
 
@@ -131,6 +209,14 @@ export class UsersListComponent {
     }
     this.S.ShowAlert(mess, -1, 0);
   }
+
+  /**
+   * Obtiene la lista de usuarios dependiendo de la acción.
+   * @param making Define la acción a realizar con el metodo.
+   * get: Solo carga la lista con los filtros existentes |
+   * search: forza al realizar una busqueda (depende de this.search_string) |
+   * more: indica que se cargara la siguiente parte de la lista (usa this.GetOption('last'))
+   */
   public GetUsers(making = 'get'): void {
     const search = this.search_string;
     if (making !== 'more') {
@@ -195,6 +281,10 @@ export class UsersListComponent {
       });
   }
 
+  /**
+   * Obtiene la lista de cursos o carreras
+   * @param callback Funcion a realizar si se completa correctamente el metodo
+   */
   GetCourses(callback: () => void = () => {}) {
     //  Primero estados
     this.S.ShowLoading( 'Cargando cursos...' );
@@ -213,18 +303,28 @@ export class UsersListComponent {
     (e) => { this.S.ShowError('Se perdió la conexión', 0); });
   }
 
+  /**
+   * Evento disparado por el evento (changed-checkers) del subcomponente <users-normal-view>
+   * @param c Son los usuarios marcados devueltos por el subcomponente
+   */
   onChangeChecks(c) {
+
+    //  Solo se puede checkear si la vista esta en normal.
     if (this.isView('normal')) {
+
+      //  Se asigna lo que nos envia el evento a checkeds
       this.Checkeds = c;
-      if (this.Checkeds.length < 1) {
-        this.PrintType = '';
-      }
+
+      //  Cambiamos la Tab actual a selection (ver definicion de this.SELECTED_TAB)
+      this.SELECTED_TAB = 'selection';
+
     } else {
+      //  Si estamos en otra vista, quitamos los checkeds
       this.Checkeds = [];
-      this.PrintType = '';
     }
   }
 
+  /** Gestiona el evento de aplicar las modificaciones masivas (ver definición de this.MasiveEditor) */
   Apply() {
     const ids = [];
     this.Checkeds.forEach(user => {
@@ -255,10 +355,16 @@ export class UsersListComponent {
     });
   }
 
+  /** Limpia los Ids guardados */
   public ClearSavedList() {
     this.SavedIds = [];
     this.SetOption( 'sids', '' );
   }
+  /**
+   * Guarda los Ids de Checkeds en el localStorage
+   * @param flush Si es true limpia los Ids guardados previamente y guarda los nuevos,
+   * si es false los agrega a la lista guardada.
+   */
   public SaveList(flush = false) {
 
     //  Si se va a borrar todo:
@@ -275,6 +381,7 @@ export class UsersListComponent {
 
     this.SetOption( 'sids', this.SavedIds.join(',') );
   }
+  /** Carga los Ids guardados en localStorage*/
   private GetSavedIds() {
     const ids = this.GetOption('sids').trim();
     if (ids.length > 0) {
@@ -284,6 +391,10 @@ export class UsersListComponent {
     }
   }
 
+  /**
+   * Hace la petición para descargar los usuarios marcados (Checkeds)
+   * con el formato listo para Generar credenciales en Adobe Photoshop CC 2017
+   */
   DownloadPSD() {
     this.S.ShowLoading('Preparando para descargar...');
 
@@ -305,10 +416,11 @@ export class UsersListComponent {
     }
   }
   /**
-   * Muestra la información de los usuarios guardados
+   * Muestra la lista de usuarios guardados con this.SavedIds
    */
   public LoadSavedIds(event) {
 
+    //  Si se presiona la tecla de control al cargarlos, se eliminan.
     if ( event.ctrlKey ) {
       this.ClearSavedList();
 
@@ -320,6 +432,10 @@ export class UsersListComponent {
     }
   }
 
+  /**
+   * Gestiona el evento de ordenamiento
+   * @param e Objeto {order: 'ASC|DESC', order_by: '...' } Enviado por el generador
+   */
   Order(e) {
     this._Order = e.order;
     this._OrderBy = e.order_by;
@@ -328,9 +444,7 @@ export class UsersListComponent {
     this.GetUsers();
   }
 
-  /**
-     * Evento que se ejecuta al escribir en la caja de busqueda
-     */
+  /** Evento que se ejecuta al escribir en la caja de busqueda */
   public search() {
     this.SetOption('search', this.search_string);
 
@@ -345,31 +459,43 @@ export class UsersListComponent {
     }
   }
 
+  /** Muestra un el texto del list-drop dentro de filtros para cambiar la vista */
   public ViewText() {
     let text = '';
     if (this.isView('normal')) {
       text = 'Normal';
     }
     if (this.isView('contacts')) {
-      text = 'Agenda';
+      text = 'Contacto';
     }
     return text;
   }
 
+  /**
+   * Comprueba si una vista es la que actualmente se está mostrando
+   * @param value El nombre de la vista que se va a comprobar
+   */
   public isView(value) {
     return this.GetOption('listview') === value;
   }
 
+  /**
+   * Asigna una vista a la lista actual
+   * @param value Nombre de la vista
+   */
   public setView(value) {
     this.SetOption('listview', value);
 
     if (value !== 'normal') {
       this.Checkeds = [];
-      this.PrintType = '';
       this.Users.map(User => User.checked = 0);
     }
   }
 
+  /**
+   * Verifica si se puede imprimir la credencial de User segun this.CardOptions
+   * @param User Usuario a comprobar
+   */
   canPrint(User) {
     if (this.CardOptions.OnlyActive) {
       if (User.status !== 0) { return false; }
@@ -381,18 +507,33 @@ export class UsersListComponent {
 
     return true;
   }
+
+  /** Cambia la propiedad OnlyActive de CardOptions y guarda la configuración */
   SetOnlyActive() {
     this.CardOptions.OnlyActive = !this.CardOptions.OnlyActive;
     this.SetOption('card.only-active', this.CardOptions.OnlyActive);
   }
+  /** Cambia la propiedad WithOutPhoto de CardOptions y guarda la configuración */
   SetWithOutPhoto() {
     this.CardOptions.WithOutPhoto = !this.CardOptions.WithOutPhoto;
     this.SetOption('card.without-photo', this.CardOptions.WithOutPhoto);
   }
 
+  /**
+   * Shothand al metodo GetOption con el contexto actual
+   * @param option Opcion a obtener
+   * @param context Contexto de la opcion
+   * @param def Valor por defecto en caso de que no se encuentre la opcion
+   */
   public GetOption(option, context = 'users', def = false) {
     return this.C.GetOption(option, context, def);
   }
+  /**
+   * Shothand al metodo SetOption con el contexto actual
+   * @param option Nombre de la opción
+   * @param value Valor a guardar
+   * @param context Contexto de la opcion (def: actual)
+   */
   public SetOption(option, value, context = 'users') {
     this.C.SetOption(option, value, context);
   }
