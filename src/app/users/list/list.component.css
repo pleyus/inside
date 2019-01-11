@@ -24,4 +24,14 @@ label.checkbox{
 .sbox.help span.icon-attention-alt { top: 0.6rem; }
 .help span.icon-attention-alt:hover { color: #1F7BB1; }
 
+.tabs {
+  min-width: auto;
+  margin-top: 10px;
+}
+.tab-body {
+  min-height: 29rem;
+  max-height: 29rem;
+  overflow-x: auto;
+}
 
+.checkbox .text { vertical-align: middle; }

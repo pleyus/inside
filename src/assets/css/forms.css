@@ -71,6 +71,12 @@ input[type="text"], textarea { border-left: 7px solid #AAA; outline: none; }
   .tab-body { display: block; border: solid 1px #F1F1F1; min-height: 12rem; padding: 1rem; }
   .tab-body::after { display: block; content: ''; clear: both; }
 
+  .tab-body > .content { margin-bottom: 1rem; }
+  .tab-body > .content > h1 { margin: 0; }
+  .tab-body > .content > p { font-size: .9rem; }
+  .tab-body > .content > a.box { cursor: pointer; margin: 5px 0; text-align: center; }
+  .tab-body > .content > a.box:hover { color: #1F7BB1; }
+
   .tabs.left > header > .item { float: none; display: block; border-top-right-radius: 0; border-bottom-left-radius: .2rem; }
   .tabs.left > header { float: left; width: 20%; }
   .tabs.left > .tab-body { float: left; width: 80%; }
@@ -140,3 +146,15 @@ ul.listy > li > [class^="icon-"]:hover {
 		font-size: .9rem;
 		padding: 0 0 5px;
 	}
+
+.acordeon {
+  display: block;
+}
+.acordeon > h1 {
+  margin: 0 0 1rem;
+}
+.acordeon > h1[clickable] { cursor: pointer; }
+.acordeon .body { overflow: hidden; max-height: 1000px; transition: max-height 300ms; margin-bottom:1rem; }
+.acordeon .body > .content > label { display: block; margin: 0 0 5px; font-size: .9rem; }
+.acordeon .body > .content:not(:first-child) > label { margin-top: 20px; }
+.acordeon .body.close { max-height: 0; transition: max-height 300ms; }

@@ -1,112 +1,41 @@
-  <div class="filter">
-		<div class="block col-4">
-			<label for="sbox" class="help">Busqueda <span class="icon-attention-alt" title="Ahora se pueden usar comodines en las busquedas" (click)="Info(0)"></span></label>
-			<div class="sbox">
-				<span class="icon-search"></span>
-        <input id="sbox" type="text" (keyup)="search()" [(ngModel)]="search_string" placeholder="Nombre, correo, numero de control...">
-        <span title="Cargar los usuarios guardados ({{SavedIds.length}} guardado{{SavedIds.length == 1 ? '' : 's'}}).&#013;Ctrl + Click para borrar"
-          *ngIf="SavedIds.length > 0" (click)="LoadSavedIds($event)" class="icon-user clickable"></span>
-			</div>
-		</div>
-		<div class="block col-2-5">
-			<label for="to">Vista</label>
-			<div class="dropdown">
-				<button class="dropbtn" title="Modo de vista">
-					<span class="icon-eye"></span>
-					<span class="button-text">{{ ViewText()}}</span>
-					<span class="icon-down-open"></span>
-				</button>
-				<div class="dropdown-content">
-					<a (click)="setView('normal')">
-						<span class="icon-{{isView('normal') ? 'ok' : 'noicon'}}"></span>
-						Normal
-					</a>
-					<a (click)="setView('contacts')">
-						<span class="icon-{{isView('contacts') ? 'ok' : 'noicon'}}"></span>
-						Contactos
-					</a>
-				</div>
-			</div>
-		</div>
-
-		<div class="col-5-5 not-labeled">
-			<a title="Registrar nuevo usuario" class="button primary pull-right separe-left" [routerLink]="[ '0' ]">Registrar</a>
-
-			<div class="dropdown pull-right separe-left" *ngIf="Checkeds.length > 0">
-				<button class="dropbtn btn" title="Acciones a realizar con los elementos seleccionados">
-					<span class="button-text">Selección</span>
-					<span class="icon-down-open"></span>
-				</button>
-				<div class="dropdown-content">
-          <span class="separator">Imprimir</span>
-					<a (click)="PrintType = 'list'">Lista de usuarios</a>
-          <a (click)="PrintType = 'card'">Credenciales</a>
-
-          <span class="separator">Guardar</span>
-          <a *ngIf="SavedIds.length > 0" (click)="SaveList()" title="Agrega los elementos seleccionados a la lista actual">En la lista actual ({{SavedIds.length}})</a>
-          <a (click)="SaveList(true)" title="{{SavedIds.length > 0 ? 'Elimina la lista actual y c' : 'C'}}rea una nueva con los elementos seleccinados">
-            {{SavedIds.length > 0 ? 'Como nuevo...' : 'Guardar selección'}}
-          </a>
-          <a *ngIf="SavedIds.length > 0" (click)="ClearSavedList()" title="Borra la lista guardada">Limpiar lista</a>
-
-          <span class="separator">Descargar</span>
-          <a title="Descarga una carpeta comprimida que contiene un archivo CSV con los datos&#013;de los usuarios y una carpeta con sus fotos" (click)="DownloadPSD()">Datos para PSD</a>
-				</div>
+<div class="filter">
+  <div class="block col-4">
+    <label for="sbox" class="help">Busqueda <span class="icon-attention-alt" title="Ahora se pueden usar comodines en las busquedas" (click)="Info(0)"></span></label>
+    <div class="sbox">
+      <span class="icon-search"></span>
+      <input id="sbox" type="text" (keyup)="search()" [(ngModel)]="search_string" placeholder="Nombre, correo, numero de control...">
+      <span title="Cargar los usuarios guardados ({{SavedIds.length}} guardado{{SavedIds.length == 1 ? '' : 's'}}).&#013;Ctrl + Click para borrar"
+        *ngIf="SavedIds.length > 0" (click)="LoadSavedIds($event)" class="icon-user clickable"></span>
+    </div>
+  </div>
+  <div class="block col-2-5">
+    <label for="to">Vista</label>
+    <div class="dropdown">
+      <button class="dropbtn" title="Modo de vista">
+        <span class="icon-eye"></span>
+        <span class="button-text">{{ ViewText()}}</span>
+        <span class="icon-down-open"></span>
+      </button>
+      <div class="dropdown-content">
+        <a (click)="setView('normal')">
+          <span class="icon-{{isView('normal') ? 'ok' : 'noicon'}}"></span>
+          Normal
+        </a>
+        <a (click)="setView('contacts')">
+          <span class="icon-{{isView('contacts') ? 'ok' : 'noicon'}}"></span>
+          Contactos
+        </a>
       </div>
-
-		</div>
-	</div>
-
-	<div class="filter {{PrintType === 'card' ? '' : 'hidden'}} sub">
-		<div class="block col-5">
-			<label>Opciones de impresión</label>
-			<div class="options">
-				<label for="checked-only-active" class="checkbox" title="Imprime solamente los usuarios que se encuentran activos">
-					<div class="mark {{CardOptions.OnlyActive ? 'checked' : ''}}" (click)="SetOnlyActive()">
-						<span class="icon-ok"></span>
-					</div>
-					<div class="text">Solo activos</div>
-					<input type="checkbox" id="checked-only-active" [(ngModel)]="CardOptions.OnlyActive" />
-				</label>
-				<label for="checked-wophoto" class="checkbox" title="Imprime las creadenciales aunque no tenga foto de usuario">
-					<div class="mark {{CardOptions.WithOutPhoto ? 'checked' : ''}}" (click)="SetWithOutPhoto()">
-						<span class="icon-ok"></span>
-					</div>
-					<div class="text">Incluir sin foto</div>
-					<input type="checkbox" id="checked-wophoto" [(ngModel)]="CardOptions.WithOutPhoto" />
-				</label>
-			</div>
-		</div>
-		<div class="block col-4">
-			<label>Vigencia</label>
-			<div class="sbox">
-				<span class="icon-calendar"></span>
-				<input type="text" [(ngModel)]="CardOptions.Valid" placeholder="Fecha de vencimiento...">
-			</div>
-		</div>
-		<div class="block col-3 not-labeled">
-			<a (click)="T.Print('printable-cards', 'print-user')" class="button primary pull-right">Imprimir</a>
-		</div>
-	</div>
-
-	<div class="filter {{PrintType === 'list' ? '' : 'hidden'}} sub">
-		<div class="block col-4">
-			<label>Titulo</label>
-			<input type="text" [(ngModel)]="ListOptions.Title" placeholder="Titulo de la lista...">
     </div>
-    <div class="block col-1-5">
-			<label title="Agrega filas vacias al final, en caso de necesitarse">Filas extra</label>
-			<input type="number" max="20" min="0" [(ngModel)]="ListOptions.ExtraRows">
-    </div>
+  </div>
 
-		<div class="block col-6-5 not-labeled">
-			<a (click)="T.Print('printable-list', 'user-list')" class="button primary pull-right">Imprimir</a>
-		</div>
-	</div>
-
+  <div class="col-5-5 not-labeled">
+    <a title="Registrar nuevo usuario" class="button primary pull-right separe-left" [routerLink]="[ '0' ]">Registrar</a>
+  </div>
+</div>
 
 <section>
-	<section class="{{Checkeds.length > 0 ? 'col-10 col-m-8' : 'col-12'}}">
+	<section class="{{Checkeds.length > 0 ? 'col-9 col-m-8' : 'col-12'}}">
 		<div class="table">
 
 			<users-normal-view *ngIf="isView('normal')"
@@ -127,109 +56,202 @@
 		<a *ngIf="LoadMore && Users.length > 0" (click)="GetUsers( 'more' )">
 			Mostrar más
 		</a>
-	</section>
-	<div class="props col-2 col-m-4" *ngIf="Checkeds.length > 0">
-		<h1>Modificar {{ Checkeds.length > 1 ? Checkeds.length + ' usuarios seleccionados' : ' al usuario seleccionado' }} </h1>
+  </section>
 
-		<div class="row">
-			<label class="checkbox" for="checked-idnumber">
-				<div class="mark {{ MasiveEditor.idnumber.checked ? 'checked' : ''}} ">
-					<span class="icon-ok"></span>
-				</div>
-				<div class="text">No. Control</div>
-				<input type="checkbox" id="checked-idnumber" [(ngModel)]="MasiveEditor.idnumber.checked" />
-			</label>
+  <div class="tabs col-3 col-m-4" *ngIf="Checkeds.length > 0">
+    <header>
+      <a (click)="SELECTED_TAB = 'selection'" class="item {{ SELECTED_TAB === 'selection' ? 'active' : '' }}">Selección</a>
+      <a (click)="SELECTED_TAB = 'edit'" class="item {{ SELECTED_TAB === 'edit' ? 'active' : '' }}">Editar</a>
+      <a (click)="SELECTED_TAB = 'print'" class="item {{ SELECTED_TAB === 'print' ? 'active' : '' }}">Imprimir</a>
+    </header>
 
-			<div *ngIf="MasiveEditor.idnumber.checked" class="sbox help">
-				<span class="icon-attention-alt" title="Para serializar en el orden actual use el simbolo de #" (click)="Info(1)"></span>
-				<input id="checked-idnumber" type="text" max-length="15" placeholder="Ej: 18LSC001" [(ngModel)]="MasiveEditor.idnumber.val">
-			</div>
-		</div>
+    <div class="tab-body" *ngIf="SELECTED_TAB === 'selection'">
+      <div class="content">
+        <h1>Guardar</h1>
+        <p>Almacena los usuarios seleccionados de manera local para poder consultar la lista posteriormente</p>
+        <a class="box" *ngIf="SavedIds.length > 0" (click)="SaveList()" title="Agrega los elementos seleccionados a la lista actual">En la lista actual ({{SavedIds.length}})</a>
+        <a class="box" (click)="SaveList(true)" title="{{SavedIds.length > 0 ? 'Elimina la lista actual y c' : 'C'}}rea una nueva con los elementos seleccinados">
+          {{SavedIds.length > 0 ? 'Como nuevo...' : 'Guardar selección'}}
+        </a>
+        <a class="box" *ngIf="SavedIds.length > 0" (click)="ClearSavedList()" title="Borra la lista guardada">Limpiar lista</a>
+      </div>
+      <div class="content">
+        <h1>Descargar</h1>
+        <a class="box" title="Descarga una carpeta comprimida que contiene un archivo CSV con los datos&#013;de los usuarios y una carpeta con sus fotos" (click)="DownloadPSD()">Datos para PSD</a>
+      </div>
+    </div>
 
-		<div class="row">
-			<label class="checkbox" for="checked-sex">
-				<div class="mark {{ MasiveEditor.sex.checked ? 'checked' : ''}} ">
-					<span class="icon-ok"></span>
-				</div>
-				<div class="text">Sexo</div>
-				<input type="checkbox" id="checked-sex" [(ngModel)]="MasiveEditor.sex.checked" />
-			</label>
+    <div class="tab-body" *ngIf="SELECTED_TAB === 'edit'">
+      <div class="props">
+        <h1>Editar {{ Checkeds.length > 1 ? Checkeds.length + ' usuarios seleccionados' : ' al usuario seleccionado' }} </h1>
 
-			<select *ngIf="MasiveEditor.sex.checked" class="col-12" [(ngModel)]="MasiveEditor.sex.val">
-				<option value="0">(Seleccione)</option>
-				<option value="1">Mujer</option>
-				<option value="2">Hombre</option>
-			</select>
-		</div>
+        <div class="row">
+          <label class="checkbox" for="checked-idnumber">
+            <div class="mark {{ MasiveEditor.idnumber.checked ? 'checked' : ''}} ">
+              <span class="icon-ok"></span>
+            </div>
+            <div class="text">No. Control</div>
+            <input type="checkbox" id="checked-idnumber" [(ngModel)]="MasiveEditor.idnumber.checked" />
+          </label>
 
-		<div class="row">
-			<label class="checkbox" for="checked-type">
-				<div class="mark {{ MasiveEditor.type.checked ? 'checked' : ''}} ">
-					<span class="icon-ok"></span>
-				</div>
-				<div class="text">Tipo de usuario</div>
-				<input type="checkbox" id="checked-type" [(ngModel)]="MasiveEditor.type.checked" />
-			</label>
-			<select *ngIf="MasiveEditor.type.checked" [(ngModel)]="MasiveEditor.type.val" class="col-12">
-				<option value="{{$.T_QUEST}}">(Seleccione)</option>
-				<option value="{{$.T_LOGGED}}">Registrado</option>
-				<option value="{{$.T_STUDENT}}">Estudiante</option>
-				<option value="{{$.T_TEACHER}}">Maestro</option>
-				<option value="{{$.T_ADMIN}}">Administrador</option>
-			</select>
-		</div>
+          <div *ngIf="MasiveEditor.idnumber.checked" class="sbox help">
+            <span class="icon-attention-alt" title="Para serializar en el orden actual use el simbolo de #" (click)="Info(1)"></span>
+            <input id="checked-idnumber" type="text" max-length="15" placeholder="Ej: 18LSC001" [(ngModel)]="MasiveEditor.idnumber.val">
+          </div>
+        </div>
 
-		<div class="row">
-			<label class="checkbox" for="checked-status">
-				<div class="mark {{ MasiveEditor.status.checked ? 'checked' : ''}} ">
-					<span class="icon-ok"></span>
-				</div>
-				<div class="text">Estado</div>
-				<input type="checkbox" id="checked-status" [(ngModel)]="MasiveEditor.status.checked" />
-			</label>
-			<select *ngIf="MasiveEditor.status.checked" [(ngModel)]="MasiveEditor.status.val" class="col-12">
-				<option value="{{$.ACTIVE}}">Activo</option>
-				<option value="{{$.IN_BREAK}}">Baja temporal</option>
-				<option value="{{$.DROPPED}}">Excluido</option>
-				<option value="{{$.IS_GRADUATED}}">Egresado</option>
-			</select>
-		</div>
+        <div class="row">
+          <label class="checkbox" for="checked-sex">
+            <div class="mark {{ MasiveEditor.sex.checked ? 'checked' : ''}} ">
+              <span class="icon-ok"></span>
+            </div>
+            <div class="text">Sexo</div>
+            <input type="checkbox" id="checked-sex" [(ngModel)]="MasiveEditor.sex.checked" />
+          </label>
 
-		<div class="row">
-			<label class="checkbox" for="checked-course">
-				<div class="mark {{ MasiveEditor.cid.checked ? 'checked' : ''}} ">
-					<span class="icon-ok"></span>
-				</div>
-				<div class="text">Curso</div>
-				<input type="checkbox" id="checked-course" [(ngModel)]="MasiveEditor.cid.checked" />
-			</label>
-			<select *ngIf="MasiveEditor.cid.checked" [(ngModel)]="MasiveEditor.cid.val" class="col-12">
-				<option value="0">(Especialidad)</option>
-				<option *ngFor="let C of COURSES" value="{{C.id}}">{{C.name}}</option>
-			</select>
-		</div>
+          <select *ngIf="MasiveEditor.sex.checked" class="col-12" [(ngModel)]="MasiveEditor.sex.val">
+            <option value="0">(Seleccione)</option>
+            <option value="1">Mujer</option>
+            <option value="2">Hombre</option>
+          </select>
+        </div>
 
-		<div class="row">
-			<label class="checkbox" for="checked-level">
-				<div class="mark {{ MasiveEditor.level.checked ? 'checked' : ''}} ">
-					<span class="icon-ok"></span>
-				</div>
-				<div class="text">Nivel</div>
-				<input type="checkbox" id="checked-level" [(ngModel)]="MasiveEditor.level.checked" />
-			</label>
-			<input
-				*ngIf="MasiveEditor.level.checked"
-				type="number"
-				maxlength="2"
-				min="0" max="10"
-				class="col-12"
-				placeholder="Nivel" maxlength="2" [(ngModel)]="MasiveEditor.level.val">
-		</div>
+        <div class="row">
+          <label class="checkbox" for="checked-type">
+            <div class="mark {{ MasiveEditor.type.checked ? 'checked' : ''}} ">
+              <span class="icon-ok"></span>
+            </div>
+            <div class="text">Tipo de usuario</div>
+            <input type="checkbox" id="checked-type" [(ngModel)]="MasiveEditor.type.checked" />
+          </label>
+          <select *ngIf="MasiveEditor.type.checked" [(ngModel)]="MasiveEditor.type.val" class="col-12">
+            <option value="{{$.T_QUEST}}">(Seleccione)</option>
+            <option value="{{$.T_LOGGED}}">Registrado</option>
+            <option value="{{$.T_STUDENT}}">Estudiante</option>
+            <option value="{{$.T_TEACHER}}">Maestro</option>
+            <option value="{{$.T_ADMIN}}">Administrador</option>
+          </select>
+        </div>
 
-		<div class="row">
-			<button class="button primary col-12" (click)="Apply()">Aplicar</button>
-		</div>
-	</div>
+        <div class="row">
+          <label class="checkbox" for="checked-status">
+            <div class="mark {{ MasiveEditor.status.checked ? 'checked' : ''}} ">
+              <span class="icon-ok"></span>
+            </div>
+            <div class="text">Estado</div>
+            <input type="checkbox" id="checked-status" [(ngModel)]="MasiveEditor.status.checked" />
+          </label>
+          <select *ngIf="MasiveEditor.status.checked" [(ngModel)]="MasiveEditor.status.val" class="col-12">
+            <option value="{{$.ACTIVE}}">Activo</option>
+            <option value="{{$.IN_BREAK}}">Baja temporal</option>
+            <option value="{{$.DROPPED}}">Excluido</option>
+            <option value="{{$.IS_GRADUATED}}">Egresado</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <label class="checkbox" for="checked-course">
+            <div class="mark {{ MasiveEditor.cid.checked ? 'checked' : ''}} ">
+              <span class="icon-ok"></span>
+            </div>
+            <div class="text">Curso</div>
+            <input type="checkbox" id="checked-course" [(ngModel)]="MasiveEditor.cid.checked" />
+          </label>
+          <select *ngIf="MasiveEditor.cid.checked" [(ngModel)]="MasiveEditor.cid.val" class="col-12">
+            <option value="0">(Especialidad)</option>
+            <option *ngFor="let C of COURSES" value="{{C.id}}">{{C.name}}</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <label class="checkbox" for="checked-level">
+            <div class="mark {{ MasiveEditor.level.checked ? 'checked' : ''}} ">
+              <span class="icon-ok"></span>
+            </div>
+            <div class="text">Nivel</div>
+            <input type="checkbox" id="checked-level" [(ngModel)]="MasiveEditor.level.checked" />
+          </label>
+          <input
+            *ngIf="MasiveEditor.level.checked"
+            type="number"
+            maxlength="2"
+            min="0" max="10"
+            class="col-12"
+            placeholder="Nivel" maxlength="2" [(ngModel)]="MasiveEditor.level.val">
+        </div>
+
+        <div class="row">
+          <button class="button primary col-12" (click)="Apply()">Aplicar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-body" *ngIf="SELECTED_TAB === 'print'">
+
+      <div class="acordeon">
+
+        <!-- CREDENCIALES -->
+        <h1 (click)="Acordeon.card = !Acordeon.card" clickable >
+          Credenciales
+          <span class="icon-{{Acordeon.card ? 'up-open' : 'down-open'}}"></span>
+        </h1>
+        <div class="body" [class.close]="!Acordeon.card">
+          <div>
+            <label for="checked-only-active" class="checkbox" title="Imprime solamente los usuarios que se encuentran activos">
+              <div class="mark {{CardOptions.OnlyActive ? 'checked' : ''}}" (click)="SetOnlyActive()">
+                <span class="icon-ok"></span>
+              </div>
+              <div class="text">Solo activos</div>
+              <input type="checkbox" id="checked-only-active" [(ngModel)]="CardOptions.OnlyActive" />
+            </label>
+          </div>
+
+          <div>
+            <label for="checked-wophoto" class="checkbox" title="Imprime las creadenciales aunque no tenga foto de usuario">
+              <div class="mark {{CardOptions.WithOutPhoto ? 'checked' : ''}}" (click)="SetWithOutPhoto()">
+                <span class="icon-ok"></span>
+              </div>
+              <div class="text">Incluir sin foto</div>
+              <input type="checkbox" id="checked-wophoto" [(ngModel)]="CardOptions.WithOutPhoto" />
+            </label>
+          </div>
+
+          <div class="content">
+            <label>Vigencia</label>
+            <div class="sbox">
+              <span class="icon-calendar"></span>
+              <input type="text" [(ngModel)]="CardOptions.Valid" placeholder="Fecha de vencimiento...">
+            </div>
+          </div>
+
+          <div>
+            <a (click)="T.Print('printable-cards', 'print-user')" class="button primary pull-right">Imprimir</a>
+          </div>
+        </div>
+
+        <!-- LISTA DE USUARIOS -->
+        <h1 (click)="Acordeon.list = !Acordeon.list" clickable >
+          Lista de asistencia
+          <span class="icon-{{Acordeon.list ? 'up-open' : 'down-open'}}"></span>
+        </h1>
+        <div class="body" [class.close]="!Acordeon.list">
+          <div class="content">
+            <label>Titulo</label>
+            <input type="text" [(ngModel)]="ListOptions.Title" placeholder="Titulo de la lista...">
+          </div>
+          <div class="content">
+            <label title="Agrega filas vacias al final, en caso de necesitarse">Filas extra</label>
+            <input type="number" max="20" min="0" [(ngModel)]="ListOptions.ExtraRows">
+          </div>
+
+          <div>
+            <a (click)="T.Print('printable-list', 'user-list')" class="button primary pull-right">Imprimir</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </section>
 
 <div style="clear: both"> </div>
@@ -296,8 +318,6 @@
 		</div>
 	</div>
 </section>
-
-
 
 <section id="printable-cards">
 	<ng-container *ngFor="let C of Checkeds">
