@@ -1,12 +1,10 @@
-.info-head 
+.info-head
 {
 	display: block;
 	text-align: center;
-	border-bottom: solid 1px #DDD;
-	padding: 1rem; 
-	margin-bottom: 1rem;
-
+	padding: 1rem;
 }
+.info-body { border-left: solid 1px #EEE; }
 
 .info-head > .img {
 	position: relative;
@@ -19,7 +17,7 @@
 	background-position: center;
 }
 .info-head h1 {
-	font-size: 2rem;
+	font-size: 1.5rem;
 }
 .info-head .date {
 	font-size: 1rem;
@@ -42,10 +40,10 @@
 	/*transform: rotate(-140deg);*/
 	color: #FFFFFF78;
 }
-.genere.icon-male { 
+.genere.icon-male {
     text-shadow: 0 0 20px #70d1d2;
 }
-.genere.icon-female { 
+.genere.icon-female {
     text-shadow: 0 0 20px #ffbbd8;
 }
 .icon-birthday{
@@ -71,3 +69,5 @@
 .note i::before {
 	content: '» ';
 }
+
+section::after { display: block; content: ''; clear: both; }

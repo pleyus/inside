@@ -8,11 +8,11 @@ import { WebService, AppStatus, Tools, Configuration } from '../../app.service';
   templateUrl: './me.component.html',
   styleUrls: ['./me.component.css']
 })
-export class UsersMeComponent 
+export class UsersMeComponent
 {
 	StatusClass = ['active', 'inactive', 'error', 'upgrade', 'special' ];
 	StatusString = [ 'activo', 'suspendido', 'dado de baja', 'egresado', '' ];
-	
+
 	ActivityDays = [];
 	MaxActivityEvents = 0;
 
@@ -22,7 +22,7 @@ export class UsersMeComponent
 		if(this.$.Me.uid > 0)
 		{
 			//	Platica
-			this.W.Web('users', 'stats', 'id=' + this.$.Me.uid, (s) => 
+			this.W.Web('users', 'stats', 'id=' + this.$.Me.uid, (s) =>
 			{
 				//	Listo!
 				this.S.ClearState();
@@ -42,7 +42,7 @@ export class UsersMeComponent
 		else
 			callback();
 	}
-	
+
 	Feed(Block)
 	{
 		this.SetOption('pre', 'Hay un problema con mis datos «' + Block + '»');
@@ -61,9 +61,9 @@ export class UsersMeComponent
 				td = t.getDate(),
 				tm = t.getMonth()+1,
 				ty = t.getFullYear();
-				
+
 			return (''+ty+tm+td) == (''+by+bm+bd);
-			
+
 		}
 		return false;
 	}
@@ -84,6 +84,81 @@ export class UsersMeComponent
 		public T : Tools,
 		private C: Configuration
 	){
-		$.ngOnInit();
-	}
+    $.ngOnInit();
+    this.GetPlatformInfo( () => this.GetStats() );
+  }
+  ChartData = [];
+		ChartLabels = [];
+		ChartOptions = { scaleShowVerticalLines: false, responsive: true }
+		ChartColors =
+		[
+			{
+				backgroundColor: '#4dabf5',
+				borderColor: '#1769aa',
+				hoverBackgroundColor: '#2196f3',
+				hoverBorderColor: '#1769aa'
+			}
+		];
+		private GetStats( callback : () => void = () => {} )
+		{
+			//	Cargamos sus estadisticas, si es que tiene.
+			if(this.$.Me.uid > 0)
+			{
+				//	Cargando...
+				this.S.ShowLoading( 'Leyendo actividad...' );
+
+				//	Platica
+				this.W.Web('users', 'stats', 'id=' + this.$.Me.uid, (s) =>
+				{
+					//	Listo!
+					this.S.ClearState();
+
+					//	Todo bien?
+					if( s.status == this.S.SUCCESS )
+					{
+						this.ChartLabels = s.data.map( it => it.days + ' ' + it.dates );
+						this.ChartData = [{ data: s.data.map( it => it.events ), label: 'Interacciones' }];
+						// this.ActivityDays = s.data;
+						// this.MaxActivityEvents = Math.max.apply(Math, this.ActivityDays.map( (o) => { return o.events } ));
+
+					}
+
+					callback();
+
+				},
+				(e)=> { this.S.ShowError("Se perdió la conexión", 0);});
+			}
+			else
+				callback();
+    }
+    private GetPlatformInfo( callback : () => void = () => {} )
+		{
+			if(this.$.Me.uid < 1){
+				callback();
+				return;
+			}
+
+			//	Mostramos el loading
+			this.S.ShowLoading('Cargando vinculo de plataforma...');
+
+			//	Cargamos usuario
+			this.W.Web( 'users', 'get-platform',
+			'id=' + this.$.Me.uid,
+			(u)=>
+			{
+				//	Listo
+				this.S.ClearState();
+
+				//	Todo bien?
+				if(u.status == this.S.SUCCESS)
+				{
+					//	Cargamos el usuario en datos
+					this.$.Me.platform = u.data;
+					callback();
+				}
+				else
+					this.S.ShowError('Error al obtener información:<br> –' + u.data)
+			},
+			(e)=> { this.S.ShowError("Se perdió la conexión", 0);});
+		}
 }

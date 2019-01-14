@@ -1,28 +1,29 @@
-<div class="row info-head">
+<section>
+<div class="col-3 info-head">
 	<div
 		class="img"
-		title="Imagen actual de {{$.Me.firstname}} {{$.Me.pid > 0 ? '' : '(Sin imagen)'}}" 
+		title="Imagen actual de {{$.Me.firstname}} {{$.Me.pid > 0 ? '' : '(Sin imagen)'}}"
 		[ngStyle]="$.Me.pid > 0 ? {'background-image':'url(https://unitam.edu.mx/uploads/users/' + $.Me.picture.filename + ')'} : {}">
-		<span 
+		<span
 			class="genere icon-{{$.Me.sex > 0 ? ($.Me.sex == 1 ? 'female' : 'male') : 'sex-undefined'}}"
 			title="{{ $.Me.sex > 0 ? 'Genero ' + ($.Me.sex == 1 ? 'femenino' : 'masculino') : '(Sin genero definido)' }}" >
 		</span>
 	</div>
-	
+
 	<h1>{{ $.Me.firstname + ' ' + $.Me.lastname }}</h1>
-	
-	<div 
-		title="{{ T.HappyB($.Me.birthday*1000) ? '¡FELIZ CUMPLEAÑOS!' : 'Tu fecha de cumpleaños'}}" 
+
+	<div
+		title="{{ T.HappyB($.Me.birthday*1000) ? '¡FELIZ CUMPLEAÑOS!' : 'Tu fecha de cumpleaños'}}"
 		class="date">
 		<span *ngIf="T.HappyB($.Me.birthday*1000)" class="icon-birthday animate-jump"></span>
-		{{ 
-			$.Me.birthday > 0 
-			? ($.Me.birthday*1000 | date: 'dd/MMM/yyyy') 
-			: '(Sin fecha de nacimiento)' 
+		{{
+			$.Me.birthday > 0
+			? ($.Me.birthday*1000 | date: 'dd/MMM/yyyy')
+			: '(Sin fecha de nacimiento)'
 		}}
 	</div>
-	
-	<a 
+
+	<a
 		title="¿Algo anda mal con esta información? Haz un reporte desde aqui"
 		class="link-report"
 		(click)="Feed('Información general')">
@@ -30,89 +31,113 @@
 	</a>
 </div>
 
-<div class="row">
-	<div class="col-4 block">
-		<h1>Contacto</h1>
-		<p> <span class="icon-at"></span> {{ $.Me.email.includes('@') ? $.Me.email : '(Sin email)' }}</p>
-		<p> <span class="icon-phone"></span> {{ $.Me.personal_phone != '' ? $.Me.personal_phone : '(Sin teléfono)' }}</p>
-		<p *ngIf="$.Me.tutor_phone != ''"> <span class="icon-phone"></span> {{ $.Me.tutor_phone }} </p>
-		<a 
-			title="¿Algo anda mal con esta información? Haz un reporte desde aqui"
-			class="link-report"
-			(click)="Feed('Contacto')">
-			reportar
-		</a>
-		
-		
-		<h1>Dirección</h1>
-		<p> 
-			{{ 
-				$.Me.address + ' ' +
-				$.Me.location.asentamiento + ', ' +
-				$.Me.location.municipio + ', ' +
-				$.Me.location.estado
-			}} 
-			<a 
-				title="¿Algo anda mal con esta información? Haz un reporte desde aqui"
-				class="link-report"
-				(click)="Feed('Dirección')">
-				reportar
-			</a>
-		</p>
-	</div>
+<div class="col-9 info-body">
+  <div class="row">
+    <div class="col-4 block">
+      <h1>Contacto</h1>
+      <p> <span class="icon-at"></span> {{ $.Me.email.includes('@') ? $.Me.email : '(Sin email)' }}</p>
+      <p> <span class="icon-phone"></span> {{ $.Me.personal_phone != '' ? $.Me.personal_phone : '(Sin teléfono)' }}</p>
+      <p *ngIf="$.Me.tutor_phone != ''"> <span class="icon-phone"></span> {{ $.Me.tutor_phone }} </p>
+      <a
+        title="¿Algo anda mal con esta información? Haz un reporte desde aqui"
+        class="link-report"
+        (click)="Feed('Contacto')">
+        reportar
+      </a>
 
-	<div class="col-4 block">
-		<h1>Registro</h1>
 
-		<ng-container *ngIf="$.Me.type <= 1">
-			<p>
-				<span class="icon-user color-{{StatusClass[$.Me.status]}}"></span>
-				Usuario registrado
-			</p>
-		</ng-container>
+      <h1>Dirección</h1>
+      <p>
+        {{
+          $.Me.address + ' ' +
+          $.Me.location.asentamiento + ', ' +
+          $.Me.location.municipio + ', ' +
+          $.Me.location.estado
+        }}
+        <a
+          title="¿Algo anda mal con esta información? Haz un reporte desde aqui"
+          class="link-report"
+          (click)="Feed('Dirección')">
+          reportar
+        </a>
+      </p>
+    </div>
 
-		<ng-container *ngIf="$.isAdmin()">
-			<p>
-				<span class="icon-user-admin color-{{ StatusClass[$.Me.status] }}"></span>
-				Administrivo {{StatusString[$.Me.status]}}
-			</p>
-			<p *ngIf="$.Me.status != $.ACTIVE" class="note">
-				Sin privilegion de acceso, por tener una cuenta inactiva
-			</p>
-			<p *ngIf="$.Me.status == $.ACTIVE" class="note">
-				Privilegios:
-				<i *ngIf="$.CanDo('payment')">Acceso a pagos</i>
-				<i *ngIf="$.CanDo('user')">Acceso a usuarios</i>
-				<i *ngIf="$.CanDo('applicants')">Acceso a aspirantes</i>
-				<i *ngIf="$.CanDo('courses')">Acceso a cursos</i>
-				<i *ngIf="$.CanDo('vias')">Creación de vias de contacto</i>
-				<i *ngIf="$.CanDo('campaigns')">Creación de campañas</i>
-				<i *ngIf="$.CanDo('institutions')">Edición de repertorio de escuelas</i>
-				<i *ngIf="$.CanDo('radio') || $.Me.announcerOf">Acceso a radio {{ $.Me.announcerOf > 0 && !$.CanDo('radio') ? '(Limitado)' : '' }}</i>
-				<i *ngIf="$.CanDo('docs')">Edición de biblioteca</i>
-				<i *ngIf="$.CanDo('feedback')">Administración de Feedbacks</i>
-			</p>
-		</ng-container>
+    <div class="col-4 block">
+      <h1>Registro</h1>
 
-		<ng-container *ngIf="$.isTeacher()" >
-			<p>
-				<span class="icon-book color-{{ StatusClass[$.Me.status] }}"></span>
-				Docente {{StatusString[$.Me.status]}}
-			</p>
-		</ng-container>
+      <ng-container *ngIf="$.Me.type <= 1">
+        <p>
+          <span class="icon-user color-{{StatusClass[$.Me.status]}}"></span>
+          Usuario registrado
+        </p>
+      </ng-container>
 
-		<ng-container *ngIf="$.isStudent()" >
-			<p>
-				<span class="icon-applicant color-{{ StatusClass[$.Me.status] }}"></span>
-				{{ $.Me.status == $.IS_APPLICANT ? 'Candidato a ingreso' : 'Alumno ' + StatusString[$.Me.status]}}
-			</p>
-		</ng-container>
+      <ng-container *ngIf="$.isAdmin()">
+        <p>
+          <span class="icon-user-admin color-{{ StatusClass[$.Me.status] }}"></span>
+          Administrivo {{StatusString[$.Me.status]}}
+        </p>
+        <p *ngIf="$.Me.status != $.ACTIVE" class="note">
+          Sin privilegion de acceso, por tener una cuenta inactiva
+        </p>
+        <p *ngIf="$.Me.status == $.ACTIVE" class="note">
+          Privilegios:
+          <i *ngIf="$.CanDo('payment')">Acceso a pagos</i>
+          <i *ngIf="$.CanDo('user')">Acceso a usuarios</i>
+          <i *ngIf="$.CanDo('applicants')">Acceso a difusión</i>
+          <i *ngIf="$.CanDo('courses')">Acceso a cursos</i>
+          <i *ngIf="$.CanDo('campaigns')">Creación de campañas</i>
+          <i *ngIf="$.CanDo('institutions')">Edición de repertorio de escuelas</i>
+          <i *ngIf="$.CanDo('radio') || $.Me.announcerOf">Acceso a radio {{ $.Me.announcerOf > 0 && !$.CanDo('radio') ? '(Limitado)' : '' }}</i>
+          <i *ngIf="$.CanDo('docs')">Edición de biblioteca</i>
+          <i *ngIf="$.CanDo('feedback')">Administración de Feedbacks</i>
+        </p>
+      </ng-container>
 
-		<a 
-			title="¿Algo anda mal con esta información? Haz un reporte desde aqui"
-			class="link-report"
-			(click)="Feed('Registro de usuario')">
-			reportar
-		</a>
-	</div>
+      <ng-container *ngIf="$.isTeacher()" >
+        <p>
+          <span class="icon-book color-{{ StatusClass[$.Me.status] }}"></span>
+          Docente {{StatusString[$.Me.status]}}
+        </p>
+      </ng-container>
+
+      <ng-container *ngIf="$.isStudent()" >
+        <p>
+          <span class="icon-applicant color-{{ StatusClass[$.Me.status] }}"></span>
+          {{ $.Me.status == $.IS_APPLICANT ? 'Candidato a ingreso' : 'Alumno ' + StatusString[$.Me.status]}}
+        </p>
+      </ng-container>
+
+      <a
+        title="¿Algo anda mal con esta información? Haz un reporte desde aqui"
+        class="link-report"
+        (click)="Feed('Registro de usuario')">
+        reportar
+      </a>
+    </div>
+
+    <div class="col-4 block">
+      <!-- Nombre -->
+      <h1>En plataforma</h1>
+      <linker-box
+        [(object)]="$.Me.platform"
+        [disabled]="true"
+        ></linker-box>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6 block">
+      <h1>Ultimos 7 dias de actividad</h1>
+      <canvas *ngIf="ChartData.length > 0" baseChart
+        [datasets]="ChartData"
+        [labels]="ChartLabels"
+        [options]="ChartOptions"
+        [colors]="ChartColors"
+        [legend]="false"
+        [chartType]="'bar'"></canvas>
+      <a href="https://unitam.edu.mx/plataforma/report/log/user.php?id={{$.Me.uid}}&course=1&mode=all" target="_blank" class="link">Ver reporte completo</a>
+    </div>
+  </div>
 </div>
+</section>
