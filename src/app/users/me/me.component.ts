@@ -73,7 +73,7 @@ export class UsersMeComponent {
         callback();
 
       },
-      (e) => { this.S.ShowError('Se perdió la conexión', 0);});
+      (e) => { this.S.ShowError('Se perdió la conexión', 0); });
     } else {
       callback();
     }
