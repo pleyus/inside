@@ -366,7 +366,8 @@ export class UsersOpenComponent
 					{
 						this.User.pid = Pic.id;
 						this.User.picture = Pic;
-						this.S.ClearState();
+            this.S.ClearState();
+            this.$.loadUser();
 					}
 					else
 						this.S.ShowError(r.data);

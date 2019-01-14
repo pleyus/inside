@@ -1,20 +1,10 @@
-<div class="row" id="header">
-	<div class="title row">
-		<h1>{{
-			User.firstname+User.lastname != ''
-			? User.firstname + " " + User.lastname
-			: '(Sin nombre)'
-		}}</h1>
-	</div>
-</div>
-
 <p *ngIf="$.isAdmin() && Id < 1" class="color-alert blue">
 	Para agregar alumnos de nuevo ingreso, utilize el modulo de
 	<a routerLink="/applicants/open/0"><b>Aspirantes</b></a>.
 	Para poder recabar la información sobre la segmentación.
 </p>
 
-<div class="tabs clearfix">
+<div class="tabs left">
 	<header>
 		<div class="item {{ GetOption('selected_tab')== 'personal' ? 'active' : '' }}"
 			(click)="SetOption('selected_tab', 'personal')">Personal</div>
@@ -199,7 +189,7 @@
 						<div class="mark {{User.capabilities.applicants ? 'checked' : ''}}">
 							<span class="icon-ok"></span>
 						</div>
-						<div class="text">Aspirantes</div>
+						<div class="text">Difusión</div>
 						<input type="checkbox" id="checked-payment" [(ngModel)]="User.capabilities.applicants" />
 					</label>
 					<label class="checkbox" title="Edición de lista de cursos">
@@ -208,13 +198,6 @@
 						</div>
 						<div class="text">Cursos</div>
 						<input type="checkbox" id="checked-payment" [(ngModel)]="User.capabilities.courses" />
-					</label>
-					<label class="checkbox" title="Edición vias de difusión">
-						<div class="mark {{User.capabilities.vias ? 'checked' : ''}}">
-							<span class="icon-ok"></span>
-						</div>
-						<div class="text">Vias</div>
-						<input type="checkbox" id="checked-payment" [(ngModel)]="User.capabilities.vias" />
 					</label>
 					<label class="checkbox" title="Edición de campañas promocionales">
 						<div class="mark {{User.capabilities.campaigns ? 'checked' : ''}}">
