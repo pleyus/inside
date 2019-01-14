@@ -30,6 +30,7 @@ export class AppComponent implements OnInit {
     picture: { filename: '' },
     image: '',
     radio: [],
+    platform: null,
     location: {
       asentamiento: '',
       municipio: '',
