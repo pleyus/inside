@@ -23,7 +23,7 @@ h2 { color: #555; font-size: 1rem; margin: 0; }
 .version a:hover { text-decoration: underline; }
 
 
-.image { float: right; }
+.image { float: right; min-height: 500px; }
 .image span
 {
 	position: absolute;
