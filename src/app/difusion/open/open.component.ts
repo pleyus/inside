@@ -161,7 +161,7 @@ export class ApplicantsOpenComponent {
       else if (this.Applicant.user.id > 0 && this.Applicant.id > 0)
         this.SaveNote(() => this.do_update());
       else
-        this.RT.navigate(['/applicants/open/']);
+        this.RT.navigate(['/difusion/applicants/open/']);
     }
     else
       this.S.ShowWarning(
@@ -186,7 +186,7 @@ export class ApplicantsOpenComponent {
           setTimeout(() => {
             // Si es nuevo, cargamos el chucho
             if (this.Id < 1) {
-              let go = '/applicants/open/' + r.data.id,
+              let go = '/difusion/applicants/open/' + r.data.id,
                 goto = this.GetOption('goto');
 
               if (goto != '') {
@@ -235,7 +235,7 @@ export class ApplicantsOpenComponent {
           // Si contesta con 1
           if (r.status == this.S.SUCCESS)
             // Redireccionamos a aplicantes
-            this.RT.navigate(['/applicants']);
+            this.RT.navigate(['/difusion/applicants']);
 
           else
             this.S.ShowError(r.data, 0);
@@ -308,7 +308,7 @@ export class ApplicantsOpenComponent {
   }
 
   public GoBack(): void {
-    this.RT.navigate(['/applicants']);
+    this.RT.navigate(['/difusion/applicants']);
   }
 
   InstitutionSelected(item) {
