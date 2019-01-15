@@ -22,3 +22,5 @@ input.money {
 .table tbody { height: 320px; }
 .table thead { display: flex; }
 .box { padding: 10px !important; }
+
+.row.checked { background-color: rgb(217, 244, 255); }

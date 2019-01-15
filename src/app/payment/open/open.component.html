@@ -107,7 +107,7 @@
           </thead>
 
           <tbody>
-            <tr *ngFor="let P of Pays" class="row">
+            <tr *ngFor="let P of Pays" class="row{{P.id === Pay.id ? ' checked' : ''}}">
               <a routerLink="/payment/{{P.id}}">
                 <td class="col-1"><span class="icon icon-flag state-{{P.status}}"></span></td>
                 <td class="col-2">{{ P.at*1000 | date: 'dd/MM/yy'}}</td>
