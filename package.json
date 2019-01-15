@@ -1,6 +1,6 @@
 {
   "name": "inside",
-  "version": "3.6.7",
+  "version": "3.8.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
