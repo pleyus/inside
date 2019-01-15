@@ -10,7 +10,11 @@ import { Router } from '../../../node_modules/@angular/router';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
+  StatusString = [ '', 'Inactivo', 'Baja', 'Egresado', '' ];
+  StatusClass = ['', 'disabled', 'disabled fade', 'upgrade', '' ];
 
+  TodaysB = [];
+  NextB = [];
   constructor(
     public $: AppComponent,
     public T: Tools,
@@ -19,8 +23,14 @@ export class HomeComponent {
     private R: Router
   ) {
     if ( $.isAdmin() ) {
-      $.ngOnInit();
-      S.UpdateNews(true);
+      $.ngOnInit();  //  Para que?...
+
+      //  Para mejorar el muestreo de cumpleaños
+      S.UpdateNews(true, (B) => {
+        // Todo
+      });
+
+      //  Enviamos señales de vida...
       S.Alive(null);
     } else {
       R.navigate(['/me']);

@@ -1,3 +1,11 @@
+section {
+  position: relative;
+}
+section::after {
+  content: '';
+  display: block;
+  clear: both;
+}
 h1 { color: #555; font-size: 1.3rem; margin: 1rem 0; }
 h2 { color: #555; font-size: 1rem; margin: 0; }
 
@@ -15,7 +23,7 @@ h2 { color: #555; font-size: 1rem; margin: 0; }
 .version a:hover { text-decoration: underline; }
 
 
-.image { float: right; position: relative; height: 130px; width: 300px; }
+.image { float: right; }
 .image span
 {
 	position: absolute;
@@ -27,10 +35,9 @@ h2 { color: #555; font-size: 1rem; margin: 0; }
     right: 0;
 	margin-bottom: -.1rem;
 }
-.image::before { content: ''; clear: both; display: block; }
-.image img { position: absolute;  display: block; height: 130px; width: 300px; }
+/* .image::before { content: ''; clear: both; display: block; } */
+.image img { bottom: 0; right: 0; height: 130px; width: 300px; position: absolute; }
 
-.birthdays { min-height: 300px; }
 .birthdays .item {
 	margin: 10px 0;
 	padding: 5px;
@@ -50,16 +57,29 @@ h2 { color: #555; font-size: 1rem; margin: 0; }
 .birthdays .item .cal .num { font-size: 1rem; background-color: #FFF; color: #1f7bb1; font-weight: bold; line-height: 20px; }
 .birthdays .item.disabled .cal .num { color: #555; }
 
+.birthdays .item.upgrade { opacity: .7; }
+.birthdays .item.upgrade.now { opacity: 1; }
+.birthdays .item.upgrade .cal .num { color: rgb(49, 124, 53); }
+.birthdays .item.upgrade .cal .day,
+  .birthdays .item.upgrade .cal .month { background-color: rgb(49, 124, 53) }
+.birthdays .item.upgrade.now .cal { border-color: #AAA }
+.birthdays .item.upgrade.now .cal .day,
+  .birthdays .item.upgrade.now .cal .month { background-color: #AAA }
+.birthdays .item.upgrade.now .cal .day,
+  .birthdays .item.upgrade.now .cal .month { background-color:rgb(49, 124, 53);  }
+
+
 .birthdays .item.now .cal { border-color: rgb(230, 169, 1); }
 .birthdays .item.now .cal .day, .birthdays .item.now .cal .month { background-color: rgb(230, 169, 1); }
 .birthdays .item.now .cal .num { color: rgb(230, 169, 1); }
 .birthdays .item.disabled.now .cal { border-color: #AAA }
 .birthdays .item.disabled.now .cal .day, .birthdays .item.disabled.now .cal .month { background-color: #AAA }
 .birthdays .item.disabled.now .cal .num { color: #AAA }
+.birthdays .item.disabled.fade { opacity: .7;}
 
 .birthdays .item .data { display: inline-block; overflow: hidden; }
 .birthdays .item .data > a { color: #333; }
 .birthdays .item .data > a:hover { text-decoration: underline; }
-.birthdays .item img { display: inline-block; overflow: hidden; background-color: #F1F1F1; border: solid 1px #DDD; margin-right: 10px; height: 50px; width: 43px; }
+.birthdays .item .img { background-position: center; display: inline-block; overflow: hidden; background-color: #F1F1F1; border: solid 1px #DDD; margin-right: 10px; height: 50px; width: 43px; background-size: cover; background-repeat: no-repeat; }
 .birthdays .item.disabled img { filter: grayscale(1); }
 .data > div:last-of-type { font-size: .8rem; color: #888; }
