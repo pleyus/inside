@@ -184,8 +184,34 @@ export class PaymentOpenComponent {
 
           // Si contesta con 1
           if (r.status === this.S.SUCCESS) {
-            // Redireccionamos a aplicantes
-            this.RT.navigate(['/payment']);
+
+            //  Recorremos los pagos buscando el que se acaba de borrar
+            let i = 0;
+            for (; i < this.Pays.length; i++) {
+              if (this.Pays[i].id === this.Pay.id) {
+                this.Pays.splice(i, 1);
+                break;
+              }
+            }
+
+            //  Si el indice es mas chico que el tamaño de la lista de pagos
+            if (i < this.Pays.length) {
+
+              //  Nos vamos al siguiente pago en la lista...
+              this.RT.navigate(['/payment/' + this.Pays[i].id]);
+
+            //  Si no, checamos que la lista tenga algo
+            } else if (this.Pays.length > 0) {
+
+              //  Y nos vamos al ultimo pago
+              i = this.Pays.length - 1;
+              this.RT.navigate(['/payment/' + this.Pays[i].id]);
+
+            //  Si no es chana ni juana, volvemos a la lista general
+            } else {
+              this.RT.navigate(['/payment']);
+            }
+
           } else {
             this.S.ShowError(r.data, 0);
           }
