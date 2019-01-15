@@ -24,22 +24,10 @@
     </a>
 
     <a (click)="MenuClick(false)"
-      *ngIf="$.isAdmin()"
+      *ngIf="$.isAdmin() && false"
       routerLinkActive="active" routerLink="/academy">
       Academico
     </a>
-
-    <a (click)="MenuClick(false)"
-      *ngIf="$.isAdmin() && (
-        $.CanDo('institutions')
-        || $.CanDo('courses')
-        || $.CanDo('vias')
-        ||$.CanDo('campaigns'))"
-      [class.active]="$.isActive(['/categories'])"
-      [routerLink]="['/categories', $.ST.categories]">
-      Categorias
-    </a>
-
 
     <a (click)="MenuClick(false)"
       *ngIf="$.isAdmin() && $.CanDo('user')"
@@ -54,6 +42,27 @@
       Studio3.3
       <span *ngIf="S.News.RadioMessages > 0" class="bullet pull-right">
         {{S.News.RadioMessages > 99 ? '+99' : S.News.RadioMessages}}
+      </span>
+    </a>
+
+    <a (click)="MenuClick(false)"
+      *ngIf="$.isAdmin() && (
+        $.CanDo('institutions')
+        || $.CanDo('courses')
+        || $.CanDo('vias')
+        ||$.CanDo('campaigns'))"
+      [class.active]="$.isActive(['/categories'])"
+      [routerLink]="['/categories', $.ST.categories]">
+      Categorias
+    </a>
+
+    <a
+      *ngIf="false"
+      [class.active]="$.isActive(['/feedback'])"
+      [routerLink]="['/feedback']">
+      Feedback
+      <span *ngIf="S.News.Feedbacks > 0" class="bullet pull-right">
+        {{S.News.Feedbacks > 99 ? '+99' : S.News.Feedbacks}}
       </span>
     </a>
 
