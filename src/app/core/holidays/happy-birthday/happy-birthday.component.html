@@ -1,4 +1,4 @@
-<ng-container *ngIf="Show">
+<section *ngIf="Show">
   <link href="https://fonts.googleapis.com/css?family=Wendy+One" rel="stylesheet" type="text/css">
 
   <span class="ico"
@@ -20,7 +20,7 @@
         <div><span>!</span></div>
       </div>
       <div class="message" [innerHTML]="Message"></div>
-      <canvas id="myCanvas" style=""></canvas>
+      <canvas id="myCanvas"></canvas>
     </div>
     <input type="hidden" [(ngModel)]="UserObject.firstname" id="my-name">
   </section>
@@ -28,4 +28,4 @@
   <app-script-hack type="text/javascript" src="https://s3.amazonaws.com/codecademy-content/courses/hour-of-code/js/bubbles.js"></app-script-hack>
   <app-script-hack type="text/javascript" src="https://s3.amazonaws.com/codecademy-content/courses/hour-of-code/js/alphabet.js"></app-script-hack>
   <app-script-hack type="text/javascript" src="https://unitam.edu.mx/inside/assets/hbd.js"></app-script-hack>
-</ng-container>
+</section>
