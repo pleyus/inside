@@ -59,14 +59,16 @@ h2 { color: #555; font-size: 1rem; margin: 0; }
 
 .birthdays .item.upgrade { opacity: .7; }
 .birthdays .item.upgrade.now { opacity: 1; }
-.birthdays .item.upgrade .cal .num { color: rgb(49, 124, 53); }
+.birthdays .item.upgrade .cal .num { color: rgb(77, 49, 124); }
+.birthdays .item.upgrade.now .cal .num { color: rgb(77, 49, 124); }
 .birthdays .item.upgrade .cal .day,
-  .birthdays .item.upgrade .cal .month { background-color: rgb(49, 124, 53) }
+  .birthdays .item.upgrade .cal .month { background-color: rgb(77, 49, 124) }
 .birthdays .item.upgrade.now .cal { border-color: #AAA }
+.birthdays .item.upgrade.now { border-left: solid 4px rgb(77, 49, 124); }
 .birthdays .item.upgrade.now .cal .day,
-  .birthdays .item.upgrade.now .cal .month { background-color: #AAA }
+  .birthdays .item.upgrade.now .cal .month { background-color: rgb(77, 49, 124) }
 .birthdays .item.upgrade.now .cal .day,
-  .birthdays .item.upgrade.now .cal .month { background-color:rgb(49, 124, 53);  }
+  .birthdays .item.upgrade.now .cal .month { background-color:rgb(77, 49, 124);  }
 
 
 .birthdays .item.now .cal { border-color: rgb(230, 169, 1); }
