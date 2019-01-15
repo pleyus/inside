@@ -677,7 +677,7 @@ export class Configuration {
     this.HeartBeat = new Date().getTime();
   }
 
-  public UpdateNews(force = false) {
+  public UpdateNews(force = false, callback: (r) => void = (r) => {}) {
     // Vemos si el usuario sigue con vida Checando que no tenga mas de 10s sin mover el inside
     if ( new Date().getTime() < this.HeartBeat + 1000 || force ) {
       this.W.Web('general', 'get-counters',
@@ -686,8 +686,20 @@ export class Configuration {
         '&lpt=' + this.C.GetOption('lpt', 'payment', 0),
         (r) => {
           if (r.status === this.SUCCESS) {
-            this.News = r.data;
+            if (force) {
+              this.News = r.data;
+            } else {
+              this.News.Applicants = r.data.Applicants;
+              this.News.Feedbacks = r.data.Feedbacks;
+              this.News.Messages = r.data.Messages;
+              this.News.RadioMessages = r.data.RadioMessages;
+
+              if (this.News.Birthdays.length !== r.data.Birthdays.length) {
+                this.News.Birthdays = r.data.Birthdays;
+              }
+            }
           }
+          callback(r.data);
         }
       );
     }
