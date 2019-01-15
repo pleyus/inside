@@ -3,6 +3,7 @@
 import { Component, OnInit } from '@angular/core';
 import { WebService, AppStatus, Tools, Configuration } from './app.service';
 import { Router } from '@angular/router';
+import { environment } from '../environments/environment';
 
 
 @Component({
@@ -48,7 +49,7 @@ export class AppComponent implements OnInit {
       user: 0
     }
   };
-  public VERSION = '3.6.7';
+  public VERSION = environment.VERSION;
 
   /**
    * Define las urls dinamicas que pueden ser utilizadas con las SelectedTabs dentro de los componentes
