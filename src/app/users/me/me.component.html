@@ -24,7 +24,8 @@
 	</div>
 
 	<a
-		title="¿Algo anda mal con esta información? Haz un reporte desde aqui"
+    title="¿Algo anda mal con esta información? Haz un reporte desde aqui"
+    *ngIf="!$.isAdmin()"
 		class="link-report"
 		(click)="Feed('Información general')">
 		reportar
@@ -40,6 +41,7 @@
       <p *ngIf="$.Me.tutor_phone != ''"> <span class="icon-phone"></span> {{ $.Me.tutor_phone }} </p>
       <a
         title="¿Algo anda mal con esta información? Haz un reporte desde aqui"
+        *ngIf="!$.isAdmin()"
         class="link-report"
         (click)="Feed('Contacto')">
         reportar
@@ -56,6 +58,7 @@
         }}
         <a
           title="¿Algo anda mal con esta información? Haz un reporte desde aqui"
+          *ngIf="!$.isAdmin()"
           class="link-report"
           (click)="Feed('Dirección')">
           reportar
@@ -111,6 +114,7 @@
 
       <a
         title="¿Algo anda mal con esta información? Haz un reporte desde aqui"
+        *ngIf="!$.isAdmin()"
         class="link-report"
         (click)="Feed('Registro de usuario')">
         reportar
