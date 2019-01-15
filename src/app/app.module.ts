@@ -24,7 +24,7 @@ import { RadioComponent } from './radio/radio.component';
 import { RadioMessagesComponent } from './radio/messages/messages.component';
 import { RadioGuideEditorComponent } from './radio/guide/editor/editor.component';
 import { RadioGuideListComponent } from './radio/guide/list/list.component';
-import {   RadioAnnouncersComponent } from './radio/announcers/announcers.component';
+import { RadioAnnouncersComponent } from './radio/announcers/announcers.component';
 import { CategoryInstitutionsComponent } from './categories/institutions/institutions.component';
 import { UsersMeComponent } from './users/me/me.component';
 import { LibraryComponent } from './library/library.component';
@@ -44,6 +44,7 @@ import { ScriptHackComponent } from './core/script-hack/script-hack.component';
 import { AcademyComponent } from './academy/academy.component';
 import { CheckinComponent } from './academy/checkin/checkin.component';
 import { ViasComponent } from './difusion/vias/vias.component';
+import { HolidaysComponent } from './core/holidays/holidays.component';
 
 const appRoutes: Routes = [
   {
@@ -142,7 +143,8 @@ const appRoutes: Routes = [
     ScriptHackComponent,
     AcademyComponent,
     CheckinComponent,
-    ViasComponent
+    ViasComponent,
+    HolidaysComponent
   ],
 
   imports: [

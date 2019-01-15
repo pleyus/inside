@@ -110,11 +110,7 @@ header::after { content: ''; display: block; clear: both; }
 	background-size: cover;
   background-position: center;
 }
-.holidays {
-  display: block;
-  float: right;
-  margin-right: 1rem;
-}
+
 
 @media screen and (max-width: 500px) {
   .userinfo { display: none; }
