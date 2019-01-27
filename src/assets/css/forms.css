@@ -81,6 +81,7 @@ input[type="text"], textarea { border-left: 7px solid #AAA; outline: none; }
   .tabs.left > header { float: left; width: 20%; }
   .tabs.left > .tab-body { float: left; width: 80%; }
 
+/* Listy, para listas linkeadas */
 ul.listy {
 	display: block;
     margin: -10px 0 1rem 0;
@@ -158,3 +159,9 @@ ul.listy > li > [class^="icon-"]:hover {
 .acordeon .body > .content > label { display: block; margin: 0 0 5px; font-size: .9rem; }
 .acordeon .body > .content:not(:first-child) > label { margin-top: 20px; }
 .acordeon .body.close { max-height: 0; transition: max-height 300ms; }
+
+@media only screen and (max-width: 600px) {
+  .tabs.left > header > .item { border-radius: 0; float: left; border-top-left-radius: .2rem; border-top-right-radius: .2rem; }
+  .tabs.left > header { float: none; width: 100%; }
+  .tabs.left > .tab-body { float: none; width: 100%; }
+}
