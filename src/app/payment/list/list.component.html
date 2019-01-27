@@ -116,7 +116,7 @@
 					<td class="col-1"> <span class="icon icon-flag state-{{P.status}}"></span> {{ ("00000"+P.id).slice(-6) }}</td>
 					<td class="col-1">{{ P.at*1000 | date: 'dd/MM/yy'}}</td>
 					<td class="col-2-5">{{P.name}}</td>
-					<td class="col-4">{{P.concept}}</td>
+					<td class="col-4" title="{{P.concept}}">{{P.concept.substring(0, 60)}}</td>
 					<th class="col-1-5 monospace">{{P.ref}}</th>
 					<td class="col-1-5">{{P.amount | currency : 'USD' : 'symbol' }}</td>
 				</a>
@@ -171,7 +171,7 @@
 
 				<td class="col-1-5"> <span class="icon icon-flag state-{{P.status}}"></span> {{ ("00000"+P.id).slice(-6) }}</td>
 				<td class="col-1-5">{{ P.at*1000 | date: 'dd/MM/yy'}}</td>
-				<td class="col-3-5">{{P.concept}}</td>
+        <td class="col-3-5" title="{{P.concept}}">{{P.concept.substring(0, 60)}}</td>
 				<th class="col-3 monospace">{{P.ref}}</th>
 				<td class="col-2">{{P.amount | currency : 'USD' : 'symbol' }}</td>
 
