@@ -1,6 +1,6 @@
 .group > label { margin-top: 15px; padding-left: 10px; }
 .group > div:not(.linker) { padding: 0 10px; }
-textarea { height: 100px; }
+textarea { min-height: 100px; resize: vertical; }
 label.input { font-weight: 600; font-size: 1.2rem; padding-top: 5px; color: #333; }
 .verify>label:not(.normal) { display: block; margin-bottom: 10px; font-weight: 600; text-transform: inherit; }
 .verify { margin: 10px 0; }
