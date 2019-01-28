@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { ChartsModule } from 'ng2-charts';
@@ -153,7 +154,8 @@ const appRoutes: Routes = [
     HttpClientModule,
     FormsModule,
     CurrencyMaskModule,
-    ChartsModule
+    ChartsModule,
+    CKEditorModule
   ],
   providers: [ WebService, Tools, AppStatus, Configuration ],
   bootstrap: [ AppComponent ]
