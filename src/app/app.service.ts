@@ -5,7 +5,7 @@ import { DOCUMENT } from '@angular/common';
 @Injectable()
 export class WebService {
   constructor( private http: HttpClient ) { }
-  private Url = 'https://unitam.edu.mx/inside/service/?';
+  private Url = 'https://unitam.edu.mx/api/?';
 
 
   /**
