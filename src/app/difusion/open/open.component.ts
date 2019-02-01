@@ -194,7 +194,7 @@ export class ApplicantsOpenComponent {
                 this.SetOption('goto', '');
               }
 
-              setTimeout(() => { this.RT.navigate([go]); }, 2000);
+              setTimeout(() => { this.RT.navigate([go]); }, 1000);
             }
 
           }, 2000);
