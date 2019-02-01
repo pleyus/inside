@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgForm } from '@angular/forms';
 
 import { AppComponent } from './../../app.component';
 import { WebService, AppStatus, Configuration } from './../../app.service';
@@ -119,8 +118,8 @@ export class ApplicantsOpenComponent {
     this.W.Web('applicants', 'get', 'id=' + this.Id,
       (a) => {
         this.S.ClearState();
-        if (a.status == this.S.SUCCESS) {
-          this.Applicant = a.data
+        if (a.status === this.S.SUCCESS) {
+          this.Applicant = a.data;
           // Obtenemos el usuario
           this.check_excluded = this.Applicant.excluded > 0;
         }
@@ -129,20 +128,28 @@ export class ApplicantsOpenComponent {
       (e) => { this.S.ShowError('No hay conexión', 0); });
   }
 
-	/**
+  /**
 	 * Obtiene categorias de la base de datos
 	 * @param type Tipo de Categoria que se obtendrá, 0 = Vias de Difusion, 1 = Promociones activas
 	 */
   private getCategories(type: string): void {
     this.W.Web('categories', 'list', 'type=' + type, (r) => {
       let tmp = [];
-      if (r.status == this.S.SUCCESS)
+      if (r.status === this.S.SUCCESS) {
         tmp = r.data;
+      }
 
-      if (type == 'vias') this.Vias = tmp;
-      else if (type == 'courses') this.Courses = tmp;
-      else if (type == 'courses') this.Courses = tmp;
-
+      if (type === 'vias')  {
+        this.Vias = tmp;
+      } else {
+        if (type === 'courses') {
+          this.Courses = tmp;
+        } else {
+          if (type === 'courses') {
+            this.Courses = tmp;
+          }
+        }
+      }
     },
       (e) => { this.S.ShowError('No hay conexión', 0); });
   }
@@ -155,21 +162,24 @@ export class ApplicantsOpenComponent {
     this.Applicant.excluded = this.check_excluded ? 1 : 0;
 
     // Solo podremos guardar si viene el nombre, mail y telefono
-    if (this.Applicant.user.firstname != '' && this.Applicant.user.email != '' && this.Applicant.user.personal_phone != '') {
-      if (this.Id < 1)
-        this.do_new()
-      else if (this.Applicant.user.id > 0 && this.Applicant.id > 0)
-        this.SaveNote(() => this.do_update());
-      else
-        this.RT.navigate(['/difusion/applicants/open/']);
-    }
-    else
+    if (this.Applicant.user.firstname !== '' && this.Applicant.user.email !== '' && this.Applicant.user.personal_phone !== '') {
+      if (this.Id < 1) {
+        this.do_new();
+      } else {
+        if (this.Applicant.user.id > 0 && this.Applicant.id > 0) {
+          this.SaveNote(() => this.do_update());
+        } else {
+        this.RT.navigate(['/difusion/applicants/']);
+        }
+      }
+    } else {
       this.S.ShowWarning(
         'Algunos campos no deben estar vacios: ' +
         (this.Applicant.user.firstname ? '' : '<br> – Nombre') +
         (this.Applicant.user.email ? '' : '<br> – Correo electrónico') +
         (this.Applicant.user.personal_phone ? '' : '<br> – Teléfono personal')
         , 0);
+    }
   }
   private do_new() {
     this.W.Web('applicants', 'save',
@@ -177,7 +187,7 @@ export class ApplicantsOpenComponent {
       (this.ContactId > 0 ? '&contact-id=' + this.ContactId : ''),
       r => {
         // Si contesta con 1
-        if (r.status == this.S.SUCCESS) {
+        if (r.status === this.S.SUCCESS) {
 
           // Mostramos el mensaje de guardado
           this.S.ShowSuccess('Se guardó correctamente la información de ' + this.Applicant.user.firstname + ', espere...');
@@ -198,9 +208,9 @@ export class ApplicantsOpenComponent {
             }
 
           }, 2000);
-        }
-        else
+        } else {
           this.S.ShowError(r.data, 0);
+        }
 
       },
       (e) => { this.S.ShowError('Se perdió la conexión', 0); });
@@ -211,10 +221,11 @@ export class ApplicantsOpenComponent {
       (this.ContactId > 0 ? '&contact-id=' + this.ContactId : ''),
       r => {
         // Si contesta con 1
-        if (r.status == this.S.SUCCESS)
+        if (r.status === this.S.SUCCESS) {
           this.S.ShowSuccess('Cambios guardados correctamente...');
-        else
+        } else {
           this.S.ShowAlert(r.data, r.status, 0);
+        }
 
       },
       (e) => { this.S.ShowError('Se perdió la conexión', 0); });
@@ -222,23 +233,26 @@ export class ApplicantsOpenComponent {
 
   public Delete(): void {
     // Para poder borrarlo es necesario que no sea aplicante
-    if (this.Applicant.user.status != this.$.IS_APPLICANT) {
-      this.S.ShowWarning('Los aspirantes que se han inscrito ya no se pueden eliminar', 0)
-    }
-    else if (this.Id > 0) {
-      if (confirm('Esta a punto de eliminar este registro, tenga en cuenta que se borrarán tambien los datos ligados al usuario. ¿Desea continuar?')) {
+    if (this.Applicant.user.status !== this.$.IS_APPLICANT) {
+      this.S.ShowWarning('Los aspirantes que se han inscrito ya no se pueden eliminar', 0);
+    } else if (this.Id > 0) {
+
+      if ( confirm('Esta a punto de eliminar este registro, ' +
+        'tenga en cuenta que se borrarán tambien los datos ' +
+        'ligados al usuario. ¿Desea continuar?')) {
+
         // Loading...
         this.S.ShowLoading('Eliminando a ' + this.Applicant.user.firstname + ' de la lista de aspirantes...');
 
         // Hablamos con la api para que 'borre' al id
         this.W.Web('applicants', 'delete', 'id=' + this.Id, (r) => {
           // Si contesta con 1
-          if (r.status == this.S.SUCCESS)
+          if (r.status === this.S.SUCCESS) {
             // Redireccionamos a aplicantes
             this.RT.navigate(['/difusion/applicants']);
-
-          else
+          } else {
             this.S.ShowError(r.data, 0);
+          }
         });
       }
     }
@@ -248,62 +262,64 @@ export class ApplicantsOpenComponent {
     // Solo se pueden sacar las notas cuando el aplicante ya esta registrado
     if (this.Id > 0) {
       // Verificamos que no sea una peticion silenciosa
-      if (!quiet)
+      if (!quiet) {
         // Para mostrar el loading
         this.S.ShowLoading('Cargando notas del aspirante...');
+      }
 
       // Llamamos a la api
       this.W.Web('applicants', 'list-notes', 'aid=' + this.Id, (r) => {
 
         // Limpiamos si es que no es silenciosa
-        if (!quiet)
+        if (!quiet) {
           this.S.ClearState();
+        }
 
         // Si sale todo bien
-        if (r.status == this.S.SUCCESS)
+        if (r.status === this.S.SUCCESS) {
           this.Applicant.notes = r.data;
-        else {
+        } else {
           this.S.ShowError('No se pudieron cargar las notas');
           this.Applicant.notes = [];
         }
         callback();
 
       });
-    }
-    else
+    } else {
       callback();
+    }
   }
 
   public SaveNote(callback: () => void = () => { }) {
-    if (this.NewNote.trim() != '' && this.Id > 0) {
+    if (this.NewNote.trim() !== '' && this.Id > 0) {
       this.S.ShowLoading('Guardando nueva nota. Espere...');
       this.W.Web('applicants', 'save-note', 'note=' + this.NewNote + '&aid=' + this.Id, (r) => {
-        if (r.status == this.S.SUCCESS) {
+        if (r.status === this.S.SUCCESS) {
           this.S.UpdateNews();
           this.NewNote = '';
           this.S.ShowSuccess('Nota guardada correctamente', 2000);
           this.GetNotes(true, callback);
-        }
-        else
+        } else {
           this.S.ShowError(r.data, 0);
+        }
       });
-    }
-    else
+    } else {
       callback();
+    }
   }
   public DeleteNote(index) {
-    let note = this.Applicant.notes[index];
+    const note = this.Applicant.notes[index];
     this.S.ShowLoading('Borrando nota <i>' + note.note + '</i>...');
 
     this.W.Web('applicants', 'delete-note', 'id=' + note.id, (r) => {
-      if (r.status == this.S.SUCCESS) {
+      if (r.status === this.S.SUCCESS) {
         this.S.UpdateNews();
         this.GetNotes(true);
         this.Applicant.notes[index].note = 'Elemento eliminado...';
         this.S.ShowSuccess('Se borro correctamente la nota', 2000);
-      }
-      else
+      } else {
         this.S.ShowError(r.data, 0);
+      }
     });
   }
 
