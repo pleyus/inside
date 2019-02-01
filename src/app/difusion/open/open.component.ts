@@ -186,11 +186,11 @@ export class ApplicantsOpenComponent {
           setTimeout(() => {
             // Si es nuevo, cargamos el chucho
             if (this.Id < 1) {
-              let go = '/difusion/applicants/open/' + r.data.id,
-                goto = this.GetOption('goto');
+              let go = '/difusion/applicants/' + r.data.aid;
+              const goto = this.GetOption('goto');
 
-              if (goto != '') {
-                go = goto + r.data.uid
+              if (goto !== '') {
+                go = goto + r.data.uid;
                 this.SetOption('goto', '');
               }
 
