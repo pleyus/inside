@@ -48,7 +48,7 @@ export class AppComponent implements OnInit {
       user: 0
     }
   };
-  public VERSION = '3.8.1';
+  public VERSION = '3.8.2';
 
   /**
    * Define las urls dinamicas que pueden ser utilizadas con las SelectedTabs dentro de los componentes
