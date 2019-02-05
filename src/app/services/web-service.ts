@@ -19,10 +19,7 @@ export class WebService {
    * @param callback Funcion que se llama al terminar la petición
    * @param onerr Funcion que se llama en caso de error en la petición
    */
-  Web( using, make, params,
-    callback: (r) => void,
-    onerr: (r) => void = (r) => {}
-  ) {
+  Web( using, make, params, callback: (r) => void, onerr: (r) => void = (r) => {}) {
     try {
       const Api = this.Url + 'using=' + using + '&make=' + make,
 
@@ -43,10 +40,7 @@ export class WebService {
     }
   }
 
-  Post( page, params,
-    callback: (r) => void,
-    onerr: (r) => void = (r) => {}
-  ) {
+  Post( page, params, callback: (r) => void, onerr: (r) => void = (r) => {} ) {
     try {
       const Url = page,
 
@@ -83,17 +77,66 @@ export class WebService {
     }
   }
 
-  Upload(using, file: File, params: string,
-    callback: (r) => void, onerr: (r) => void = (r) => {}) {
-    try {
-      const uploadData = new FormData();
-      uploadData.append('the-file', file, file.name);
+  /**
+   * Sube un archivo al servidor utilizando la Api
+   * @param file Objeto de archivo que se subira al servidor
+   * @param params Parametros post extra de la petición
+   * @param callback Llamada tras completarse la subida del archivo
+   * @param onerr Llamada en caso de provocar error
+   */
+  Upload(file: File, params: string, callback: (r) => void, onerr: (r) => void = (r) => {}) {
+    //  Preparamos la información que enviaremos
+    const FileData = new FormData();
+    FileData.append('fily', file, file.name);
 
-      this.http.post(this.Url + 'using=general&make=debug' + params, uploadData)
-      .subscribe(callback, onerr);
-    } catch (x) {
-      onerr({status: 0, data: 'No se pudo completar la solicitud: <br> – ' + x});
+    //  Retornamos el observable..
+    return this.http.post(this.Url + 'using=files&make=upload&' + params, FileData, {
+      reportProgress: true,
+      observe: 'events'
+    }).pipe(
+      //  Mapeamos el evento
+      map(event => this.getEventMessage(event, FileData)),
+
+      //  En caso de error...
+      catchError(this.handleError)
+    );
+  }
+
+  private getEventMessage(event: HttpEvent<any>, formData) {
+
+    switch (event.type) {
+
+      case HttpEventType.UploadProgress:
+        return this.fileUploadProgress(event);
+
+      case HttpEventType.Response:
+        return this.apiResponse(event);
+
+      default:
+        return `File "${formData.get('profile').name}" surprising upload event: ${event.type}.`;
     }
+  }
+
+  private fileUploadProgress(event) {
+    const percentDone = Math.round(100 * event.loaded / event.total);
+    return { status: 'progress', message: percentDone };
+  }
+
+  private apiResponse(event) {
+    return event.body;
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error.message);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      console.error(`Backend returned code ${error.status}, ` + `body was: ${error.error}`);
+    }
+    // return an observable with a user-facing error message
+    return throwError('Something bad happened. Please try again later.');
   }
 }
 
