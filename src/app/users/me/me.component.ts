@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppComponent } from '../../app.component';
-import { WebService, AppStatus, Tools, Configuration } from '../../app.service';
+import { AppStatus, Tools, Configuration } from '../../app.service';
+import { WebService } from '../../services/web-service';
 
 @Component({
   selector: 'app-me',

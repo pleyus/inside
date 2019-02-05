@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { AppStatus, WebService, Tools } from '../../app.service';
+import { AppStatus, Tools } from '../../app.service';
+import { WebService } from '../../services/web-service';
 import { Router } from '../../../../node_modules/@angular/router';
 
 @Component({

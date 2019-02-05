@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { WebService, AppStatus, Configuration } from '../../app.service';
+import { AppStatus, Configuration } from '../../app.service';
+import { WebService } from '../../services/web-service';
 import { AppComponent } from '../../app.component';
 
 @Component({
@@ -14,20 +15,20 @@ export class CategoriesOpenComponent {
 
 	Category = { id: 0, name: '', slug: '', param1:'', type: 0, status: 0 };
 
-		
+
 	//	Lista de elementos
 	List = [];
 
 	constructor
 	(
 		public $:AppComponent,
-		private R:ActivatedRoute, 
-		private W:WebService, 
+		private R:ActivatedRoute,
+		private W:WebService,
 		private RT:Router,
 		private S : AppStatus,
 		private C: Configuration
 	){
-		R.params.subscribe( params => 
+		R.params.subscribe( params =>
 		{
 			this.cat_type = params['open'];
 
@@ -39,7 +40,7 @@ export class CategoriesOpenComponent {
 			else
 			{
 				S.ShowError("No tienes autorización para modificar las instituciones.", 0);
-				
+
 				//	Asignamos la primer categoria a la que tenemos acceso
 				let cat_type = $.CanDo('courses')
 					? 'courses'
@@ -50,10 +51,10 @@ export class CategoriesOpenComponent {
 							:($.CanDo('insitutions')
 								? 'institutions'
 								: '')));
-	
+
 				C.SetOption('selected.tab', cat_type, 'categories')
 				$.ST.categories = cat_type;
-	
+
 				//	Redireccionamos
 				RT.navigate(['/home']);
 			}
@@ -98,20 +99,20 @@ export class CategoriesOpenComponent {
 		{
 			//	Loading...
 			this.S.ShowLoading('Eliminando ' + this.Category.name + '...');
-			
+
 			//	Hablamos con la api para que "borre" al id
 			this.W.Web
-			('categories', 'delete', 'id=' + this.Category.id + '&type=' + this.cat_type, 
-				(r) => 
+			('categories', 'delete', 'id=' + this.Category.id + '&type=' + this.cat_type,
+				(r) =>
 				{
 					//	Si contesta con 1
 					if(r.status == this.S.SUCCESS)
 					{
 						this.S.ShowSuccess('Elemento borrado');
-						
+
 						this.Category = { id: 0, name: '', slug: '', param1:'', type: 0, status: 0 };
-						this.GetCategories();					
-					}	  
+						this.GetCategories();
+					}
 					else
 						this.S.ShowError(r.data, 0)
 				},
@@ -126,14 +127,14 @@ export class CategoriesOpenComponent {
 			return;
 		}
 
-		this.Category = 
-		{ 
-			id: Item.id, 
-			name: Item.name, 
-			slug: Item.slug, 
-			param1: Item.param1, 
-			type: Item.type, 
-			status: Item.status 
+		this.Category =
+		{
+			id: Item.id,
+			name: Item.name,
+			slug: Item.slug,
+			param1: Item.param1,
+			type: Item.type,
+			status: Item.status
 		}
 	}
 	public GetCategories( making = 'get' ) : void
@@ -141,8 +142,8 @@ export class CategoriesOpenComponent {
 		this.S.ShowLoading();
 
 		//	Hablamos con la API
-		this.W.Web( "categories", 'list', 
-		
+		this.W.Web( "categories", 'list',
+
 		//	Pedimos solo el typo de categoria
 		'type=' + this.cat_type,
 
@@ -155,7 +156,7 @@ export class CategoriesOpenComponent {
 			if(r.status == this.S.SUCCESS)
 				if( typeof r.data == 'object')
 				{
-					this.List = 
+					this.List =
 						making == 'more'
 						? this.List.concat(r.data)
 						: r.data;
@@ -166,7 +167,7 @@ export class CategoriesOpenComponent {
 			//	Si no, mostramos el mensaje
 			else
 				this.S.ShowError(r.data, 0);
-			
+
 		},
 		(e)=> { this.S.ShowError("Se perdió la conexión", 0);});
 	}

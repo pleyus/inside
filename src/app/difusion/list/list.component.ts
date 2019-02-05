@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { WebService, AppStatus, Configuration } from '../../app.service';
+import { AppStatus, Configuration } from '../../app.service';
+import { WebService } from '../../services/web-service';
 import { AppComponent } from '../../app.component';
 import { Router } from '@angular/router';
 
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 })
 
 export class ApplicantsListComponent {
-	
+
 	Title : string = "Aspirantes";
 	Applicants : Array<any>;
 	LoadMore = true;
@@ -24,13 +25,13 @@ export class ApplicantsListComponent {
 		this.GetApplicants();
 	}
 
-	constructor( 
-		private W : WebService, 
-		public $ : AppComponent, 
-		private R : Router, 
+	constructor(
+		private W : WebService,
+		public $ : AppComponent,
+		private R : Router,
 		private S : AppStatus,
 		private C: Configuration)
-	{ 
+	{
 		this.Applicants = [];
 		this.SetOption('last', 0);
 
@@ -44,10 +45,10 @@ export class ApplicantsListComponent {
 
 		this.search_string = this.GetOption('search');
 		this.S.UpdateNews();
-		
-		
+
+
 		if( $.isAdmin() && this.$.CanDo('applicants') )
-			this.GetApplicants(  );	
+			this.GetApplicants(  );
 		else
 		{
 			this.S.ShowError( 'No cuentas con permisos suficientes para ver la lista de aspirantes', 0 );
@@ -60,7 +61,7 @@ export class ApplicantsListComponent {
 	 * @param get 	Opcional: Array de parametros para interactuar con server
 	 */
 	public GetApplicants( making = 'get' ) : void
-	{	
+	{
 		let search = this.search_string;
 		if(making != 'more')
 			this.SetOption('last', 0);
@@ -76,14 +77,14 @@ export class ApplicantsListComponent {
 		this.W.Web( "applicants", 'list', 'last=' + this.GetOption('last') +
 
 		//	Lanzamos el orden
-		'&order=' + this._Order + 
-		'&order_by=' + this._OrderBy + 
+		'&order=' + this._Order +
+		'&order_by=' + this._OrderBy +
 
 		//	Periodo
-		'&period=' + this.Period + 
+		'&period=' + this.Period +
 
 		//	Si se esta buscando algo le decimos
-		(making == 'search' || search != '' ? '&search=' + search : '') + 
+		(making == 'search' || search != '' ? '&search=' + search : '') +
 		('&filter_type=' + this.GetOption('filter_type')),
 
 		(r) :void =>
@@ -96,7 +97,7 @@ export class ApplicantsListComponent {
 				if( typeof r.data == 'object' )
 				{
 					//	Mostramos los elementos
-					this.Applicants = 
+					this.Applicants =
 						making == 'more'
 						? this.Applicants.concat(r.data)
 						: r.data;
@@ -106,13 +107,13 @@ export class ApplicantsListComponent {
 				else
 					this.S.ShowWarning('No se pudo completar la consulta. Intente de nuevo en un momento', 0)
 
-			}	
+			}
 			//	Si no, mostramos un error
 			else
 				this.S.ShowError(r.data, 0);
-			
+
 			//	Marcamos el ultimo
-			this.SetOption('last', this.Applicants.length); 
+			this.SetOption('last', this.Applicants.length);
 		},
 		(e)=> { this.S.ShowError("No hay conexión", 0);});
 	}
@@ -124,7 +125,7 @@ export class ApplicantsListComponent {
 	public search()
 	{
 		this.SetOption('search', this.search_string);
-		
+
 		if(this.search_timer != undefined)
 			clearTimeout(this.search_timer);
 
@@ -139,13 +140,13 @@ export class ApplicantsListComponent {
 	{
 		if(Applicant.excluded == 1)
 			return 'excluded';
-			
+
 		let tclass = '',
 			time = Applicant.note_at,
 			now = new Date();
 
 		if(time > 0)
-		{	
+		{
 			//	Restamos el tiempo que tiene la nota con la actual entre 1000 (porque js trae milisegundos)
 			let dias = now.getTime(); 	// Se obtiene el tiempo de hoy
 			dias = dias / 1000;			//	Se parte entre 1000 porque js trae ms
@@ -167,11 +168,11 @@ export class ApplicantsListComponent {
 			now = new Date();
 
 		if(time > 0)
-		{	
+		{
 			//	Restamos el tiempo que tiene la nota con la actual entre 1000 (porque js trae milisegundos)
 			let n = ( now.getTime() / 1000 ) - time,
 				dia = 60*60*24;
-			
+
 			if( n <= (dia*7) ) tclass = 'Seguimiento reciente';
 			else if (n <= (dia*15) ) tclass = 'Hace mas de una semana';
 			else if (n <= (dia*20) ) tclass = 'Hace mas de dos semanas';
@@ -184,8 +185,8 @@ export class ApplicantsListComponent {
 				h = D.getHours(),
 				m = D.getMinutes(),
 				s = D.getSeconds();
-			tclass += " » " + 
-				(d > 9 ? d : '0' + d) + '/' + 
+			tclass += " » " +
+				(d > 9 ? d : '0' + d) + '/' +
 				(M > 9 ? M : '0' + M) + '/' +
 				y + ' ' +
 				(h > 9 ? h : '0' + h) + ':' +
@@ -194,7 +195,7 @@ export class ApplicantsListComponent {
 		}
 		return tclass;
 	}
-	
+
 	//#region Filters
 	public isFilter(value)
 	{
@@ -219,7 +220,7 @@ export class ApplicantsListComponent {
 	//#endregion
 
 	//#region Views
-	// public isView(value) 
+	// public isView(value)
 	// {
 	// 	return this.GetOption('current_view') == value;
 	// }
@@ -264,7 +265,7 @@ export class ApplicantsListComponent {
 	_OrderBy = 'at';
 	_order_count = 0;
 	Order( column )
-	{	
+	{
 		//	Checamos, si la columna es la misma que la anterior
 		if(column == this._OrderBy)
 		{
@@ -279,7 +280,7 @@ export class ApplicantsListComponent {
 			this._OrderBy = column;
 			this._Order = 'ASC';
 		}
-	
+
 		//	Si ya se orderno varias veces sobre la misma columna, quitamos el orden y ponemos el default
 		if(this._order_count > 1)
 		{
@@ -296,7 +297,7 @@ export class ApplicantsListComponent {
 
 		this.SetOption('order', this._Order);
 		this.SetOption('order_by', this._OrderBy);
-	
+
 		this.GetApplicants();
 	}
 	//#endregion

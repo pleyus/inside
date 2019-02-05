@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AppComponent } from '../../app.component';
-import { WebService, AppStatus, Configuration } from '../../app.service';
+import { AppStatus, Configuration } from '../../app.service';
+import { WebService } from '../../services/web-service';
 
 @Component({
   selector: 'app-applicant-stats',

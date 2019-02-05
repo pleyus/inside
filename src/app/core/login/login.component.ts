@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { AppStatus, WebService, Tools } from '../../app.service';
+import { AppStatus, Tools } from '../../app.service';
+import { WebService } from '../../services/web-service';
 import { AppComponent } from '../../app.component';
 import { Router } from '@angular/router';
 

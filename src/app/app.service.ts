@@ -1,98 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { DOCUMENT } from '@angular/common';
-
-@Injectable()
-export class WebService {
-  constructor( private http: HttpClient ) { }
-  private Url = 'https://unitam.edu.mx/api/?';
-
-
-  /**
-   * Se encarga de descargar datos desde internet (Api rest)
-   * @param using Define el modulo de la api que se usará para la obtencion de datos
-   * @param make Es la acción a realizar dentro del modulo de la api
-   * @param params Parametros que pudiera necesitar el modulo para realizar la acción
-   * @param callback Funcion que se llama al terminar la petición
-   * @param onerr Funcion que se llama en caso de error en la petición
-   */
-  Web( using, make, params,
-    callback: (r) => void,
-    onerr: (r) => void = (r) => {}
-  ) {
-    try {
-      const Api = this.Url + 'using=' + using + '&make=' + make,
-
-        headers = new HttpHeaders( {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        } ),
-
-        options = {
-          headers: headers,
-          method: 'post',
-          withCredentials: true
-        };
-
-      this.http.post(Api, params, options)
-        .subscribe(callback, onerr);
-    } catch (x) {
-      onerr({status: 0, data: 'No se pudo completar la solicitud: <br> – ' + x});
-    }
-  }
-
-  Post( page, params,
-    callback: (r) => void,
-    onerr: (r) => void = (r) => {}
-  ) {
-    try {
-      const Url = page,
-
-        headers = new HttpHeaders( {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        } ),
-
-        options = {
-          headers: headers,
-          method: 'post',
-          withCredentials: true
-        };
-
-      this.http.post(Url, params, options)
-        .subscribe(callback, onerr);
-    } catch (x) {
-      onerr({status: 0, data: 'No se pudo completar la solicitud: <br> – ' + x});
-    }
-  }
-
-  Get( page, callback: (r) => void, onerr: (r) => void = (r) => {} ) {
-    try {
-      const Url = page,
-
-        options = {
-          method: 'get',
-          withCredentials: true
-        };
-
-      this.http.get(Url, options)
-        .subscribe(callback, onerr);
-    } catch (x) {
-      onerr({status: 0, data: 'No se pudo completar la solicitud: <br> – ' + x});
-    }
-  }
-
-  Upload(using, file: File, params: string,
-    callback: (r) => void, onerr: (r) => void = (r) => {}) {
-    try {
-      const uploadData = new FormData();
-      uploadData.append('the-file', file, file.name);
-
-      this.http.post(this.Url + 'using=general&make=debug' + params, uploadData)
-      .subscribe(callback, onerr);
-    } catch (x) {
-      onerr({status: 0, data: 'No se pudo completar la solicitud: <br> – ' + x});
-    }
-  }
-}
+import { WebService } from './services/web-service';
 
 @Injectable()
 export class Tools {
@@ -135,7 +43,7 @@ export class Tools {
    */
   public Print(container: string, css_class: string = '', printer: string = 'printer') {
     //  Sacamos los elementos
-    let from = document.getElementById(container),
+    const from = document.getElementById(container),
       to = document.getElementById(printer);
 
     //  Preparamos el destino
@@ -153,7 +61,7 @@ export class Tools {
   }
 
   public Range(Size: number): Array<number> {
-    let a = [];
+    const a = [];
     for (let i = 0; i < Size; i++) {
       a.push(i);
     }
@@ -161,8 +69,8 @@ export class Tools {
   }
 
   public SepareName( FullName: string ): string[] {
-    let Separado = ['', '', ''];
-    let Tokens = [ 'DE', 'LA', 'DEL', 'LAS', 'LOS', 'Y', 'I', 'SAN', 'SANTA' ];
+    const Separado = ['', '', ''],
+          Tokens = [ 'DE', 'LA', 'DEL', 'LAS', 'LOS', 'Y', 'I', 'SAN', 'SANTA' ];
     let Bloques = FullName.replace('  ', ' ').split( ' ' );
 
     if ( FullName.trim().length < 4 ) {
@@ -418,7 +326,7 @@ export class Tools {
   }
 
   public NumeroALetras(num): string {
-    let data = {
+    const data = {
       numero: num,
       enteros: Math.floor(num),
       centavos: (((Math.round(num * 100)) - (Math.floor(num) * 100))),

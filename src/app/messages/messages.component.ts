@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AppStatus, WebService, Configuration } from '../app.service';
+import { AppStatus, Configuration } from '../app.service';
+import { WebService } from '../services/web-service';
 import { AppComponent } from '../app.component';
 import { Router } from '../../../node_modules/@angular/router';
-import { shallowEqual } from '../../../node_modules/@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-messages',

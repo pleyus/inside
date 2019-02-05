@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { WebService, AppStatus, Tools, Configuration } from '../../app.service';
+import { AppStatus, Tools, Configuration } from '../../app.service';
+import { WebService } from '../../services/web-service';
 import { AppComponent } from '../../app.component';
 import { Router } from '@angular/router';
 
@@ -19,19 +20,19 @@ export class PaymentListComponent {
 
 	public Result = 0;
 
-	constructor( 
-		private W : WebService, 
+	constructor(
+		private W : WebService,
 		public $ : AppComponent,
 		private R : Router,
 		private S : AppStatus,
 		public T: Tools,
 		private C: Configuration
-	){ 
+	){
 		this.SetOption('last', 0);
 
 		this._Order = this.GetOption('order');
 		this._OrderBy = this.GetOption('order_by');
-		
+
 		this.init();
 	}
 
@@ -39,25 +40,25 @@ export class PaymentListComponent {
 	_Order = 'DESC';
 	_OrderBy = 'at';
 	Order( column )
-	{	
+	{
 		//	Checamos, si la columna es la misma que la anterior
 		if(column == this._OrderBy)
 			//	Solo alternamos el order
 			this._Order = this._Order === 'DESC' ? 'ASC' : 'DESC';
-	
+
 		//	Si no, ponemos la nueva columna y seteamos a ascendente el orden
 		else
 		{
 			this._OrderBy = column;
 			this._Order = 'ASC';
 		}
-	
+
 		this._OrderBy = this._OrderBy.toLowerCase();
 		this._Order = this._Order.toUpperCase();
-		
+
 		this.SetOption('order', this._Order);
 		this.SetOption('order_by', this._OrderBy);
-	
+
 		this.GetPays();
 	}
 	//#endregion
@@ -90,7 +91,7 @@ export class PaymentListComponent {
 	//#endregion
 
 	init()
-	{  
+	{
 		this.search_string = this.GetOption('search');
 		if( (this.$.isAdmin() && this.$.CanDo('payment') ) || this.$.isStudent() )
 		{
@@ -117,18 +118,18 @@ export class PaymentListComponent {
 			? 'Buscando «' + search + '»...'
 			: 'Cargando pagos' + (making == 'more' ? ' anteriores' : '') + '...'
 		);
-		
+
 
 		//	Hablamos con la API
-		this.W.Web( "payment", 'list', 
-		
+		this.W.Web( "payment", 'list',
+
 		//	Mandamos el ultimo que tenemos
 		'last=' + this.GetOption('last') +
 		'&filter_status=' + this.GetOption('filter_status') +
-		
+
 		//	Lanzamos el orden
-		'&order=' + this._Order + 
-		'&order_by=' + this._OrderBy + 
+		'&order=' + this._Order +
+		'&order_by=' + this._OrderBy +
 
 		//	Si se esta buscando algo le decimos
 		(making == 'search' || search != '' ? '&search=' + search : ''),
@@ -138,12 +139,12 @@ export class PaymentListComponent {
 		(r) :void =>
 		{
 			this.S.ClearState();
-			
+
 			//	Revisamos que nos diga 1
-			if(r.status == 1) 
+			if(r.status == 1)
 			{
 				if( typeof r.data == 'object' )
-					this.Pays = 
+					this.Pays =
 						making == 'more'
 						? this.Pays.concat(r.data)
 						: r.data;
@@ -163,14 +164,14 @@ export class PaymentListComponent {
 			// this.Checkeds = this.Pays.filter(P => P.checked == 1).length;
 
 			//	Si se esta buscando algo, sacamos el primer user id para ponerlo cuando creemos un nuevo pago
-			this.Result = 
+			this.Result =
 				(this.Pays.length > 0 && (making == 'search' || search != '') )
-					? this.Pays[0].uid 
+					? this.Pays[0].uid
 					: 0;
-			
-		}); 
+
+		});
 	}
-	
+
 	/**
 	 * Evento que se ejecuta al escribir en la caja de busqueda
 	 */
@@ -185,7 +186,7 @@ export class PaymentListComponent {
 
 		if(this.search_string == '')
 			this.GetPays();
-			
+
 		else
 			this.search_timer = setTimeout( () => { this.GetPays('search'); }, 500);
 

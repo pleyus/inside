@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { AppComponent } from '../../app.component';
-import { WebService, Tools, AppStatus, Configuration } from '../../app.service';
+import { Tools, AppStatus, Configuration } from '../../app.service';
+import { WebService } from '../../services/web-service';
 import { Router } from '@angular/router';
 
-@Component({ 
+@Component({
   selector: 'radio-messages',
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.css']
@@ -13,11 +14,11 @@ export class RadioMessagesComponent {
 	Updater = null;
 	RELATED = {listid: ''}
 	LoadMore = false;
-	
+
 	public GetMessages( making = 'get' ) : void
 	{
 		let send_at = '';
-		
+
 		//	Si estamos actualizando solamente la lista de mensajes
 		if(making == 'update'){
 			if(this.Mensajes.length > 0)	//checamos que haya mensajes mostrandose
@@ -33,14 +34,14 @@ export class RadioMessagesComponent {
 		//	Si se e
 		if(making == 'get')
 			this.SetOption('last', 0);
-		
+
 
 		//	Hablamos con la API
-		this.W.Web( "radio", 'list-messages', 
-		
+		this.W.Web( "radio", 'list-messages',
+
 		//	Mandamos el ultimo que tenemos
 		'last=' + this.GetOption('last') +
-		
+
 		//	Mandamos send_at, si es que tiene algo...
 		send_at,
 
@@ -49,19 +50,19 @@ export class RadioMessagesComponent {
 		(r) :void =>
 		{
 			this.S.ClearState();
-			
+
 			//	Revisamos que nos diga 1
 			if(r.status == 1)
 			{
-				this.Mensajes = 
+				this.Mensajes =
 					making == 'more'	// Si se estan cargando mas
 					? this.Mensajes.concat(r.data)	// Concatenamos los actuales + antiguos
 					: (
-						making == 'update'	//	Si se esta actualizando 
+						making == 'update'	//	Si se esta actualizando
 						? [].concat(r.data, this.Mensajes)	//	Concatenamos los nuevos + actuales
 						: r.data	//	Sino, solo asignamos los mensajes
 					);
-				
+
 				//	Altualizamos nuestro ultimo mensaje leido
 				if(this.Mensajes.length > 0){
 					this.SetOption('lmt', this.Mensajes[0].at);
@@ -73,19 +74,19 @@ export class RadioMessagesComponent {
 			else
 				this.S.ShowError(r.data, 0);
 
-				
+
 			this.SetOption('last', this.Mensajes.length );
 			//	En caso de que se este actualizando, loadmore no cambia, sino si
 			this.LoadMore = making == 'update' ? this.LoadMore : r.data.length >= 10 ;
-			
-		}); 
+
+		});
 	}
 
 	GetOption(option, context = 'radio', def = false){
 		return this.C.GetOption(option, context, def);
 	}
 	SetOption(option, value, context = 'radio'){
-		this.C.SetOption(option, value, context); 
+		this.C.SetOption(option, value, context);
 	}
 
 	ShowMe(M)
@@ -97,7 +98,7 @@ export class RadioMessagesComponent {
 	}
 	Ban(M){
 		if(confirm("Está a pundo de " + (M.status == 0 ? '' : 'des') + "bloquear los mensajes de " + M.name + "." +
-		(M.status == 0 
+		(M.status == 0
 			? "Esto no garantiza que dejará de comunicarse ya que aun puede comunicarse desde otro dispositivo."
 			: "Ya podrá enviar mensajes nuevamente"
 		) + "¿Continuar?"))
@@ -123,19 +124,19 @@ export class RadioMessagesComponent {
 		private R : Router,
 		private S: AppStatus,
 		private C: Configuration
-	) 
-	{ 
+	)
+	{
 		if( ($.isAdmin() && $.CanDo('radio')) || $.Me.radio.length > 0 )
 		{
 			this.C.SetOption('selected.tab', 'messages', 'radio');
 			this.$.ST.radio = 'messages';
-			
+
 			this.GetMessages();
 
 			if(this.$.Updaters.radioMessages != null)
 				clearInterval(this.$.Updaters.radioMessages);
-			
-			this.$.Updaters.radioMessages = setInterval( ()=>{ 
+
+			this.$.Updaters.radioMessages = setInterval( ()=>{
 				if( this.$.isActive(['/radio', 'messages']) )
 					this.GetMessages('update');
 			}, 5000 );

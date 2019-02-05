@@ -8,7 +8,9 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { ChartsModule } from 'ng2-charts';
 
-import { Tools, WebService, AppStatus, Configuration } from './app.service';
+import { Tools, AppStatus, Configuration } from './app.service';
+import { WebService } from './services/web-service';
+import { ConfigService } from './services/config.service';
 
 import { AppComponent } from './app.component';
 import { ApplicantsListComponent } from './difusion/list/list.component';
@@ -46,6 +48,7 @@ import { AcademyComponent } from './academy/academy.component';
 import { CheckinComponent } from './academy/checkin/checkin.component';
 import { ViasComponent } from './difusion/vias/vias.component';
 import { HolidaysComponent } from './core/holidays/holidays.component';
+import { FileManagerComponent } from './core/file-manager/file-manager.component';
 
 const appRoutes: Routes = [
   {
@@ -145,7 +148,8 @@ const appRoutes: Routes = [
     AcademyComponent,
     CheckinComponent,
     ViasComponent,
-    HolidaysComponent
+    HolidaysComponent,
+    FileManagerComponent
   ],
 
   imports: [
@@ -157,7 +161,7 @@ const appRoutes: Routes = [
     ChartsModule,
     CKEditorModule
   ],
-  providers: [ WebService, Tools, AppStatus, Configuration ],
+  providers: [ WebService, ConfigService, Tools, AppStatus, Configuration ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }
