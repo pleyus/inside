@@ -4,12 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { FlatpickrModule } from 'angularx-flatpickr';
-import { CalendarModule, DateAdapter } from 'angular-calendar';
-import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { NgbModalModule, NgbButtonsModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { ChartsModule } from 'ng2-charts';
@@ -18,7 +12,6 @@ import { Tools, AppStatus, Configuration } from './app.service';
 import { WebService } from './services/web-service';
 import { ConfigService } from './services/config.service';
 
-//#region Componentes
 import { AppComponent } from './app.component';
 import { ApplicantsListComponent } from './difusion/list/list.component';
 import { ApplicantsOpenComponent } from './difusion/open/open.component';
@@ -56,8 +49,6 @@ import { CheckinComponent } from './academy/checkin/checkin.component';
 import { ViasComponent } from './difusion/vias/vias.component';
 import { HolidaysComponent } from './core/holidays/holidays.component';
 import { FileManagerComponent } from './core/file-manager/file-manager.component';
-import { CalendarComponent } from './calendar/calendar.component';
-//#endregion
 
 const appRoutes: Routes = [
   {
@@ -80,8 +71,6 @@ const appRoutes: Routes = [
       { path: 'checkin', component: CheckinComponent }
     ]
   },
-
-  { path: 'calendar', component: CalendarComponent },
 
   { path: 'payment', component: PaymentListComponent },
   { path: 'payment/:id', component: PaymentOpenComponent },
@@ -160,8 +149,7 @@ const appRoutes: Routes = [
     CheckinComponent,
     ViasComponent,
     HolidaysComponent,
-    FileManagerComponent,
-    CalendarComponent
+    FileManagerComponent
   ],
 
   imports: [
@@ -171,14 +159,7 @@ const appRoutes: Routes = [
     FormsModule,
     CurrencyMaskModule,
     ChartsModule,
-    CKEditorModule,
-    BrowserAnimationsModule,
-    CalendarModule.forRoot({
-      provide: DateAdapter,
-      useFactory: adapterFactory
-    }),
-    NgbModalModule, NgbButtonsModule,
-    FlatpickrModule.forRoot()
+    CKEditorModule
   ],
   providers: [ WebService, ConfigService, Tools, AppStatus, Configuration ],
   bootstrap: [ AppComponent ]
