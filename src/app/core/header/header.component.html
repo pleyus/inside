@@ -1,5 +1,95 @@
 <header>
-  <nav class="wrap" [class.responsive]="MENU_RESPONSIVE">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand"><img class="inside" src="assets/inside.png" /></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Alternar menu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+
+        <li *ngIf="!$.isAdmin()" routerLinkActive="active" class="nav-item">
+          <a class="nav-link" routerLink="/me">Perfil</a>
+        </li>
+        <li *ngIf="($.isAdmin() && $.CanDo('payment')) || $.isStudent()" routerLinkActive="active" class="nav-item">
+          <a class="nav-link" routerLink="/payment">{{$.isStudent() ? 'Mis ' : ''}}Pagos</a>
+        </li>
+        <li *ngIf="$.isAdmin() && $.CanDo('applicants')" routerLinkActive="active" class="nav-item">
+          <a class="nav-link" routerLink="/difusion">
+            Difusión
+            <span *ngIf="S.News.Applicants > 0 || S.News.Messages > 0" class="badge badge-light">
+              {{S.News.Applicants + S.News.Messages > 99 ? '+99' : S.News.Applicants + S.News.Messages}}
+            </span>
+          </a>
+        </li>
+        <li *ngIf="$.isAdmin() && $.CanDo('user')" routerLinkActive="active" class="nav-item">
+          <a class="nav-link" routerLink="/users">Usuarios</a>
+        </li>
+        <li *ngIf="($.isAdmin() && $.CanDo('radio')) || $.Me.radio.length > 0" [class.active]="$.isActive(['/radio'])" class="nav-item">
+          <a class="nav-link" [routerLink]="['/radio', $.ST.radio]">
+            Studio3.3
+            <span *ngIf="S.News.RadioMessages > 0" class="badge badge-light">
+              {{S.News.RadioMessages > 99 ? '+99' : S.News.RadioMessages}}
+            </span></a>
+        </li>
+        <li *ngIf="$.isAdmin() && ( $.CanDo('institutions') || $.CanDo('courses') ||$.CanDo('campaigns') )"
+          [class.active]="$.isActive(['/categories'])" class="nav-item">
+          <a class="nav-link" [routerLink]="['/categories', $.ST.categories]">Categorias</a>
+        </li>
+        <li *ngIf="!$.isAdmin()" routerLinkActive="active" class="nav-item">
+          <a class="nav-link" routerLink="/me">Home</a>
+        </li>
+        <li *ngIf="!$.isAdmin()" routerLinkActive="active" class="nav-item">
+          <a class="nav-link" routerLink="/me">Home</a>
+        </li>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown">
+              <span class="glyphicon glyphicon-user"></span> 
+              <strong>{{$.Me.firstname}}</strong>
+              <span class="glyphicon glyphicon-chevron-down"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <div class="navbar-login">
+                  <div class="row">
+                    <div class="col-lg-4">
+                      <p class="text-center">
+                        <span class="glyphicon icon-size"
+                          [ngStyle]="{'background-image':'url(' + T.CreateUrl($.Me.pid > 0 ? $.Me.picture.filename : $.Me.image, 'users') + ')'}">
+                        </span>
+                      </p>
+                    </div>
+                    <div class="col-lg-8">
+                      <p class="text-left"><strong>{{ $.Me.firstname + ' ' + $.Me.lastname }}</strong></p>
+                      <p class="text-left small">{{$.Me.personal_phone}}</p>
+                      <p class="text-left">
+                        <a href="#" class="btn btn-danger btn-block">Salir</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <!-- <li class="divider"></li>
+              <li>
+                <div class="navbar-login navbar-login-session">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <p>
+                        <a href="#" class="btn btn-danger btn-block">Salir</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </li> -->
+            </ul>
+          </li>
+        </ul>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- <nav class="wrap" [class.responsive]="MENU_RESPONSIVE">
     <a (click)="MenuClick(false)" class="logo" routerLink="/home">
       <img class="inside" src="assets/inside.png" />
     </a>
@@ -46,11 +136,7 @@
     </a>
 
     <a (click)="MenuClick(false)"
-      *ngIf="$.isAdmin() && (
-        $.CanDo('institutions')
-        || $.CanDo('courses')
-        || $.CanDo('vias')
-        ||$.CanDo('campaigns'))"
+      *ngIf="$.isAdmin() && ( $.CanDo('institutions') || $.CanDo('courses') ||$.CanDo('campaigns') )"
       [class.active]="$.isActive(['/categories'])"
       [routerLink]="['/categories', $.ST.categories]">
       Categorias
@@ -66,7 +152,6 @@
       </span>
     </a>
 
-    <!-- Imagen de usuario y nombre -->
     <a (click)="MenuClick(false)" class="userinfo" routerLink="/me" *ngIf="$.Me.id > 0">
       <span
         title="Imagen actual de {{$.Me.firstname}} {{$.Me.pid > 0 ? '' : '(Sin imagen)'}}"
@@ -77,5 +162,5 @@
     <a class="mini" (click)="MenuClick()">
       <span class="icon-menu"></span>
     </a>
-  </nav>
+  </nav> -->
 </header>

@@ -1,4 +1,4 @@
-header {
+/* header {
 	border-bottom: solid 1px #DDD;
 	background-color: #F1F1F1;
   position: fixed;
@@ -10,7 +10,7 @@ header {
 
 header::after { content: ''; display: block; clear: both; }
 
-/* Menu de navegación */
+
   .logo img {
     margin-right: 1rem;
     width: 80px;
@@ -25,10 +25,10 @@ header::after { content: ''; display: block; clear: both; }
     filter: grayscale(0);
     transition: filter 200ms;
   }
-  /* Add a black background color to the top navigation */
+
   nav { padding: 0; z-index: 1; }
 
-  /* Style the links inside the navigation bar */
+
   nav a:not(.logo):not(.userinfo) {
     float: left;
     text-align: center;
@@ -41,20 +41,20 @@ header::after { content: ''; display: block; clear: both; }
   }
   a:not(.mini) { display: block; }
 
-  /* Change the color of links on hover */
+
   nav a:not(.logo):not(.active):not(.userinfo):hover {
     background-color: #1f7bb1;
     color: #FFF;
     transition: background-color 200ms, color 200ms;
   }
 
-  /* Add an active class to highlight the current page */
+
   .active {
     background-color: #1f7bb1;
     color: #FFF !important;
   }
 
-  /* Hide the link that should open and close the topnav on small screens */
+
   .mini {
     display: none;
     cursor: pointer;
@@ -62,7 +62,7 @@ header::after { content: ''; display: block; clear: both; }
     z-index: 1;
   }
 
- /* When the screen is less than 600 pixels wide, hide all links, except for the first one ("Home"). Show the link that contains should open and close the topnav (.mini) */
+
  @media screen and (max-width: 600px) {
   nav a:not(.logo):not(.mini) {display: none}
 
@@ -114,4 +114,22 @@ header::after { content: ''; display: block; clear: both; }
 
 @media screen and (max-width: 500px) {
   .userinfo { display: none; }
+} */
+.icon-size
+{
+    font-size: 87px;
+}
+.inside {
+  margin-right: 1rem;
+  width: 80px;
+  height: 35px;
+  padding: 0;
+  float: left;
+  margin-top: 8px;
+  filter: grayscale(1);
+  transition: filter 200ms;
+}
+.inside:hover {
+  filter: grayscale(0);
+  transition: filter 200ms;
 }

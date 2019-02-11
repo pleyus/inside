@@ -1,4 +1,6 @@
-@import url(assets/css/fontello.css);
+@import "../node_modules/angular-calendar/css/angular-calendar.css";
+@import '../node_modules/flatpickr/dist/flatpickr.css';
+/* @import url(assets/css/fontello.css);
 @import url(assets/css/titillium.css);
 @import url(assets/css/animation.css);
 @import url(assets/css/base.css);
@@ -9,6 +11,6 @@
 @import url(assets/css/buttons.css);
 
 @import url(assets/css/status.css);
-@import url(assets/css/printer.css);
+@import url(assets/css/printer.css); */
 
 footer { text-align: center; border-top: solid 1px #DDD; }
