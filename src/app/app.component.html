@@ -5,7 +5,10 @@
     {{S.Class}}">
   <div class="container col-4">
 
-    <div class="{{ S.IsLoading() ? 'loader' : 'bar'}}"></div>
+    <div
+      class="{{ S.IsLoading() ? 'loader' : 'bar'}}"
+      [ngStyle]="(S.CurrentProgress >= 0 ? { 'width' : S.CurrentProgress + '%', 'background-color':'#a9ddff' } : {})"></div>
+
     <div class="message">
       <div class="type">Inside</div>
       <p [innerHTML]="S.Message"></p>

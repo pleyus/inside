@@ -413,6 +413,7 @@ export class Configuration {
 
   loading_timeout = null;
   LoadingTicks = 0;
+  CurrentProgress = -1;
 
   public Icon = '';
   public Class = '';
@@ -432,12 +433,14 @@ export class Configuration {
   public readonly SUCCESS = 1;
   public readonly WARNING = 2;
   public readonly UNKNOW = 3;
+  public readonly PROGRESS = 4;
   public readonly CONGRATS = 8;
 
   public IsLoading() { return this.is_loading; }
 
   private start_timer(time) {
     this.is_loading = false;
+    this.CurrentProgress = -1;
     clearTimeout( this.loading_timeout );
     this.LoadingTicks = 0;
 
@@ -541,7 +544,8 @@ export class Configuration {
    * @param message Mensaje para mostrar en el Loading... (def: 'Cargando...')
    * @param type Tipo de alerta (def: -1)
    */
-  public ShowLoading(message = 'Cargando...', type = -1) {
+  public ShowLoading(message = 'Cargando...', type = -1, progress = -1) {
+    this.CurrentProgress = progress;
     this.Icon = '';
     this.Class = (
       type === this.SUCCESS
