@@ -10,7 +10,6 @@ export class WebService {
   constructor( private http: HttpClient ) { }
   private Url = 'https://unitam.edu.mx/api/?';
 
-
   /**
    * Se encarga de descargar datos desde internet (Api rest)
    * @param using Define el modulo de la api que se usará para la obtencion de datos
@@ -80,50 +79,54 @@ export class WebService {
   /**
    * Sube un archivo al servidor utilizando la Api
    * @param file Objeto de archivo que se subira al servidor
-   * @param params Parametros post extra de la petición
-   * @param callback Llamada tras completarse la subida del archivo
-   * @param onerr Llamada en caso de provocar error
+   * @param params Parametros GET extra de la petición
    */
-  Upload(file: File, params: string, callback: (r) => void, onerr: (r) => void = (r) => {}) {
-    //  Preparamos la información que enviaremos
+  Upload(file: File, params: string) {
+
+    //  Preparamos el form que vamos a enviar
     const FileData = new FormData();
-    FileData.append('fily', file, file.name);
+    FileData.append('the-file', file, file.name);  //  Acuerdate prro!! Se llama the-file el archivo
 
-    //  Retornamos el observable..
-    return this.http.post(this.Url + 'using=files&make=upload&' + params, FileData, {
-      reportProgress: true,
-      observe: 'events'
-    }).pipe(
-      //  Mapeamos el evento
-      map(event => this.getEventMessage(event, FileData)),
+    //  Retornamos un Observable para llevar el control del la carga
+    return this.http.post(this.Url + 'using=general&make=debug&' + params, FileData, {
+        reportProgress: true,
+        observe: 'events',
+        withCredentials: true
+      }).pipe(
+        //  Mapeamos el evento
+        map(event => this.UploadStatus(event)),
 
-      //  En caso de error...
-      catchError(this.handleError)
-    );
+        //  En caso de error...
+        catchError(this.handleError)
+      );
   }
 
-  private getEventMessage(event: HttpEvent<any>, formData) {
-
+  //  Manejamos el estado actual de la subida
+  private UploadStatus(event: HttpEvent<any>) {
     switch (event.type) {
-
+      //  Si se reporta el progreso
       case HttpEventType.UploadProgress:
-        return this.fileUploadProgress(event);
+        return this.FileUploadProgress(event);
 
+      //  Si termina
       case HttpEventType.Response:
-        return this.apiResponse(event);
-
-      default:
-        return `File "${formData.get('profile').name}" surprising upload event: ${event.type}.`;
+        //  Revisamos si devuelve algo la api
+        if (event.body !== undefined) {
+          //  Si tiene el formato correcto
+          if (event.body.data !== undefined) {
+            //  Ahi ta...
+            return event.body;
+          }
+        }
+        //  Si no devuelve datos entendibles, devolvemos un error...
+        return { status: 0, data: 'Algo salió mal al subir el archivo' };
     }
   }
 
-  private fileUploadProgress(event) {
+  private FileUploadProgress(event) {
     const percentDone = Math.round(100 * event.loaded / event.total);
-    return { status: 'progress', message: percentDone };
-  }
-
-  private apiResponse(event) {
-    return event.body;
+    //  Devolvemos el estatus de progress en AppStatus.PROGRESS = 4
+    return { status: 4, data: percentDone };
   }
 
   private handleError(error: HttpErrorResponse) {
@@ -138,62 +141,4 @@ export class WebService {
     // return an observable with a user-facing error message
     return throwError('Something bad happened. Please try again later.');
   }
-}
-
-@Injectable({
-  providedIn: 'root'
-})
-export class FileUploadService {
-
-  apiUrl = 'https://unitam.edu.mx/api/?using=files&make=upload';
-
-  constructor(private http: HttpClient) { }
-
-  upload(formData) {
-    return this.http.post<any>(`${this.apiUrl}`, formData, {
-      reportProgress: true,
-      observe: 'events'
-    }).pipe(
-      map(event => this.getEventMessage(event, formData)),
-      catchError(this.handleError)
-    );
-  }
-
-  private getEventMessage(event: HttpEvent<any>, formData) {
-
-    switch (event.type) {
-
-      case HttpEventType.UploadProgress:
-        return this.fileUploadProgress(event);
-
-      case HttpEventType.Response:
-        return this.apiResponse(event);
-
-      default:
-        return `File "${formData.get('profile').name}" surprising upload event: ${event.type}.`;
-    }
-  }
-
-  private fileUploadProgress(event) {
-    const percentDone = Math.round(100 * event.loaded / event.total);
-    return { status: 'progress', message: percentDone };
-  }
-
-  private apiResponse(event) {
-    return event.body;
-  }
-
-  private handleError(error: HttpErrorResponse) {
-    if (error.error instanceof ErrorEvent) {
-      // A client-side or network error occurred. Handle it accordingly.
-      console.error('An error occurred:', error.error.message);
-    } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong,
-      console.error(`Backend returned code ${error.status}, ` + `body was: ${error.error}`);
-    }
-    // return an observable with a user-facing error message
-    return throwError('Something bad happened. Please try again later.');
-  }
-
 }
