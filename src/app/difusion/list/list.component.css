@@ -1,4 +1,4 @@
-span.tag 
+span.tag
 {
 	font-size: .6rem;
 	color: #FFF;
@@ -43,7 +43,7 @@ span.tag.excluded { background-color: #922; color: #FFF; }
 	padding: .5rem;
 }
 .tracking .applicant .note {
-	padding-left: 1rem;	
+	padding-left: 1rem;
 }
 .tracking .applicant .note input {
 	border-width: 1px;

@@ -45,3 +45,11 @@ label.button { text-transform: initial !important; padding-left: .3rem; display:
 .phones p:hover i span { display: block; }
 .phones p::after { content: ''; display: block; clear: both; }
 .phones p:not(:last-of-type) { border-bottom: solid 1px #DDD; }
+
+.alert {
+  color: #1F7BB1 !important;
+  border-color: #cfd8de;
+  background-color: #fafafb;
+}
+.alert a { color: inherit; }
+.alert a:hover { color: #000; }
