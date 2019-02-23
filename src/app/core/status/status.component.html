@@ -1,0 +1,46 @@
+<ng-container *ngIf="S.Showing">
+  <section class="t{{S.Type}}">
+
+    <div class="col-5">
+
+      <div class="info">
+
+        <div class="icon-type">
+          <span class="icon {{S.Icon}}"></span>
+        </div>
+
+        <div class="message">{{S.Message}}</div>
+
+      </div>
+
+      <!-- Barra de loading -->
+      <div *ngIf="S.IsLoading"
+        class="progress-bar {{ S.CurrentProgress > 99 || S.CurrentProgress < 0 ? 'wait' : ''}}">
+
+        <!-- Before -->
+
+        <span *ngIf="S.CurrentProgress > -1" class="{{S.CurrentProgress >= 50 ? 'mid' : ''}}">{{(S.CurrentProgress > 100 ? 100 : S.CurrentProgress) + '%'}}</span>
+        <div *ngIf="S.CurrentProgress > 0 && S.CurrentProgress < 100" [ngStyle]="{'width': S.CurrentProgress + '%'}" class="progress "></div>
+
+
+      </div>
+
+      <div class="timeout" *ngIf="S.IsLoading && S.LoadingTimeOut">
+        <span class="icon-emo-bad"></span> Esto ya tardó mucho...
+        <small (click)="S.ClearState()"><span class="icon-close"></span>Descartar</small>
+      </div>
+
+      <div *ngIf="!S.IsLoading" class="buttons">
+        <div *ngFor="let B of S.Buttons"
+          class="button {{B.Class}}"
+          title="{{B.Tooltip}}"
+          (click)="ButtonClick( B.Action )">{{B.Text}}</div>
+
+        <div *ngIf="S.Buttons.length < 1" class="button"
+          (click)="S.ClearState()">Aceptar</div>
+      </div>
+
+    </div>
+
+  </section>
+</ng-container>
