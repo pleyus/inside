@@ -183,7 +183,7 @@ export class MessagesComponent implements OnInit {
 	}
 	ToApplicant(){
 		if(this.Message.aid > 0)
-			this.R.navigate(['/applicants/open/' + this.Message.aid]);
+			this.R.navigate(['/difusion/applicants/' + this.Message.aid]);
 		else
 		{
 			this.SetOption('pre-fn', this.Message.firstname, 'applicants');
@@ -193,7 +193,7 @@ export class MessagesComponent implements OnInit {
 			this.SetOption('pre-at', this.Message.at, 'applicants');
 			this.SetOption('pre-contact-id', this.Message.id, 'applicants');
 
-			this.R.navigate(['/applicants/open/0']);
+			this.R.navigate(['/difusion/applicants/0']);
 		}
 	}
 
