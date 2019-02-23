@@ -244,7 +244,7 @@ export class PaymentOpenComponent {
   public GetUserPayments(making = '') {
     if (this.Pay.uid > 0) {
       // Loading...
-      this.S.ShowLoading('Cargando ultimos pagos de ' + this.Pay.user.name + '...');
+      this.S.ShowLoading('Cargando ultimos pagos de ' + this.Pay.user.firstname + '...');
 
       // Hablamos con la api para que guarde data
       this.W.Web('payment', 'list', 'id=' + this.Pay.uid + '&last=' + this.Last, (r) => {
