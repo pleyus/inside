@@ -1,7 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { AppStatus, Tools } from '../../app.service';
+import { Tools } from '../../app.service';
 import { WebService } from '../../services/web-service';
 import { Router } from '../../../../node_modules/@angular/router';
+import { StatusService } from '../../services/status.service';
 
 @Component({
   selector: 'linker-box',
@@ -130,7 +131,7 @@ export class LinkerComponent {
     this.R.navigate([this.link.replace('$id', id)]);
   }
   constructor(
-    private S: AppStatus,
+    private S: StatusService,
     private W: WebService,
     public T: Tools,
     private R: Router

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { AppStatus, Tools, Configuration } from '../../app.service';
+import { Tools, Configuration } from '../../app.service';
 import { WebService } from '../../services/web-service';
 import { AppComponent } from '../../app.component';
 import { Router } from '@angular/router';
+import { StatusService, InsideListenerService } from '../../services/status.service';
 
 @Component({
 	selector: 'app-list',
@@ -24,7 +25,7 @@ export class PaymentListComponent {
 		private W : WebService,
 		public $ : AppComponent,
 		private R : Router,
-		private S : AppStatus,
+		private S : StatusService,
 		public T: Tools,
 		private C: Configuration
 	){

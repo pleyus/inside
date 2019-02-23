@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { AppComponent } from './../../app.component';
-import { Tools, AppStatus, Configuration } from './../../app.service';
+import { Tools, Configuration } from './../../app.service';
 import { WebService } from '../../services/web-service';
+import { StatusService, InsideListenerService } from '../../services/status.service';
 
 @Component({
   selector: 'app-open',
@@ -58,7 +59,7 @@ export class PaymentOpenComponent {
     private R: ActivatedRoute,
     public $: AppComponent,
     private RT: Router,
-    private S: AppStatus,
+    private S: StatusService,
     private C: Configuration) {
 
       this.SetOption('view', 0);

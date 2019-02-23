@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AppComponent } from '../app.component';
 import { Router } from '@angular/router';
-import { AppStatus } from '../app.service';
+import { StatusService, InsideListenerService } from '../services/status.service';
 
 @Component({
   selector: 'app-list',
@@ -13,7 +13,7 @@ export class CategoriesListComponent {
   constructor(
     public $: AppComponent,
     private R: Router,
-    private S: AppStatus
+    private S: StatusService
   ) {
     if (!$.isAdmin()) {
       this.S.ShowError('Solo los administradores pueden entrar a las categorías', 2000);

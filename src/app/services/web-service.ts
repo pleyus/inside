@@ -125,7 +125,7 @@ export class WebService {
 
   private FileUploadProgress(event) {
     const percentDone = Math.round(100 * event.loaded / event.total);
-    //  Devolvemos el estatus de progress en AppStatus.PROGRESS = 4
+    //  Devolvemos el estatus de progress en StatusService.PROGRESS = 4
     return { status: 4, data: percentDone };
   }
 

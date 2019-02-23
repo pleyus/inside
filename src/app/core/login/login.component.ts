@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AppStatus, Tools } from '../../app.service';
+import { Tools } from '../../app.service';
 import { WebService } from '../../services/web-service';
 import { AppComponent } from '../../app.component';
 import { Router } from '@angular/router';
@@ -48,7 +48,6 @@ export class LoginComponent {
   };
 
   constructor(
-    private S: AppStatus,
     private W: WebService,
     public $: AppComponent,
     private T: Tools,

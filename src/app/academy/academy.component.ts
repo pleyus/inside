@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppComponent } from '../app.component';
-import { AppStatus } from '../app.service';
+import { StatusService } from '../services/status.service';
 
 @Component({
   selector: 'app-academy',
@@ -11,7 +11,7 @@ export class AcademyComponent implements OnInit {
 
   constructor(
     public $: AppComponent,
-    public S: AppStatus
+    public S: StatusService
   ) { }
 
   ngOnInit() {

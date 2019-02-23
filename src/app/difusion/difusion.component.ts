@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppComponent } from '../app.component';
-import { AppStatus } from '../app.service';
+import { StatusService, InsideListenerService } from '../services/status.service';
 
 @Component({
   selector: 'app-difusion',
@@ -11,7 +11,8 @@ export class ApplicantsComponent implements OnInit {
 
   constructor(
     public $: AppComponent,
-    public S: AppStatus
+    public S: StatusService,
+    public L: InsideListenerService
   ) { }
 
   ngOnInit() {

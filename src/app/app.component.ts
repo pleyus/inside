@@ -1,9 +1,10 @@
 // ng build --base-href=/inside/ --prod --build-optimizer
 
 import { Component, OnInit } from '@angular/core';
-import { AppStatus, Tools, Configuration } from './app.service';
+import { Tools, Configuration } from './app.service';
 import { WebService } from './services/web-service';
 import { Router } from '@angular/router';
+import { StatusService, InsideListenerService } from './services/status.service';
 
 
 @Component({
@@ -133,8 +134,8 @@ export class AppComponent implements OnInit {
   constructor(
     private W: WebService,
     private R: Router,
-    public S: AppStatus,
-    private T: Tools,
+    public S: StatusService,
+    public L: InsideListenerService,
     private C: Configuration ) { }
   public Now() { return new Date(); }
 

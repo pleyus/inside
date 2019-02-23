@@ -1,28 +1,9 @@
 <app-holidays></app-holidays>
-<section id="status"
-  class="
-    {{S.Message != '' ? '' : 'hide'}}
-    {{S.Class}}">
-  <div class="container col-4">
-
-    <div
-      class="{{ S.IsLoading() ? 'loader' : 'bar'}}"
-      [ngStyle]="(S.CurrentProgress >= 0 ? { 'width' : S.CurrentProgress + '%', 'background-color':'#a9ddff' } : {})"></div>
-
-    <div class="message">
-      <div class="type">Inside</div>
-      <p [innerHTML]="S.Message"></p>
-
-      <p *ngIf="S.IsLoading() && S.LoadingTicks > 10" class="uptime">Esto ya tardó mucho... <span class="icon-emo-bad"></span></p>
-
-      <a (click)="S.ClearState()" class="{{ ( !S.IsLoading() || S.LoadingTicks > 10 ) ? '' : 'hide'}} button">Cerrar</a>
-    </div>
-  </div>
-</section>
+<app-status></app-status>
 
 <ng-container *ngIf="!Loading">
   <ng-container *ngIf="Me.id > 0">
-    <section id="viewer" (mousemove)="S.Alive($event)">
+    <section id="viewer" (mousemove)="L.Alive($event)">
 
       <app-core-header></app-core-header>
 

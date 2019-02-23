@@ -1,7 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { AppComponent } from '../../app.component';
 import { DOCUMENT } from '@angular/common';
-import { Tools, AppStatus } from '../../app.service';
+import { Tools } from '../../app.service';
+import { StatusService, InsideListenerService } from '../../services/status.service';
 
 @Component({
   selector: 'app-core-header',
@@ -14,7 +15,8 @@ export class HeaderComponent {
   constructor(
     public $: AppComponent,
     public T: Tools,
-    public S: AppStatus,
+    public S: StatusService,
+    public L: InsideListenerService,
     @Inject(DOCUMENT) document) {}
 
   public MenuClick(Set: boolean = null) {

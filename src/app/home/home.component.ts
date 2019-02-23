@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { AppComponent } from '../app.component';
-import { UsersListComponent } from '../users/list/list.component';
-import { Tools, Configuration, AppStatus } from '../app.service';
+import { Tools, Configuration } from '../app.service';
 import { Router } from '../../../node_modules/@angular/router';
+import { StatusService, InsideListenerService } from '../services/status.service';
 
 @Component({
   selector: 'app-home',
@@ -19,19 +19,20 @@ export class HomeComponent {
     public $: AppComponent,
     public T: Tools,
     private C: Configuration,
-    public S: AppStatus,
-    private R: Router
+    public S: StatusService,
+    private R: Router,
+    public L: InsideListenerService
   ) {
     if ( $.isAdmin() ) {
       $.ngOnInit();  //  Para que?...
 
       //  Para mejorar el muestreo de cumpleaños
-      S.UpdateNews(true, (B) => {
+      L.UpdateNews(true, (B) => {
         // Todo
       });
 
       //  Enviamos señales de vida...
-      S.Alive(null);
+      L.Alive(null);
     } else {
       R.navigate(['/me']);
     }

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { AppComponent } from '../../app.component';
-import { Tools, AppStatus, Configuration } from '../../app.service';
+import { Tools, Configuration } from '../../app.service';
 import { WebService } from '../../services/web-service';
 import { Router } from '@angular/router';
+import { StatusService, InsideListenerService } from '../../services/status.service';
 
 @Component({
   selector: 'radio-messages',
@@ -66,7 +67,7 @@ export class RadioMessagesComponent {
 				//	Altualizamos nuestro ultimo mensaje leido
 				if(this.Mensajes.length > 0){
 					this.SetOption('lmt', this.Mensajes[0].at);
-					this.S.UpdateNews();
+					this.L.UpdateNews();
 				}
 			}
 
@@ -120,10 +121,10 @@ export class RadioMessagesComponent {
 	constructor(
 		private $ : AppComponent,
 		private W : WebService,
-		private T : Tools,
-		private R : Router,
-		private S: AppStatus,
-		private C: Configuration
+		private S: StatusService,
+    private C: Configuration,
+    private L: InsideListenerService,
+    private R: Router
 	)
 	{
 		if( ($.isAdmin() && $.CanDo('radio')) || $.Me.radio.length > 0 )

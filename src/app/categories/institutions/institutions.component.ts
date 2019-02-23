@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { Tools, AppStatus, Configuration } from '../../app.service';
+import { Tools, Configuration } from '../../app.service';
 import { WebService } from '../../services/web-service';
 import { AppComponent } from '../../app.component';
 import { Router } from '@angular/router';
+import { StatusService, InsideListenerService } from '../../services/status.service';
 
 @Component({
   selector: 'app-institutions',
@@ -239,7 +240,7 @@ export class CategoryInstitutionsComponent {
 		private W : WebService,
 		private T : Tools,
 		private R : Router,
-		private S : AppStatus,
+		private S : StatusService,
 		private C: Configuration
 	)
 	{

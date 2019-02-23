@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AppComponent } from 'src/app/app.component';
 import { Router } from '@angular/router';
-import { AppStatus, Configuration } from 'src/app/app.service';
+import { Configuration } from 'src/app/app.service';
 import { WebService } from '../../services/web-service';
+import { StatusService, InsideListenerService } from '../../services/status.service';
 
 @Component({
   selector: 'app-vias',
@@ -17,7 +18,7 @@ export class ViasComponent {
     public $: AppComponent,
     private W: WebService,
     private R: Router,
-    private S: AppStatus,
+    private S: StatusService,
     private C: Configuration) {
       if ($.CanDo('vias') ) {
         this.init();

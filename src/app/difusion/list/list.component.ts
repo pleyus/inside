@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { AppStatus, Configuration } from '../../app.service';
+import { Configuration } from '../../app.service';
 import { WebService } from '../../services/web-service';
 import { AppComponent } from '../../app.component';
 import { Router } from '@angular/router';
+import { StatusService, InsideListenerService } from '../../services/status.service';
 
 @Component({
   selector: 'applicants-list',
@@ -28,9 +29,10 @@ export class ApplicantsListComponent {
 	constructor(
 		private W : WebService,
 		public $ : AppComponent,
-		private R : Router,
-		private S : AppStatus,
-		private C: Configuration)
+    private S : StatusService,
+    public L: InsideListenerService,
+    private C: Configuration,
+    private R: Router)
 	{
 		this.Applicants = [];
 		this.SetOption('last', 0);
@@ -44,7 +46,7 @@ export class ApplicantsListComponent {
 		this._OrderBy = this.GetOption('order_by');
 
 		this.search_string = this.GetOption('search');
-		this.S.UpdateNews();
+		this.L.UpdateNews();
 
 
 		if( $.isAdmin() && this.$.CanDo('applicants') )

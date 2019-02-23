@@ -3,8 +3,8 @@
 		<a class="item" *ngIf="$.isAdmin() || $.Me.announcerOf > 0" routerLinkActive="active" routerLink="messages">
 			<span class="icon-mail"></span>
 			Mensajes
-			<span *ngIf="S.News.RadioMessages > 0" class="bullet pull-right">
-				{{ S.News.RadioMessages > 99 ? '+99' : S.News.RadioMessages }}
+			<span *ngIf="L.News.RadioMessages > 0" class="bullet pull-right">
+				{{ L.News.RadioMessages > 99 ? '+99' : L.News.RadioMessages }}
 			</span>
 		</a>
 		<a class="item" *ngIf="$.isAdmin()" routerLinkActive="active" routerLink="guide">

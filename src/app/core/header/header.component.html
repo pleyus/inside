@@ -18,8 +18,8 @@
       *ngIf="$.isAdmin() && $.CanDo('applicants')"
       routerLinkActive="active" routerLink="/difusion">
       Difusión
-      <span *ngIf="S.News.Applicants > 0 || S.News.Messages > 0" class="bullet pull-right">
-        {{S.News.Applicants + S.News.Messages > 99 ? '+99' : S.News.Applicants + S.News.Messages}}
+      <span *ngIf="L.News.Applicants > 0 || L.News.Messages > 0" class="bullet pull-right">
+        {{L.News.Applicants + L.News.Messages > 99 ? '+99' : L.News.Applicants + L.News.Messages}}
       </span>
     </a>
 
@@ -40,8 +40,8 @@
       [class.active]="$.isActive(['/radio'])"
       [routerLink]="['/radio', $.ST.radio]">
       Studio3.3
-      <span *ngIf="S.News.RadioMessages > 0" class="bullet pull-right">
-        {{S.News.RadioMessages > 99 ? '+99' : S.News.RadioMessages}}
+      <span *ngIf="L.News.RadioMessages > 0" class="bullet pull-right">
+        {{L.News.RadioMessages > 99 ? '+99' : L.News.RadioMessages}}
       </span>
     </a>
 
@@ -61,8 +61,8 @@
       [class.active]="$.isActive(['/feedback'])"
       [routerLink]="['/feedback']">
       Feedback
-      <span *ngIf="S.News.Feedbacks > 0" class="bullet pull-right">
-        {{S.News.Feedbacks > 99 ? '+99' : S.News.Feedbacks}}
+      <span *ngIf="L.News.Feedbacks > 0" class="bullet pull-right">
+        {{L.News.Feedbacks > 99 ? '+99' : L.News.Feedbacks}}
       </span>
     </a>
 

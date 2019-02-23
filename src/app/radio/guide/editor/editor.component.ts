@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { AppComponent } from '../../../app.component';
-import { Tools, AppStatus, Configuration } from '../../../app.service';
+import { Tools, Configuration } from '../../../app.service';
 import { WebService } from '../../../services/web-service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { StatusService, InsideListenerService } from '../../../services/status.service';
 
 @Component({
   selector: 'app-radio-guide-editor',
@@ -265,7 +266,7 @@ export class RadioGuideEditorComponent {
     public T: Tools,
     private R: Router,
     private AR: ActivatedRoute,
-    private S: AppStatus,
+    private S: StatusService,
     private C: Configuration
   ) {
     this.AR.params.subscribe(params => {

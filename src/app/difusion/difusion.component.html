@@ -4,15 +4,15 @@
 			[class.active]="$.isActive(['/difusion/applicants'])" routerLink="/difusion/applicants">
 			<span class="icon-users"></span>
 			Aspirantes
-			<span *ngIf="S.News.Applicants > 0" class="bullet pull-right">
-				{{S.News.Applicants > 99 ? '+99' : S.News.Applicants}}
+			<span *ngIf="L.News.Applicants > 0" class="bullet pull-right">
+				{{L.News.Applicants > 99 ? '+99' : L.News.Applicants}}
 			</span>
     </a>
     <a class="item" [class.active]="$.isActive(['/difusion/inbox'])" routerLink="/difusion/inbox">
 			<span class="icon-inbox"></span>
 			Mensajes
-			<span *ngIf="S.News.Messages > 0" class="bullet pull-right">
-				{{S.News.Messages > 99 ? '+99' : S.News.Messages}}
+			<span *ngIf="L.News.Messages > 0" class="bullet pull-right">
+				{{L.News.Messages > 99 ? '+99' : L.News.Messages}}
 			</span>
 		</a>
     <a class="item"

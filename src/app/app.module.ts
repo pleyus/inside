@@ -8,7 +8,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { ChartsModule } from 'ng2-charts';
 
-import { Tools, AppStatus, Configuration } from './app.service';
+import { Tools, Configuration } from './app.service';
 import { WebService } from './services/web-service';
 import { ConfigService } from './services/config.service';
 
@@ -32,7 +32,6 @@ import { CategoryInstitutionsComponent } from './categories/institutions/institu
 import { UsersMeComponent } from './users/me/me.component';
 import { LibraryComponent } from './library/library.component';
 import { HeaderComponent } from './core/header/header.component';
-import { MenuComponent } from './core/menu/menu.component';
 import { LinkerComponent } from './core/linker/linker.component';
 import { UsersNormalViewComponent } from './users/list/view-normal/view-normal.component';
 import { UsersContactsViewComponent } from './users/list/view-contacts/view-contacts.component';
@@ -49,6 +48,8 @@ import { CheckinComponent } from './academy/checkin/checkin.component';
 import { ViasComponent } from './difusion/vias/vias.component';
 import { HolidaysComponent } from './core/holidays/holidays.component';
 import { FileManagerComponent } from './core/file-manager/file-manager.component';
+import { StatusComponent } from './core/status/status.component';
+import { StatusService, InsideListenerService } from './services/status.service';
 
 const appRoutes: Routes = [
   {
@@ -133,7 +134,6 @@ const appRoutes: Routes = [
     UsersMeComponent,
     LibraryComponent,
     HeaderComponent,
-    MenuComponent,
     LinkerComponent,
     UsersNormalViewComponent,
     UsersContactsViewComponent,
@@ -149,7 +149,8 @@ const appRoutes: Routes = [
     CheckinComponent,
     ViasComponent,
     HolidaysComponent,
-    FileManagerComponent
+    FileManagerComponent,
+    StatusComponent
   ],
 
   imports: [
@@ -161,7 +162,7 @@ const appRoutes: Routes = [
     ChartsModule,
     CKEditorModule
   ],
-  providers: [ WebService, ConfigService, Tools, AppStatus, Configuration ],
+  providers: [ StatusService, InsideListenerService, WebService, ConfigService, Tools, Configuration ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

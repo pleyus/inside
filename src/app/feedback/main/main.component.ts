@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { Tools, AppStatus, Configuration } from '../../app.service';
+import { Tools, Configuration } from '../../app.service';
 import { WebService } from '../../services/web-service';
 import { Router } from '@angular/router';
 import { AppComponent } from '../../app.component';
+import { StatusService, InsideListenerService } from '../../services/status.service';
 
 
 @Component({
@@ -51,7 +52,7 @@ export class FeedbackListComponent {
     private RT: Router,
     public T: Tools,
     private C: Configuration,
-    private S: AppStatus ) {
+    private S: StatusService ) {
       this.SetOption('last', 0);
       //  Is logged
       if (this.$.Me.type >= 1) {

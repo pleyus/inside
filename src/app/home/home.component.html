@@ -6,8 +6,8 @@
 <section>
   <div class="col-6 birthdays">
     <h1>Proximos cumpleaños</h1>
-    <div class="empty" *ngIf="S.News.Birthdays.length === 0">No hay cumpleaños proximos</div>
-    <div *ngFor="let B of S.News.Birthdays"
+    <div class="empty" *ngIf="L.News.Birthdays.length === 0">No hay cumpleaños proximos</div>
+    <div *ngFor="let B of L.News.Birthdays"
       title="{{
         (T.HappyB(B.birthday * 1000) ? '¡Hoy cumple' : '¡Cumplirá' ) +
         (B.id === $.Me.id ? 's' : '') +

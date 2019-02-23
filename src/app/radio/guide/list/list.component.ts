@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { AppComponent } from '../../../app.component';
-import { AppStatus, Tools, Configuration } from '../../../app.service';
+import { Tools, Configuration } from '../../../app.service';
 import { WebService } from '../../../services/web-service';
 import { Router } from '@angular/router';
+import { StatusService, InsideListenerService } from '../../../services/status.service';
 
 
 @Component({
@@ -103,7 +104,7 @@ export class RadioGuideListComponent {
     private $: AppComponent,
     private W: WebService,
     private R: Router,
-    private S: AppStatus,
+    private S: StatusService,
     public T: Tools,
     private C: Configuration
   ) {

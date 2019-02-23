@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { AppComponent } from '../../app.component';
-import { AppStatus, Configuration } from '../../app.service';
+import { Configuration } from '../../app.service';
 import { WebService } from '../../services/web-service';
+import { StatusService, InsideListenerService } from '../../services/status.service';
 
 @Component({
   selector: 'app-applicant-stats',
@@ -311,7 +312,7 @@ export class ApplicantsStatsComponent {
 
   constructor(
     public $: AppComponent,
-    private S: AppStatus,
+    private S: StatusService,
     private W: WebService,
     private C: Configuration
   ) {

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AppStatus, Configuration } from '../app.service';
+import { Configuration } from '../app.service';
 import { WebService } from '../services/web-service';
 import { AppComponent } from '../app.component';
 import { Router } from '../../../node_modules/@angular/router';
+import { StatusService, InsideListenerService } from '../services/status.service';
 
 @Component({
   selector: 'app-messages',
@@ -197,7 +198,7 @@ export class MessagesComponent implements OnInit {
 	}
 
 	constructor(
-		private S: AppStatus,
+		private S: StatusService,
 		private R: Router,
 		private $: AppComponent,
 		private W: WebService,

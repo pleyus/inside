@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppComponent } from '../app.component';
-import { AppStatus } from '../app.service';
+import { StatusService, InsideListenerService } from '../services/status.service';
 
 @Component({
   selector: 'app-radio',
@@ -8,12 +8,10 @@ import { AppStatus } from '../app.service';
   styleUrls: ['./radio.component.css']
 })
 export class RadioComponent implements OnInit {
-
-	Title = "Studio3.3 – Panel";
-
-	constructor(
-		public $ : AppComponent,
-		public S: AppStatus
-	) { }
-	ngOnInit() { }
+  constructor(
+    public $: AppComponent,
+    public S: StatusService,
+    public L: InsideListenerService
+  ) { }
+  ngOnInit() { }
 }

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppComponent } from '../../app.component';
-import { AppStatus, Tools, Configuration } from '../../app.service';
+import { Tools, Configuration } from '../../app.service';
 import { WebService } from '../../services/web-service';
+import { StatusService, InsideListenerService } from '../../services/status.service';
 
 @Component({
   selector: 'app-me',
@@ -48,7 +49,7 @@ export class UsersMeComponent {
     public $: AppComponent,
     private R: Router,
     private W: WebService,
-    private S: AppStatus,
+    private S: StatusService,
     public T: Tools,
     private C: Configuration) {
     $.ngOnInit();

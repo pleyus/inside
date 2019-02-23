@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { Tools, AppStatus, Configuration } from '../../app.service';
+import { Tools, Configuration } from '../../app.service';
 import { WebService } from '../../services/web-service';
 import { AppComponent } from '../../app.component';
 import { Router } from '@angular/router';
+import { StatusService, InsideListenerService } from '../../services/status.service';
 
 @Component({
   selector: 'app-list',
@@ -114,7 +115,7 @@ export class UsersListComponent {
     public $: AppComponent,
     public T: Tools,
     private R: Router,
-    private S: AppStatus,
+    private S: StatusService,
     private C: Configuration
   ) {
     //  Primero se limpian los usuarios que esten en cache
@@ -177,7 +178,7 @@ export class UsersListComponent {
   }
 
   /**
-   * Muestra en un Alert (AppStatus) información sobre algun elemento del componente
+   * Muestra en un Alert (StatusService) información sobre algun elemento del componente
    * @param num Numero del bloque de información a mostrar
    */
   public Info(num) {

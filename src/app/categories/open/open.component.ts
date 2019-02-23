@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AppStatus, Configuration } from '../../app.service';
+import { Configuration } from '../../app.service';
 import { WebService } from '../../services/web-service';
 import { AppComponent } from '../../app.component';
+import { StatusService, InsideListenerService } from '../../services/status.service';
 
 @Component({
   selector: 'app-open',
@@ -25,7 +26,7 @@ export class CategoriesOpenComponent {
 		private R:ActivatedRoute,
 		private W:WebService,
 		private RT:Router,
-		private S : AppStatus,
+		private S : StatusService,
 		private C: Configuration
 	){
 		R.params.subscribe( params =>

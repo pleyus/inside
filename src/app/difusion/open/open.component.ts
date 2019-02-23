@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { AppComponent } from './../../app.component';
-import { AppStatus, Configuration } from './../../app.service';
+import { Configuration } from './../../app.service';
 import { WebService } from '../../services/web-service';
+import { StatusService, InsideListenerService } from '../../services/status.service';
 
 
 @Component({
@@ -72,7 +73,8 @@ export class ApplicantsOpenComponent {
     private R: ActivatedRoute,
     public $: AppComponent,
     private RT: Router,
-    private S: AppStatus,
+    private S: StatusService,
+    private L: InsideListenerService,
     private C: Configuration
   ) {
     R.params.subscribe(params => {
@@ -296,7 +298,7 @@ export class ApplicantsOpenComponent {
       this.S.ShowLoading('Guardando nueva nota. Espere...');
       this.W.Web('applicants', 'save-note', 'note=' + this.NewNote + '&aid=' + this.Id, (r) => {
         if (r.status === this.S.SUCCESS) {
-          this.S.UpdateNews();
+          this.L.UpdateNews();
           this.NewNote = '';
           this.S.ShowSuccess('Nota guardada correctamente', 2000);
           this.GetNotes(true, callback);
@@ -314,7 +316,7 @@ export class ApplicantsOpenComponent {
 
     this.W.Web('applicants', 'delete-note', 'id=' + note.id, (r) => {
       if (r.status === this.S.SUCCESS) {
-        this.S.UpdateNews();
+        this.L.UpdateNews();
         this.GetNotes(true);
         this.Applicant.notes[index].note = 'Elemento eliminado...';
         this.S.ShowSuccess('Se borro correctamente la nota', 2000);
