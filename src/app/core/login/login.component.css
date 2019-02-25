@@ -22,5 +22,19 @@ input { border-left: 7px solid #3E667C; }
 .password.show { color:#3E667C; }
 .password:hover { color: #3E667C; }
 .button { margin-bottom: 20px; }
-#loading-bar::before { background-color: rgb(19, 141, 29); }
-.hidebar { height: 4px; }
+
+.bar {
+  position: relative;
+  overflow: hidden;
+  height: 4px;
+}
+.loading::before {
+    display: block;
+    position: absolute;
+    content: '';
+    left: -200px;
+    width: 200px;
+    height: 4px;
+    background-color: rgb(19, 141, 29);
+    animation: loading 2s linear infinite;
+}

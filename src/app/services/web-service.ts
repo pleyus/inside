@@ -81,7 +81,7 @@ export class WebService {
    * @param file Objeto de archivo que se subira al servidor
    * @param params Parametros GET extra de la petición
    */
-  Upload(file: File, params: string) {
+  Upload(file: File, params: string = '') {
 
     //  Preparamos el form que vamos a enviar
     const FileData = new FormData();

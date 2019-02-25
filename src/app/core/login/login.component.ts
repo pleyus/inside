@@ -3,6 +3,7 @@ import { Tools } from '../../app.service';
 import { WebService } from '../../services/web-service';
 import { AppComponent } from '../../app.component';
 import { Router } from '@angular/router';
+import { InsideListenerService } from 'src/app/services/status.service';
 
 @Component({
   selector: 'app-login',
@@ -18,29 +19,6 @@ export class LoginComponent {
   private placeholders = ['4831234567', 'elaguila94', 'correo@ejemplo.com', '5551234567', 'miusuario'];
   private interval = null;
 
-  public LoginMessage = '';
-  private loginmessages = [
-    'Necesito saber quien eres, inicia sesión por favor :D',
-    'Se requiere inicio de sesión para entrar a Inside.',
-    'Ingresa tu usuario y contraseña para entrar a este modulo.',
-    'Introduce tu usuario y contraseña para continuar'
-  ];
-
-  private errorCurrent = 0;
-  private errorResponse = [
-    'Mmm... Tus datos no coinciden',
-    'Algo anda mal, verifica tus datos.',
-    'No conosco a nadie con esos datos',
-    'Revisa tus datos, algo no esta bien',
-    'Datos incorrectos'
-  ];
-  private successResponse = [
-    '¡Bien! Espera un momento...',
-    'Listo, ahora se quien eres.',
-    '(¡Bip!) Acceso correcto',
-    '¡Bienvenido eze!',
-    '¡Datos correctos! :D'
-  ];
   public Loading = false;
   public ResponseMessage = {
     loginCorrect: 0, //  0: aun no  1: Correcto  2: Error
@@ -51,7 +29,7 @@ export class LoginComponent {
     private W: WebService,
     public $: AppComponent,
     private T: Tools,
-    private R: Router
+    private L: InsideListenerService
   ) {
     this.init();
   }
@@ -61,6 +39,7 @@ export class LoginComponent {
   }
 
   private init() {
+    this.Username = this.$.Me.username;
     this.setPlaceholder();
 
     if (this.interval !== null) {
@@ -68,36 +47,68 @@ export class LoginComponent {
     }
 
     this.interval = setInterval(() => { this.setPlaceholder(); }, 3000);
-    this.LoginMessage = this.loginmessages[ this.T.Random( 0, this.loginmessages.length ) ];
   }
 
   public Login() {
-
     //  Si se esta cargando, terminamos
     if (this.Loading) {
       return;
     }
 
+    if (this.Username.trim() === '') {
+      this.ResponseMessage = {
+        loginCorrect: 2,
+        loginMessage: 'El nombre de usuario es obligatorio'
+      };
+      return;
+    }
+
+    if (this.Password.trim() === '') {
+      this.ResponseMessage = {
+        loginCorrect: 2,
+        loginMessage: 'Falta tu contraseña'
+      };
+      return;
+    }
+
+    this.ResponseMessage = {
+      loginCorrect: -1,
+      loginMessage: ''
+    };
+
     //  Cargando...
     this.Loading = true;
 
     //  Platicamos con la api
-    console.log('Logining...');
     this.W.Post('https://unitam.edu.mx/plataforma/login/index.php?inside=1',
       'username=' + this.Username +
       '&password=' + this.Password +
       '&anchor',
-      r => {
-        this.Loading = false;
-          //  Mostramos un mensaje en lo que termina de cargar todo...
-          this.ResponseMessage = {
-            loginCorrect: 1,
-            loginMessage: this.successResponse[ this.T.Random(0, this.successResponse.length) ]
-          };
+      (r) => this.check_loggin(),
+      (r) => this.check_loggin());
+  }
+  private check_loggin() {
+    //  Checamos si se carga el usuario correctamente
+    this.$.loadUser( (s) => {
+      this.Loading = false;
+      if (s) {
 
-          //  Checamos si se carga el usuario correctamente
-          this.$.loadUser( );
-      });
+        //  Mostramos un mensaje en lo que termina de cargar todo...
+        this.ResponseMessage = {
+          loginCorrect: 1,
+          loginMessage: 'Sesión iniciada, espera...'
+        };
+
+        setTimeout(() => this.L.UpdateNews(true), 1000);
+      } else {
+
+        this.ResponseMessage = {
+          loginCorrect: 2,
+          loginMessage: 'Usuario y/o contraseña incorrectos'
+        };
+
+      }
+    });
   }
 
 }

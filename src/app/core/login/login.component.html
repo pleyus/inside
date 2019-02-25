@@ -2,8 +2,14 @@
 <section>
   <img src="favicon.ico" alt="Logo de la Universidad Tamazunchale">
 
-  <div class="data" *ngIf="$.Me.id == 0">
-    <p>{{LoginMessage}}</p>
+  <div class="data">
+    <p>
+      {{
+        $.Me.id > 0
+        ? 'Tu sesión expiró, vuelve a iniciarla para continuar'
+        : 'Ingresa tus credenciales para entrar al modulo'
+      }}
+    </p>
 
     <div class="row filter">
       <div class="col-12">
@@ -24,12 +30,14 @@
         </div>
       </div>
     </div>
-    <p class="error" class="state-{{ResponseMessage.loginCorrect}}" *ngIf="ResponseMessage.loginCorrect > 0">
+
+    <button class="button success" (click)="Login()">Iniciar sesión</button>
+    <div class="bar {{Loading ? 'loading' : ''}}"></div>
+
+    <p class="error" class="state-{{ResponseMessage.loginCorrect}}" *ngIf="ResponseMessage.loginCorrect > -1">
       {{ResponseMessage.loginMessage}}
     </p>
-    <button class="button success" (click)="Login()">Iniciar sesión</button>
-    <div id="loading-bar" *ngIf="Loading"></div>
-    <div class="hidebar" *ngIf="!Loading"></div>
+
   </div>
 
   <div *ngIf="$.Me.id === 0 && $.Me.uid > 0">

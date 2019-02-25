@@ -4,6 +4,7 @@ export class NewsAdapter {
     public RadioMessages: number = 0,
     public Messages: number = 0,
     public Birthdays: Array<any> = [],
-    public Feedbacks: number = 0
+    public Feedbacks: number = 0,
+    public LoggedIn: boolean = false
   ) {}
 }

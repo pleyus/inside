@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
     id : 0,
     type : 0,
     uid : 0,
+    username: '',
     announcerOf: 0,
     status : 0,
     birthday: 0,

@@ -200,6 +200,7 @@ export class InsideListenerService {
               this.News.Feedbacks = r.data.Feedbacks;
               this.News.Messages = r.data.Messages;
               this.News.RadioMessages = r.data.RadioMessages;
+              this.News.LoggedIn = r.data.LoggedIn;
 
               if (this.News.Birthdays.length !== r.data.Birthdays.length) {
                 this.News.Birthdays = r.data.Birthdays;

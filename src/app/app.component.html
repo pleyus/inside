@@ -2,7 +2,7 @@
 <app-status></app-status>
 
 <ng-container *ngIf="!Loading">
-  <ng-container *ngIf="Me.id > 0">
+  <ng-container *ngIf="L.News.LoggedIn">
     <section id="viewer" (mousemove)="L.Alive($event)">
 
       <app-core-header></app-core-header>
@@ -22,5 +22,5 @@
     </section>
     <div id="printer"></div>
   </ng-container>
-  <app-login *ngIf="!(Me.id > 0)"></app-login>
+  <app-login *ngIf="!L.News.LoggedIn"></app-login>
 </ng-container>

@@ -67,7 +67,7 @@
     </a>
 
     <!-- Imagen de usuario y nombre -->
-    <a (click)="MenuClick(false)" class="userinfo" routerLink="/me" *ngIf="$.Me.id > 0">
+    <a (click)="MenuClick(false)" class="userinfo" routerLink="/me" *ngIf="L.News.LoggedIn">
       <span
         title="Imagen actual de {{$.Me.firstname}} {{$.Me.pid > 0 ? '' : '(Sin imagen)'}}"
         [ngStyle]="{'background-image':'url(' + T.CreateUrl($.Me.pid > 0 ? $.Me.picture.filename : $.Me.image, 'users') + ')'}"></span>
