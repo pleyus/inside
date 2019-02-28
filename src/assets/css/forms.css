@@ -1,5 +1,5 @@
 /* Estilos base de los forms con grupos dentro */
-textarea, input:not(.button), select { padding: 10px; width: fit-content; width: stretch; margin-bottom: 10px; border-radius: 5px; border: solid 1px #DDD; background-color: #FFF; }
+textarea, input:not(.button), select { padding: 10px; width: fit-content; width: stretch; margin-bottom: 10px; border-radius: 2px; border: solid 1px #DDD; background-color: #FFF; }
 textarea { height: 100px; }
 
 .group > h1 { border-bottom: solid 2px #1F7BB1; margin: 0; padding: 5px 0; font-size: 1rem; color: #333; }
