@@ -6,6 +6,7 @@ import { NewsAdapter } from '../core/class/news';
 
 @Injectable( {providedIn: 'root'} )
 export class StatusService {
+
   //  Statuses
   public readonly ERROR = 0;
   public readonly SUCCESS = 1;
@@ -21,9 +22,11 @@ export class StatusService {
 
   //  Alerts
   private alertTimeOut;
+  public PromptCallback;
 
   //  properties
   public CurrentProgress = -1;
+  public Input = '';
   public Icon = '';
   public Message = '';
   public Type = -1;
@@ -33,18 +36,29 @@ export class StatusService {
   public get Showing() { return this.loading || this.Message.length > 0; }
   public get LoadingTimeOut() { return this.loadingTick > 10; }
 
-  /**
-   * Dispara el temporizador para quitar la alerta
-   * @param time Tiempo en milisegundos que durará la alerta hasta eliminarse por si sola
-   */
-  private alertTiming(time) {
+  public KeyEvent(e) {
+    if(e.keyCode === 27) {
+      this.ClearState('cancel');
+    } else if (e.keyCode === 13){
+      this.ClearState();
+    }
+  }
 
+  private clearLoading() {
     //  Limpiamos el loading que puediera existir
     this.loading = false;
     this.CurrentProgress = -1;
     clearTimeout( this.loadingTimeOut );
     this.loadingTick = 0;
     this.Buttons = [];
+  }
+
+  /**
+   * Dispara el temporizador para quitar la alerta
+   * @param time Tiempo en milisegundos que durará la alerta hasta eliminarse por si sola
+   */
+  private alertTiming(time) {
+    this.clearLoading();
 
     //  Si existe el timeout de alertTimeOut, lo reseteamos
     if (this.alertTimeOut !== undefined) {
@@ -125,10 +139,20 @@ export class StatusService {
     this.Buttons = buttons;
   }
 
+  public ShowPrompt(message: string, callback: (accept: boolean, input: string) => void,
+    defaultInput: string = '', type = -1, icon: string = 'icon-comment') {
+    this.Input = defaultInput;
+    this.clearLoading();
+    this.Message = message;
+    this.Type = type;
+    this.Icon = icon;
+    this.PromptCallback = callback;
+  }
+
   /**
    * Limpia las alertas mostradas
    */
-  public ClearState() {
+  public ClearState(args = '') {
     this.Icon = '';
     this.Message = '';
 
@@ -138,6 +162,10 @@ export class StatusService {
     this.CurrentProgress = -1;
 
     this.Type = -1;
+
+    if (this.PromptCallback !== undefined) {
+      this.PromptCallback(args !== 'cancel', this.Input);
+    }
   }
 
   /**

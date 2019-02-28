@@ -42,16 +42,16 @@ section > div > *:not(:last-of-type) { margin-bottom: 1rem; }
   padding-top: .4rem;
 }
 
-.info .icon-type .icon-loading::before { background-color: #FFF; color: #1F7BB1; }
-.t0 .progress-bar > span, .t0 .info .icon-type .icon-loading::before { color: #C60000 }
-.t1 .progress-bar > span, .t1 .info .icon-type .icon-loading::before { color: #007C00 }
-.t2 .progress-bar > span, .t2 .info .icon-type .icon-loading::before { color: #F69400 }
+.info .icon-type .icon-loading::before, .info .icon-type .icon-comment::before { background-color: #FFF; color: #1F7BB1; }
+.t0 .progress-bar > span, .t0 .info .icon-type .icon-loading::before, .t0 .info .icon-type .icon-comment::before { color: #C60000 }
+.t1 .progress-bar > span, .t1 .info .icon-type .icon-loading::before, .t1 .info .icon-type .icon-comment::before { color: #007C00 }
+.t2 .progress-bar > span, .t2 .info .icon-type .icon-loading::before, .t2 .info .icon-type .icon-comment::before { color: #F69400 }
 
 .progress { height: 1rem; overflow: hidden; }
-.button.primary, .progress, .info .icon-type .icon:not(.icon-loading)::before { color: #FFF; background-color: #1F7BB1 }
-.t0 .button.primary, .t0 .progress, .t0 .info .icon-type .icon:not(.icon-loading)::before { background-color: #C60000 }
-.t1 .button.primary, .t1 .progress, .t1 .info .icon-type .icon:not(.icon-loading)::before { background-color: #007C00 }
-.t2 .button.primary, .t2 .progress, .t2 .info .icon-type .icon:not(.icon-loading)::before { background-color: #F69400 }
+.button.primary, .progress, .info .icon-type .icon:not(.icon-loading):not(.icon-comment)::before { color: #FFF; background-color: #1F7BB1 }
+.t0 .button.primary, .t0 .progress, .t0 .info .icon-type .icon:not(.icon-loading):not(.icon-comment)::before { background-color: #C60000 }
+.t1 .button.primary, .t1 .progress, .t1 .info .icon-type .icon:not(.icon-loading):not(.icon-comment)::before { background-color: #007C00 }
+.t2 .button.primary, .t2 .progress, .t2 .info .icon-type .icon:not(.icon-loading):not(.icon-comment)::before { background-color: #F69400 }
 .progress-bar > span {
   color: #1F7BB1;
   font-size: .8rem;
@@ -102,3 +102,10 @@ section > div > *:not(:last-of-type) { margin-bottom: 1rem; }
 
 .buttons { text-align: center; }
 .buttons > .button:not(:last-of-type) { margin-right: 1rem; }
+
+input[type="text"] {
+  display: block;
+  clear: both;
+  border: solid 1px #DDD;
+  margin-bottom: 1rem;
+}

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponent } from './../../app.component';
-import { Tools, AppStatus, Configuration } from './../../app.service';
+import { Tools, Configuration } from './../../app.service';
 import { WebService } from '../../services/web-service';
+import { StatusService } from 'src/app/services/status.service';
 
 
 @Component({
@@ -97,7 +98,7 @@ export class UsersOpenComponent
 		public T: Tools,
 		private W: WebService,
 		public $ : AppComponent,
-		private S: AppStatus,
+		private S: StatusService,
 		private C: Configuration
 	)
 	{
@@ -135,11 +136,12 @@ export class UsersOpenComponent
 		}
 	}
   public PrintCard() {
-    const valid = prompt('Escriba la vigencia para la credencial', this.CardOptions.Valid);
-    if (valid !== '') {
-      this.CardOptions.Valid = valid;
-    }
-    setTimeout(() => {this.T.Print('printable-cards', 'print-user');}, 500);
+    this.S.ShowPrompt('Escriba la vigencia para la credencial', (a, s) => {
+      if (s !== '') {
+        this.CardOptions.Valid = s;
+      }
+      setTimeout(() => {this.T.Print('printable-cards', 'print-user');}, 500);
+    }, this.CardOptions.Valid);
   }
 	//#region Getters
 		private GetUserInfo()

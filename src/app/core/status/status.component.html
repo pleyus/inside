@@ -1,5 +1,5 @@
 <ng-container *ngIf="S.Showing">
-  <section class="t{{S.Type}}">
+  <section class="t{{S.Type}}" (keyup)="S.KeyEvent($event)">
 
     <div class="col-5">
 
@@ -10,8 +10,9 @@
         </div>
 
         <div class="message">{{S.Message}}</div>
-
       </div>
+
+      <input *ngIf="S.PromptCallback !== undefined" type="text" [(ngModel)]="S.Input" placeholder="Introduce lo que se te pide">
 
       <!-- Barra de loading -->
       <div *ngIf="S.IsLoading"
@@ -36,8 +37,10 @@
           title="{{B.Tooltip}}"
           (click)="ButtonClick( B.Action )">{{B.Text}}</div>
 
-        <div *ngIf="S.Buttons.length < 1" class="button"
-          (click)="S.ClearState()">Aceptar</div>
+        <ng-container *ngIf="S.Buttons.length < 1">
+          <div class="button {{S.PromptCallback !== undefined ? 'primary' : ''}}" (click)="S.ClearState()">Aceptar</div>
+          <div *ngIf="S.PromptCallback !== undefined" class="button" (click)="S.ClearState('cancel')">Cancelar</div>
+        </ng-container>
       </div>
 
     </div>
