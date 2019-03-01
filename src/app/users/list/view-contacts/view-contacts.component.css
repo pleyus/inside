@@ -1,7 +1,7 @@
 .img {
 	height: 45px;
     width: 45px;
-    border: solid #DDD 1px;
+    box-shadow: 3px 3px 9px #CCC;
     background-color: #EEE;
     background-size: cover;
     border-radius: 100%;
