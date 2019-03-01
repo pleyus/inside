@@ -15,7 +15,9 @@ export class ApplicantsListComponent {
 
 	Title : string = "Aspirantes";
 	Applicants : Array<any>;
-	LoadMore = true;
+  LoadMore = true;
+
+  CView = 'general';
 
 	Period = 0;
 	Periods = [];
@@ -24,7 +26,19 @@ export class ApplicantsListComponent {
 		this.Period = P;
 		this.SetOption('period', P);
 		this.GetApplicants();
-	}
+  }
+  viewName() {
+    if (this.CView === 'general') {
+      return 'General';
+    } else if (this.CView === 'fast') {
+      return 'S. Rápido';
+    } else if (this.CView === 'assign') {
+      return 'Asignaciones';
+    }
+  }
+  setView(name) {
+    this.CView = name;
+  }
 
 	constructor(
 		private W : WebService,

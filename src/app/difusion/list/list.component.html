@@ -1,9 +1,33 @@
 <div class="row filter">
-	<div class="col-5">
+	<div class="col-3-5">
 		<label for="sbox">Busqueda</label>
 		<div class="sbox">
 			<span class="icon icon-search"></span>
 			<input id="sbox" type="text" (keyup)="search()" [(ngModel)]="search_string" placeholder="Nombre, especialidad, nota de seguimiento...">
+		</div>
+  </div>
+
+  <div class="col-2">
+		<label>Vista</label>
+		<div class="dropdown">
+			<button class="dropbtn" title="Modo de vista">
+				<span class="button-text">{{viewName()}}</span>
+				<span class="icon-down-open"></span>
+			</button>
+			<div class="dropdown-content">
+				<a (click)="setView('general')" title="Vista general">
+					<span class="icon-{{CView == 'general' ? 'ok' : 'noicon'}}"></span>
+					General
+        </a>
+        <a (click)="setView('assign')" title="Asignaciones">
+					<span class="icon-{{CView == 'assign' ? 'ok' : 'noicon'}}"></span>
+					Asignaciones
+        </a>
+        <a (click)="setView('fast')" title="Seguimiento rapido">
+					<span class="icon-{{CView == 'fast' ? 'ok' : 'noicon'}}"></span>
+					Seg. rápido
+				</a>
+			</div>
 		</div>
 	</div>
 
@@ -50,10 +74,10 @@
 		</div>
 	</div>
 
-	<div class="col-2">
-		<label>Periodo</label>
+	<div class="col-1-5">
+		<label>Año</label>
 		<div class="dropdown">
-			<button class="dropbtn" title="Modo de vista">
+			<button class="dropbtn" title="Año de registro">
 				<span class="button-text">{{Period > 0 ? Period : 'Todos'}}</span>
 				<span class="icon-down-open"></span>
 			</button>
@@ -80,68 +104,49 @@
 
 	<table>
 		<thead>
-			<th title="Ordenar por fecha de registro" class="col-1 order" (click)="Order('u.at')">
-				Fecha
-				<span *ngIf="_OrderBy == 'u.at'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
-			</th>
-			<th title="Ordenar por nombre" class="col-3">
-				<div class="order" (click)="Order('u.firstname')">
-					Nombre
-					<span *ngIf="_OrderBy == 'u.firstname'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
-				</div>
-				/
-				<div class="order" (click)="Order('u.lastname')">
-					Apellido
-					<span *ngIf="_OrderBy == 'u.lastname'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
-				</div>
-			</th>
+      <th title="Ordenar por fecha de registro" class="col-1 order" (click)="Order('u.at')">
+        Fecha
+        <span *ngIf="_OrderBy == 'u.at'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
+      </th>
+      <th title="Ordenar por nombre" class="col-2-5">
+        <div class="order" (click)="Order('u.firstname')">
+          Nombre
+          <span *ngIf="_OrderBy == 'u.firstname'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
+        </div>
+        /
+        <div class="order" (click)="Order('u.lastname')">
+          Apellido
+          <span *ngIf="_OrderBy == 'u.lastname'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
+        </div>
+      </th>
 			<th title="Ordenar por fecha de ultimo seguimiento" class="col-1 order" (click)="Order('n.at')">
 				<span class="icon-calendar"></span>
 				<span *ngIf="_OrderBy == 'n.at'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
 			</th>
-			<th title="Ordenar por nota de seguimiento" class="col-5 order" (click)="Order('n.note')">
+			<th title="Ordenar por nota de seguimiento" class="col-3-5 order" (click)="Order('n.note')">
 				Nota
 				<span *ngIf="_OrderBy == 'n.note'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
 			</th>
-			<th class="col-2"> </th>
+			<th class="col-4"></th>
 		</thead>
 		<tbody>
-			<a *ngFor="let A of Applicants" class="row" [routerLink]="[A.id]">
-				<td class="col-1" title="Fecha de registro: {{ A.at*1000 | date: 'EEE dd/MMM/yyyy hh:mm:ss' }}">{{ A.at*1000 | date: 'dd/MMM' }}</td>
-				<td class="col-3">{{ A.firstname + ' ' + A.lastname }}</td>
-				<td class="col-1"><span *ngIf="A.note_at > 0" title="{{ GetTaggedTitle(A) }}" class="tag {{ GetTaggedClass(A) }}">{{ A.note_at * 1000 | date : 'dd/MMM' }}</span> </td>
-				<td class="col-5" title="{{ A.note }}">{{ A.note }}</td>
-				<td class="col-2" style="text-align: right">
-					<span *ngIf="A.type == $.T_STUDENT && A.status == $.ACTIVE" title="Ya se ha inscrito, buen trabajo" class="icon icon-user color-special"></span>
-					<span title="{{ A.mid > 0 ? 'Ya se cuenta con su ubicación' : 'Aun no esta localizado' }}" class="icon icon-location state-{{ A.mid > 0 ? 1 : 0}}"></span>
-					<span title="{{ A.tutor_phone != '' ? 'Telefonos completos' : 'Falta el telefono del tutor o alternativo' }}" class="icon icon-phone state-{{ A.tutor_phone != '' ? 1 : 0}}"></span>
-					<span
-						title="{{ A.campaign < 0 ? 'Registrado por un administrador' : (A.campaign == 0 ? 'Autoregistro' : 'Campaña pagada')}}"
-						class="icon icon-dot-circled {{ A.campaign < 0 ? 'color-info' : (A.campaign == 0 ? 'state-0' : 'color-active')}}">
-						</span>
-				</td>
-			</a>
-<!--
-			<ng-container *ngIf="isView('tracker')">
-				<div *ngFor="let A of Applicants" class="applicant col-6 {{A.note_saved > 0 ? 'tracked' : ''}}">
-					<div class="header">
-						<span *ngIf="A.type == $.T_STUDENT && A.status == $.ACTIVE" title="Ya se ha inscrito, buen trabajo" class="icon icon-user color-special"></span>
-						<a [routerLink]="[A.id]">{{ A.firstname + ' ' + A.lastname }}</a>
-					</div>
-					<div class="date">{{ A.course }} <i>|</i> {{ A.at*1000 | date: 'dd/MM/yy' }}</div>
-					<div class="phone">
-						<span class="icon-phone"></span> {{A.personal_phone.length > 6 ? A.personal_phone : '(Sin numero)' }}
-						<span *ngIf="A.tutor_phone.length > 6" class="icon-phone"></span> {{A.tutor_phone.length > 6 ? A.tutor_phone : '' }}
-					</div>
-					<div class="note">
-						<input name="note" id="note" placeholder="Escriba una nota y pulse enter..." type="text" [(ngModel)]="A.new_note" (keyup.enter)="SaveNote(A)">
-						<div>
-							<span *ngIf="A.note_at > 0">{{ A.note_at*1000 | date: 'dd/MM hh:mm' }}</span>
-							{{A.note_at > 0 ? A.note : '(Aun no hay seguimiento)'}}
-						</div>
-					</div>
-				</div>
-			</ng-container> -->
+      <tr class="row" *ngFor="let A of Applicants">
+        <a [routerLink]="[A.id]" class="col-3-5">
+          <td class="col-3-5" title="Fecha de registro: {{ A.at*1000 | date: 'EEE dd/MMM/yyyy hh:mm:ss' }}">{{ A.at*1000 | date: 'dd/MMM/yy' }}</td>
+          <td class="col-8-5">{{ A.firstname + ' ' + A.lastname }}</td>
+        </a>
+        <td class="col-1"><span *ngIf="A.note_at > 0" title="{{ GetTaggedTitle(A) }}" class="tag {{ GetTaggedClass(A) }}">{{ A.note_at * 1000 | date : 'dd/MMM' }}</span> </td>
+        <td class="col-3-5" title="{{ A.note }}">{{ A.note.substring(0, 60) }}</td>
+        <td class="col-4 flags">
+          <span *ngIf="A.type == $.T_STUDENT && A.status == $.ACTIVE" title="Ya se ha inscrito, buen trabajo" class="icon icon-user color-special"></span>
+          <span title="{{ A.mid > 0 ? 'Ya se cuenta con su ubicación' : 'Aun no esta localizado' }}" class="icon icon-location state-{{ A.mid > 0 ? 1 : 0}}"></span>
+          <span title="{{ A.tutor_phone != '' ? 'Telefonos completos' : 'Falta el telefono del tutor o alternativo' }}" class="icon icon-phone state-{{ A.tutor_phone != '' ? 1 : 0}}"></span>
+          <span
+            title="{{ A.campaign < 0 ? 'Registrado por un administrador' : (A.campaign == 0 ? 'Autoregistro' : 'Campaña pagada')}}"
+            class="icon icon-dot-circled {{ A.campaign < 0 ? 'color-info' : (A.campaign == 0 ? 'state-0' : 'color-active')}}">
+            </span>
+        </td>
+      </tr>
 			<div class="empty" *ngIf="Applicants.length < 1">Sin aspirantes para mostrar</div>
 		</tbody>
 	</table>

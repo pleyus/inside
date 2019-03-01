@@ -63,3 +63,8 @@ span.tag.excluded { background-color: #922; color: #FFF; }
 }
 .tracking .applicant a { color: #333; }
 .tracking .applicant:hover a:hover { color: #1F7BB1; }
+
+a[class*="col-"] {
+  padding: 0;
+}
+.flags > span { float: right; }
