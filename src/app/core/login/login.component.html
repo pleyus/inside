@@ -5,7 +5,7 @@
   <div class="data">
     <p>
       {{
-        $.Me.id > 0
+        $.Me.id > 0 && !$.L.News.LoggedIn
         ? 'Tu sesión expiró, vuelve a iniciarla para continuar'
         : 'Ingresa tus credenciales para entrar al modulo'
       }}
