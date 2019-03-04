@@ -124,6 +124,7 @@ td:not(.assigned) { padding-top: 20px; padding-bottom: 20px; }
   white-space: nowrap;
   display: block;
   height: 18px;
+  text-align: left;
 }
 .assigned .icon:hover { color: #1f7bb1; }
 

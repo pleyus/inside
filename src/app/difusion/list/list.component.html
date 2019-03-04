@@ -163,15 +163,13 @@
 
         <td class="col-2 assigned">
           <div
-          class="
-            {{IsTracking(A) ? 'current' : ''}}
+          class="{{IsTracking(A) ? 'current' : ''}}
             {{TrackingBy(A) ? (TrackingBy(A).uid !== A.aid ? 'wrong' : '') : '' }}
             {{ A.assigned ? (A.assigned.status === 0 && A.note ? 'on' : 'off') : '' }}"
-          title="
-          {{
+          title="{{
             TrackingBy(A) ? (TrackingBy(A).uid !== A.aid
             ? 'Otro administrador no asignado esta dando seguimiento al aspirante' : 'Se le esta dando seguimiento')
-            : 'Se le esta dando seguimiento'
+            : ''
           }}">
             <span *ngIf="!A.assigned" class="icon icon-bookmark" (click)="AssignTo(A, $.Me)" title="{{A.aid === $.Me.id ? 'Dejar de seguir' : 'Asignar el aspirante a mi cuenta'}}"></span>
             <span *ngIf="A.assigned" class="img {{A.assigned.status !== 0 ? 'inactive' : ''}}" [ngStyle]="{'background-image' : 'url(' + T.CreateUrl(A.assigned.filename, 'users') + ')' }"></span>
