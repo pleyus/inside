@@ -23,6 +23,7 @@ export class StatusService {
   //  Alerts
   private alertTimeOut;
   public PromptCallback;
+  PromptPlaceholder = '';
 
   //  properties
   public CurrentProgress = -1;
@@ -140,13 +141,14 @@ export class StatusService {
   }
 
   public ShowPrompt(message: string, callback: (accept: boolean, input: string) => void,
-    defaultInput: string = '', type = -1, icon: string = 'icon-comment') {
+    defaultInput: string = '', placeholder = 'Escribe tu respuesta', type = -1, icon: string = 'icon-comment') {
     this.Input = defaultInput;
     this.clearLoading();
     this.Message = message;
     this.Type = type;
     this.Icon = icon;
     this.PromptCallback = callback;
+    this.PromptPlaceholder = placeholder;
   }
 
   /**
