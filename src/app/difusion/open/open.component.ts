@@ -86,6 +86,10 @@ export class ApplicantsOpenComponent {
 
   init() {
     if (this.$.isAdmin() && this.$.CanDo('applicants')) {
+      if (this.Id > 0 ) {
+        this.L.TrackingApplicantId = this.Id;
+      }
+
       this.getCategories('vias'); // Vias
       this.getCategories('courses'); // Vias
 
@@ -111,6 +115,12 @@ export class ApplicantsOpenComponent {
     } else {
       this.S.ShowError('No tienes autorización para modificar los aspirantes', 0);
       this.RT.navigate(['/home']);
+    }
+  }
+
+  Tracking(e) {
+    if (this.Id > 0 ) {
+      this.L.TrackingApplicantId = this.Id;
     }
   }
 
