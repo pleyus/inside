@@ -202,6 +202,8 @@ export class InsideListenerService {
   HeartBeat = 0;
   public News = new NewsAdapter();
 
+  public TrackingApplicantId = 0;
+
   constructor( private W: WebService, private C: Configuration, private S: StatusService ) {
     //  Cargamos el primer status
     this.Alive(null);
@@ -219,9 +221,13 @@ export class InsideListenerService {
     // Vemos si el usuario sigue con vida Checando que no tenga mas de 10s sin mover el inside
     if ( new Date().getTime() < this.HeartBeat + 1000 || force ) {
       this.W.Web('general', 'get-counters',
+
         'lmt=' + this.C.GetOption('lmt', 'radio', 0) +
         '&lfs=' + this.C.GetOption('lfs', 'feedback', 0) +
-        '&lpt=' + this.C.GetOption('lpt', 'payment', 0),
+        '&lpt=' + this.C.GetOption('lpt', 'payment', 0) +
+        '&tai=' + this.TrackingApplicantId
+        ,
+
         (r) => {
           if (r.status === this.S.SUCCESS) {
             if (force) {
@@ -232,6 +238,7 @@ export class InsideListenerService {
               this.News.Messages = r.data.Messages;
               this.News.RadioMessages = r.data.RadioMessages;
               this.News.LoggedIn = r.data.LoggedIn;
+              this.News.ApplicantsTracking = r.data.ApplicantsTracking;
 
               if (this.News.Birthdays.length !== r.data.Birthdays.length) {
                 this.News.Birthdays = r.data.Birthdays;
