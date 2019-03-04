@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { Configuration } from '../../app.service';
+import { Configuration, Tools } from '../../app.service';
 import { WebService } from '../../services/web-service';
 import { AppComponent } from '../../app.component';
 import { Router } from '@angular/router';
 import { StatusService, InsideListenerService } from '../../services/status.service';
+import { Button } from 'src/app/core/class/button';
 
 @Component({
   selector: 'applicants-list',
@@ -17,7 +18,7 @@ export class ApplicantsListComponent {
 	Applicants : Array<any>;
   LoadMore = true;
 
-  CView = 'general';
+  Admins = [];
 
 	Period = 0;
 	Periods = [];
@@ -27,18 +28,6 @@ export class ApplicantsListComponent {
 		this.SetOption('period', P);
 		this.GetApplicants();
   }
-  viewName() {
-    if (this.CView === 'general') {
-      return 'General';
-    } else if (this.CView === 'fast') {
-      return 'S. Rápido';
-    } else if (this.CView === 'assign') {
-      return 'Asignaciones';
-    }
-  }
-  setView(name) {
-    this.CView = name;
-  }
 
 	constructor(
 		private W : WebService,
@@ -46,10 +35,12 @@ export class ApplicantsListComponent {
     private S : StatusService,
     public L: InsideListenerService,
     private C: Configuration,
+    public T: Tools,
     private R: Router)
 	{
 		this.Applicants = [];
-		this.SetOption('last', 0);
+    this.SetOption('last', 0);
+    L.TrackingApplicantId = 0;  //  Reseteamos el tracking
 
 		//	Generamos los periodos posibles, empezando en 2017
 		for(let i = 2017; i <= $.Now().getFullYear(); i++)
@@ -59,18 +50,110 @@ export class ApplicantsListComponent {
 		this._Order = this.GetOption('order');
 		this._OrderBy = this.GetOption('order_by');
 
-		this.search_string = this.GetOption('search');
+    this.search_string = this.GetOption('search');
+
+    //  Quitamos el tracking general
+    this.W.Web( "applicants", 'assign-to',
+      'only-report=1&clear=1', () => {});
+
 		this.L.UpdateNews();
 
-
-		if( $.isAdmin() && this.$.CanDo('applicants') )
-			this.GetApplicants(  );
-		else
-		{
+    if( $.isAdmin() && this.$.CanDo('applicants') ) {
+      this.GetAdmins( () => {
+        this.GetApplicants(  );
+      });
+    } else {
 			this.S.ShowError( 'No cuentas con permisos suficientes para ver la lista de aspirantes', 0 );
 			R.navigate(['/home']);
 		}
-	}
+  }
+
+  private GetAdmins( callback: () => void ) {
+    this.S.ShowLoading('Cargando lista de administradores');
+    this.W.Web( "users", 'list-admins', '',
+		(r) :void => {
+			this.S.ClearState();
+
+			//	Si se completa correctamente la platica
+			if (r.status === this.S.SUCCESS) {
+				if ( typeof r.data === 'object' ) {
+          this.Admins = r.data;
+          this.Admins.sort((a, b) => {
+            if (a.firstname > b.firstname) {
+              return 1;
+            }
+            if (a.firstname < b.firstname) {
+              return -1;
+            }
+            // a must be equal to b
+            return 0;
+          } );
+				}
+      }
+      callback();
+		},
+		(e)=> { this.S.ShowError("No hay conexión", 0); });
+  }
+  AssignTo(Applicant, AdminItem) {
+    this.S.ShowLoading('Asignando aspirante a ' + AdminItem.firstname + '...');
+
+    this.W.Web( "applicants", 'assign-to',
+      'aid=' + Applicant.id +
+      '&uid=' + AdminItem.id,
+		(r) :void => {
+			this.S.ClearState();
+
+			//	Si se completa correctamente la platica
+			if (r.status === this.S.SUCCESS) {
+        Applicant.assigned = AdminItem;
+        Applicant.aid = AdminItem.id;
+      }
+		},
+    (e)=> { this.S.ShowError("No hay conexión", 0); });
+
+  }
+  SelectAdmin(Applicant) {
+    const admins = this.Admins.filter(A => A.capable && A.status === 0 && A.id !== Applicant.aid);
+    let buttons = admins.map(e => {
+        return new Button(e.firstname, () => { this.AssignTo(Applicant, e) });
+    });
+    buttons.push(new Button('Cancelar', () => {}, 'primary'));
+    this.S.ShowDialog('Seleccione un usuario para asignar a ' + Applicant.firstname + '.', buttons)
+  }
+  QuickTracking(Applicant) {
+
+    //  Si se completo, antos preparamos el mensaje
+    const message =
+    '<h2 style="margin-top:0">' + Applicant.firstname + ' ' + Applicant.lastname + '</h2>' +
+    '<p> <b>Interes: </b>' + Applicant.course + '</p>' +
+    '<p> <b>Telefono: </b>' + Applicant.personal_phone + '</p>' +
+    '<p><b>Ultima nota: </b><br>' + (Applicant.note ? Applicant.note : '(Ninguna)') + '</p>';
+    this.L.TrackingApplicantId = Applicant.id;  //  Asignamos el tracking
+
+    //  Pedimos la nota al usuario
+    this.S.ShowPrompt(message, (accept, input) => {
+
+      //  Si se da aceptar, guardamos la nota
+      if (accept) {
+        Applicant.new_note = input;
+        this.SaveNote(Applicant);
+      }
+
+      this.L.TrackingApplicantId = 0;  // reseteamos el tracking
+    }, '', 'Escribe una nueva nota de seguimiento');
+  }
+  IsTracking(Applicant) {
+    const by = this.TrackingBy(Applicant);
+    return by ? true : false;
+  }
+  TrackingBy(Applicant) {
+    return this.L.News.ApplicantsTracking.find(a => a.aid === Applicant.id);
+  }
+  FindAdmin(id) {
+    return this.Admins.find(i => id === i.id);
+  }
+
+
 
 	/**
 	 * Obtiene la lista de aplicantes desde el server
@@ -97,7 +180,10 @@ export class ApplicantsListComponent {
 		'&order_by=' + this._OrderBy +
 
 		//	Periodo
-		'&period=' + this.Period +
+    '&period=' + this.Period +
+
+    //  Asignado a
+		'&admin=' + this.GetOption('selected_admin') +
 
 		//	Si se esta buscando algo le decimos
 		(making == 'search' || search != '' ? '&search=' + search : '') +
@@ -112,6 +198,11 @@ export class ApplicantsListComponent {
 			{
 				if( typeof r.data == 'object' )
 				{
+          r.data = r.data.map(i => {
+            i.assigned = this.Admins.find(e => e.id === i.aid);
+            return i;
+          });
+
 					//	Mostramos los elementos
 					this.Applicants =
 						making == 'more'
@@ -235,24 +326,24 @@ export class ApplicantsListComponent {
 	}
 	//#endregion
 
-	//#region Views
-	// public isView(value)
-	// {
-	// 	return this.GetOption('current_view') == value;
-	// }
-	// public setView(value)
-	// {
-	// 	this.SetOption('current_view', value);
-	// }
-	// public ViewText()
-	// {
-	// 	let text = "";
-	// 	if ( this.isView("") ) text = "Normal";
-	// 	if ( this.isView("tracker") ) text = 'Seguimiento';
-	// 	if ( this.isView("linker") ) text = 'Vinculador';
-	// 	return text;
-	// }
-	//#endregion
+	public isAdmin(value)
+	{
+		return this.GetOption('selected_admin') == value;
+	}
+	public setAdmin(value)
+	{
+		this.SetOption('selected_admin', value);
+	}
+	public SelectedAdmin()
+	{
+    if(this.GetOption('selected_admin') === 0) {
+      return {firstname: 'Todos', filename: ''};
+    } else if(this.GetOption('selected_admin') === -1) {
+      return {firstname: 'Sin asignar', filename: ''};
+    }
+    let admin = this.Admins.find(i => i.id === this.GetOption('selected_admin'));
+		return admin ? admin : { firstname: '(desconocido)', filename: '' };
+	}
 
 	public SaveNote(A)//Applicant
 	{
@@ -270,7 +361,7 @@ export class ApplicantsListComponent {
 					this.S.ShowSuccess('Nota guardada correctamente', 2000);
 				}
 				else
-					this.S.ShowError(r.data, 0);
+          this.S.ShowError(r.data, 0);
 			});
 		}
 	}

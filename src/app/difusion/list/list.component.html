@@ -1,5 +1,5 @@
 <div class="row filter">
-	<div class="col-3-5">
+	<div class="col-4">
 		<label for="sbox">Busqueda</label>
 		<div class="sbox">
 			<span class="icon icon-search"></span>
@@ -8,30 +8,39 @@
   </div>
 
   <div class="col-2">
-		<label>Vista</label>
-		<div class="dropdown">
-			<button class="dropbtn" title="Modo de vista">
-				<span class="button-text">{{viewName()}}</span>
-				<span class="icon-down-open"></span>
-			</button>
-			<div class="dropdown-content">
-				<a (click)="setView('general')" title="Vista general">
-					<span class="icon-{{CView == 'general' ? 'ok' : 'noicon'}}"></span>
-					General
-        </a>
-        <a (click)="setView('assign')" title="Asignaciones">
-					<span class="icon-{{CView == 'assign' ? 'ok' : 'noicon'}}"></span>
-					Asignaciones
-        </a>
-        <a (click)="setView('fast')" title="Seguimiento rapido">
-					<span class="icon-{{CView == 'fast' ? 'ok' : 'noicon'}}"></span>
-					Seg. rápido
-				</a>
-			</div>
-		</div>
-	</div>
+    <label>Asignado a</label>
+    <div class="dropdown">
+      <button class="dropbtn" title="Filtrar resultados">
+        <span class="button-text">{{ SelectedAdmin().firstname }}</span>
+        <span class="icon-down-open"></span>
+      </button>
 
-	<div class="col-3">
+      <!-- Filtros -->
+      <div class="dropdown-content" (click)="search()">
+        <a (click)="setAdmin(0)" title="Muestra todos los aspirantes">
+          <span class="icon-{{isAdmin(0) ? 'ok' : 'noicon'}}"></span>
+          Todos
+        </a>
+        <a (click)="setAdmin($.Me.id)" title="Muestra todos los aspirantes">
+          <span class="icon-{{isAdmin($.Me.id) ? 'ok' : 'noicon'}}"></span>
+          {{$.Me.firstname}}
+        </a>
+        <a (click)="setAdmin(-1)" title="Muestra todos los aspirantes">
+          <span class="icon-{{isAdmin(-1) ? 'ok' : 'noicon'}}"></span>
+          Sin asignar
+        </a>
+        <span class="separator">Otros</span>
+        <ng-container *ngFor="let Adm of Admins">
+          <a *ngIf="Adm.status === 0 && Adm.capable && Adm.id !== $.Me.id" (click)="setAdmin(Adm.id)" title="Mostrar solo asignados a {{Adm.firstname}}">
+            <span class="icon-{{isAdmin(Adm.id) ? 'ok' : 'noicon'}}"></span>
+            {{Adm.firstname}}
+          </a>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+	<div class="col-2">
 		<label>Filtrar</label>
 		<div class="dropdown">
 			<button class="dropbtn" title="Filtrar resultados">
@@ -74,7 +83,7 @@
 		</div>
 	</div>
 
-	<div class="col-1-5">
+	<div class="col-2">
 		<label>Año</label>
 		<div class="dropdown">
 			<button class="dropbtn" title="Año de registro">
@@ -119,15 +128,25 @@
           <span *ngIf="_OrderBy == 'u.lastname'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
         </div>
       </th>
-			<th title="Ordenar por fecha de ultimo seguimiento" class="col-1 order" (click)="Order('n.at')">
+
+      <th title="Ordenar por fecha de ultimo seguimiento" class="col-1 center order" (click)="Order('n.at')">
 				<span class="icon-calendar"></span>
 				<span *ngIf="_OrderBy == 'n.at'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
 			</th>
-			<th title="Ordenar por nota de seguimiento" class="col-3-5 order" (click)="Order('n.note')">
+			<th title="Ordenar por nota de seguimiento" class="col-4-5 order" (click)="Order('n.note')">
 				Nota
 				<span *ngIf="_OrderBy == 'n.note'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
-			</th>
-			<th class="col-4"></th>
+      </th>
+
+      <th title="Ordenar por usuario asignado" class="col-2">
+
+        <div class="order" (click)="Order('ua.firstname')">
+            Asignado a
+          <span *ngIf="_OrderBy == 'ua.firstname'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
+        </div>
+      </th>
+
+      <th class="col-1"></th>
 		</thead>
 		<tbody>
       <tr class="row" *ngFor="let A of Applicants">
@@ -135,9 +154,35 @@
           <td class="col-3-5" title="Fecha de registro: {{ A.at*1000 | date: 'EEE dd/MMM/yyyy hh:mm:ss' }}">{{ A.at*1000 | date: 'dd/MMM/yy' }}</td>
           <td class="col-8-5">{{ A.firstname + ' ' + A.lastname }}</td>
         </a>
-        <td class="col-1"><span *ngIf="A.note_at > 0" title="{{ GetTaggedTitle(A) }}" class="tag {{ GetTaggedClass(A) }}">{{ A.note_at * 1000 | date : 'dd/MMM' }}</span> </td>
-        <td class="col-3-5" title="{{ A.note }}">{{ A.note.substring(0, 60) }}</td>
-        <td class="col-4 flags">
+
+        <td class="col-1 center"><span *ngIf="A.note_at > 0" title="{{ GetTaggedTitle(A) }}" class="tag {{ GetTaggedClass(A) }}">{{ A.note_at * 1000 | date : 'dd/MMM' }}</span> </td>
+        <td class="col-4-5 quick-tracking" title="{{ A.note ? A.note : '' }}">
+          <span (click)="QuickTracking(A)" class="icon icon-add" title="Dar seguimiento rápido"></span>
+          {{ A.note ? A.note.substring(0, 60) : '' }}
+        </td>
+
+        <td class="col-2 assigned">
+          <div
+          class="
+            {{IsTracking(A) ? 'current' : ''}}
+            {{TrackingBy(A) ? (TrackingBy(A).uid !== A.aid ? 'wrong' : '') : '' }}
+            {{ A.assigned ? (A.assigned.status === 0 && A.note ? 'on' : 'off') : '' }}"
+          title="
+          {{
+            TrackingBy(A) ? (TrackingBy(A).uid !== A.aid
+            ? 'Otro administrador no asignado esta dando seguimiento al aspirante' : 'Se le esta dando seguimiento')
+            : 'Se le esta dando seguimiento'
+          }}">
+            <span *ngIf="!A.assigned" class="icon icon-bookmark" (click)="AssignTo(A, $.Me)" title="{{A.aid === $.Me.id ? 'Dejar de seguir' : 'Asignar el aspirante a mi cuenta'}}"></span>
+            <span *ngIf="A.assigned" class="img {{A.assigned.status !== 0 ? 'inactive' : ''}}" [ngStyle]="{'background-image' : 'url(' + T.CreateUrl(A.assigned.filename, 'users') + ')' }"></span>
+            <div class="text" (click)="SelectAdmin(A)" title="{{A.assigned ? 'Cambiar usuario asignado' : 'Asignar a un administrador'}}">
+              <span>{{A.assigned ? A.assigned.firstname : 'Sin asignar'}}</span>
+              <span>{{A.assigned ? 'Reemplazar' : 'Asignar a...'}}</span>
+            </div>
+          </div>
+        </td>
+
+        <td class="col-1 flags">
           <span *ngIf="A.type == $.T_STUDENT && A.status == $.ACTIVE" title="Ya se ha inscrito, buen trabajo" class="icon icon-user color-special"></span>
           <span title="{{ A.mid > 0 ? 'Ya se cuenta con su ubicación' : 'Aun no esta localizado' }}" class="icon icon-location state-{{ A.mid > 0 ? 1 : 0}}"></span>
           <span title="{{ A.tutor_phone != '' ? 'Telefonos completos' : 'Falta el telefono del tutor o alternativo' }}" class="icon icon-phone state-{{ A.tutor_phone != '' ? 1 : 0}}"></span>

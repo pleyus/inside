@@ -67,4 +67,95 @@ span.tag.excluded { background-color: #922; color: #FFF; }
 a[class*="col-"] {
   padding: 0;
 }
+tbody .row:hover > a {
+  background-color: #F8F8F8;
+  border-radius: 0 10px 10px 0;
+}
+
 .flags > span { float: right; }
+
+td:not(.assigned) { padding-top: 20px; padding-bottom: 20px; }
+
+.assigned {
+  text-align: center;
+}
+.assigned > div {
+  border-radius: 20px;
+  border: solid 1px #DDD;
+  display: inline-block;
+  padding: 10px 15px 10px 10px;
+  position: relative;
+  width: 150px;
+  overflow: hidden;
+  color: #AAA;
+  background-color: #F1F1F1;
+}
+.assigned .on {
+  border-color: #9aef9e;
+  background-color: #f9fff9;
+}
+.assigned .on .text { color: #333; }
+.assigned .current { background-color: #deffdf; }
+.assigned .current.wrong {
+  border-color: #efc79a;
+  background-color: #ffe3de;
+}
+
+.assigned .icon {
+  cursor: pointer;
+  padding: 8px 2px;
+}
+.assigned .img, .assigned .icon, .other-tracking > .img {
+  height: 38px;
+  width: 38px;
+  border-radius: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  background-size: cover;
+  background-color: #DDD;
+  font-size: 1.5rem;
+}
+.assigned .img.inactive { filter: grayscale(1); }
+.assigned .text {
+  padding-left: 38px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: block;
+  height: 18px;
+}
+.assigned .icon:hover { color: #1f7bb1; }
+
+.assigned .text:hover { color: #333; cursor: pointer; }
+
+.assigned div .text span { display: block; }
+.assigned div .text span:nth-child(2) { font-weight: 600; }
+.assigned div[class]:not([class=""]) .text span:first-of-type {
+  margin-top: 0;
+  margin-bottom: 12px;
+  transition: margin-top ease 200ms;
+}
+.assigned div[class]:not([class=""]):hover .text span:first-of-type {
+  margin-top: -30px;
+  transition: margin-top ease 200ms;
+}
+
+.quick-tracking { position: relative; }
+.quick-tracking > .icon {
+  color: #333;
+  border-radius: 20px;
+  padding: 5px;
+  background-color: #FFF;
+  transition: background-color ease-out 100ms;
+  cursor: pointer;
+}
+.quick-tracking:hover > .icon {
+  background-color: #F1F1F1;
+  transition: background-color ease-out 100ms, color ease-out 100ms;
+}
+.quick-tracking > .icon:hover {
+  color: #FFF;
+  background-color: green;
+  transition: color ease-out 100ms, background-color ease-out 100ms;
+}
