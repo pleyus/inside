@@ -9,10 +9,10 @@
           <span class="icon {{S.Icon}}"></span>
         </div>
 
-        <div class="message">{{S.Message}}</div>
+        <div class="message" [innerHTML]="S.Message"></div>
       </div>
 
-      <input *ngIf="S.PromptCallback !== undefined" type="text" [(ngModel)]="S.Input" placeholder="Introduce lo que se te pide">
+      <input *ngIf="S.PromptCallback !== undefined" type="text" [(ngModel)]="S.Input" placeholder="{{S.PromptPlaceholder}}">
 
       <!-- Barra de loading -->
       <div *ngIf="S.IsLoading"
