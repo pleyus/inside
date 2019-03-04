@@ -181,6 +181,7 @@ export class StatusService {
 
     this.Message = message;
     this.Type = type;
+    this.PromptCallback = undefined;
 
     if (this.loadingTimeOut !== null) {
       clearInterval( this.loadingTimeOut );
