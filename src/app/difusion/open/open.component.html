@@ -1,3 +1,4 @@
+<div (mousemove)="Tracking($event)">
 <h1 class="title">
   {{
     Applicant.user.firstname+Applicant.user.lastname != ''
@@ -151,4 +152,5 @@
 	<a *ngIf="Id > 0" (click)="Delete()" class="button" title="Eliminar este registro">Eliminar</a>
 	<a (click)="GoBack()" class="button" title="Cancelar cambios realizados">Cancelar</a>
 	<a *ngIf="$.CanDo('user') && Id > 0" routerLink="/users/{{Applicant.user.id}}" class="pull-right button" title="Ver datos del usuario">Perfil</a>
+</div>
 </div>

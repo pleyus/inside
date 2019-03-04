@@ -5,6 +5,7 @@ export class NewsAdapter {
     public Messages: number = 0,
     public Birthdays: Array<any> = [],
     public Feedbacks: number = 0,
+    public ApplicantsTracking: Array<any> = [],
     public LoggedIn: boolean = false
   ) {}
 }
