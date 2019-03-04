@@ -210,6 +210,7 @@ export class AppComponent implements OnInit {
     this.C.RequireOption('applicants', 'order_by', 'a.at');
     this.C.RequireOption('applicants', 'goto', '');
     this.C.RequireOption('applicants', 'period', '');
+    this.C.RequireOption('applicants', 'selected_admin', 0);
     this.C.RequireOption('applicants', 'pre-fn', '');
     this.C.RequireOption('applicants', 'pre-ln', '');
     this.C.RequireOption('applicants', 'pre-ph', '');

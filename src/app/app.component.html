@@ -1,9 +1,10 @@
+<div (mousemove)="L.Alive($event)">
 <app-holidays></app-holidays>
 <app-status></app-status>
 
 <ng-container *ngIf="!Loading">
   <ng-container *ngIf="L.News.LoggedIn">
-    <section id="viewer" (mousemove)="L.Alive($event)">
+    <section id="viewer">
 
       <app-core-header></app-core-header>
 
@@ -24,3 +25,4 @@
   </ng-container>
   <app-login *ngIf="!L.News.LoggedIn"></app-login>
 </ng-container>
+</div>
