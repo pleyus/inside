@@ -12,7 +12,7 @@
         <div class="message" [innerHTML]="S.Message"></div>
       </div>
 
-      <input *ngIf="S.PromptCallback || S.Buttons.length > 0" type="text" [(ngModel)]="S.Input" placeholder="{{S.PromptPlaceholder}}">
+      <input *ngIf="S.IsPrompting" type="text" [(ngModel)]="S.Input" placeholder="{{S.PromptPlaceholder}}">
 
       <!-- Barra de loading -->
       <div *ngIf="S.IsLoading"

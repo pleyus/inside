@@ -17,14 +17,14 @@ export class StatusService {
 
   //  Loading
   private loadingTick = 0;
-  private loading = false;
 
   //  Alerts
-  public PromptCallback;
+  public PromptCallback = null;
   PromptPlaceholder = '';
 
   //  properties
   private timing;
+  making = '';
   public CurrentProgress = -1;
   public Input = '';
   public Icon = '';
@@ -32,8 +32,9 @@ export class StatusService {
   public Type = -1;
   public Buttons: Array<Button> = [];
 
-  public get IsLoading() { return this.loading; }
-  public get Showing() { return this.loading || this.Message.length > 0; }
+  public get IsLoading() { return this.making === 'loading'; }
+  public get IsPrompting() { return this.making === 'prompt'; }
+  public get Showing() { return this.making !== ''; }
   public get LoadingTimeOut() { return this.loadingTick > 10; }
 
   public KeyEvent(e) {
@@ -55,6 +56,7 @@ export class StatusService {
    */
   private alertTiming(time) {
     this.Clear();
+    this.making = 'alert';
 
     //  Si hay un tiempo establecido para quitar la alerta, entonces lo asignamos
     if (time > 0) {
@@ -124,6 +126,8 @@ export class StatusService {
   }
 
   public ShowDialog(message: string, buttons: Array<Button> = [], type = -1, icon: string = 'icon-attention-alt') {
+    this.Clear();
+    this.making = 'dialog';
     this.Type = type;
     this.Icon = icon;
     this.Message = message;
@@ -139,6 +143,7 @@ export class StatusService {
     icon: string = 'icon-comment') {
 
     this.Clear();
+    this.making = 'prompt';
 
     this.Input = defaultInput;
     this.Message = message;
@@ -161,11 +166,10 @@ export class StatusService {
   public Clear(args = '') {
     //  Del prompt
     this.Input = '';
-    this.PromptCallback = undefined;
+    this.PromptCallback = null;
     this.PromptPlaceholder = '';
 
     //  De loading
-    this.loading = false;
     clearTimeout( this.timing );
     this.loadingTick = 0;
     this.CurrentProgress = -1;
@@ -174,6 +178,8 @@ export class StatusService {
     this.Icon = '';
     this.Message = '';
     this.Type = -1;
+
+    this.making = '';
   }
 
   /**
@@ -183,13 +189,13 @@ export class StatusService {
    */
   public ShowLoading(message = 'Cargando...', type = -1, progress = -1) {
     this.Clear();
+    this.making = 'loading';
     this.CurrentProgress = progress;
     this.Icon = 'icon-loading animate-spin';
 
     this.Message = message;
     this.Type = type;
 
-    this.loading = true;
     this.timing = setInterval( () => {
       this.loadingTick++;
     }, 1000);
