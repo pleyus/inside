@@ -171,7 +171,7 @@
             ? 'Otro administrador no asignado esta dando seguimiento al aspirante' : 'Se le esta dando seguimiento')
             : ''
           }}">
-            <span *ngIf="!A.assigned" class="icon icon-bookmark" (click)="AssignTo(A, $.Me)" title="{{A.aid === $.Me.id ? 'Dejar de seguir' : 'Asignar el aspirante a mi cuenta'}}"></span>
+            <span *ngIf="!A.assigned" class="icon icon-bookmark" (click)="AssignTo(A, {id: $.Me.id, firstname: $.Me.firstname, filename: $.Me.picture.filename, status: $.Me.status})" title="Asignar el aspirante a mi cuenta"></span>
             <span *ngIf="A.assigned" class="img {{A.assigned.status !== 0 ? 'inactive' : ''}}" [ngStyle]="{'background-image' : 'url(' + T.CreateUrl(A.assigned.filename, 'users') + ')' }"></span>
             <div class="text" (click)="SelectAdmin(A)" title="{{A.assigned ? 'Cambiar usuario asignado' : 'Asignar a un administrador'}}">
               <span>{{A.assigned ? A.assigned.firstname : 'Sin asignar'}}</span>
