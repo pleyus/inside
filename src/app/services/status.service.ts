@@ -16,16 +16,15 @@ export class StatusService {
   public readonly QUESTION = 5;
 
   //  Loading
-  private loadingTimeOut;
   private loadingTick = 0;
   private loading = false;
 
   //  Alerts
-  private alertTimeOut;
   public PromptCallback;
   PromptPlaceholder = '';
 
   //  properties
+  private timing;
   public CurrentProgress = -1;
   public Input = '';
   public Icon = '';
@@ -38,20 +37,16 @@ export class StatusService {
   public get LoadingTimeOut() { return this.loadingTick > 10; }
 
   public KeyEvent(e) {
-    if(e.keyCode === 27) {
-      this.ClearState('cancel');
-    } else if (e.keyCode === 13){
-      this.ClearState();
+    if (e.keyCode === 27) {
+      if (this.PromptCallback !== undefined ) {
+        this.PromptCallback(false, this.Input);
+      }
+    } else if (e.keyCode === 13) {
+      if (this.PromptCallback !== undefined ) {
+        this.PromptCallback(true, this.Input);
+      }
+      this.Clear();
     }
-  }
-
-  private clearLoading() {
-    //  Limpiamos el loading que puediera existir
-    this.loading = false;
-    this.CurrentProgress = -1;
-    clearTimeout( this.loadingTimeOut );
-    this.loadingTick = 0;
-    this.Buttons = [];
   }
 
   /**
@@ -59,16 +54,11 @@ export class StatusService {
    * @param time Tiempo en milisegundos que durará la alerta hasta eliminarse por si sola
    */
   private alertTiming(time) {
-    this.clearLoading();
-
-    //  Si existe el timeout de alertTimeOut, lo reseteamos
-    if (this.alertTimeOut !== undefined) {
-      clearTimeout( this.alertTimeOut );
-    }
+    this.Clear();
 
     //  Si hay un tiempo establecido para quitar la alerta, entonces lo asignamos
     if (time > 0) {
-      this.alertTimeOut = setTimeout( () => { this.ClearState(); }, time );
+      this.timing = setTimeout( () => { this.Clear(); }, time );
     }
   }
 
@@ -140,34 +130,50 @@ export class StatusService {
     this.Buttons = buttons;
   }
 
-  public ShowPrompt(message: string, callback: (accept: boolean, input: string) => void,
-    defaultInput: string = '', placeholder = 'Escribe tu respuesta', type = -1, icon: string = 'icon-comment') {
+  public ShowPrompt(
+    message: string,
+    actions: any,
+    defaultInput: string = '',
+    placeholder = 'Escribe tu respuesta',
+    type = -1,
+    icon: string = 'icon-comment') {
+
+    this.Clear();
+
     this.Input = defaultInput;
-    this.clearLoading();
     this.Message = message;
     this.Type = type;
     this.Icon = icon;
-    this.PromptCallback = callback;
     this.PromptPlaceholder = placeholder;
+
+    if (typeof actions === 'object' ) {
+      this.PromptCallback = null;
+      this.Buttons = actions;
+    } else{
+      this.PromptCallback = actions;
+      this.Buttons = [];
+    }
   }
 
   /**
    * Limpia las alertas mostradas
    */
-  public ClearState(args = '') {
-    this.Icon = '';
-    this.Message = '';
+  public Clear(args = '') {
+    //  Del prompt
+    this.Input = '';
+    this.PromptCallback = undefined;
+    this.PromptPlaceholder = '';
 
+    //  De loading
     this.loading = false;
-    clearTimeout( this.loadingTimeOut );
+    clearTimeout( this.timing );
     this.loadingTick = 0;
     this.CurrentProgress = -1;
 
+    this.Buttons = [];
+    this.Icon = '';
+    this.Message = '';
     this.Type = -1;
-
-    if (this.PromptCallback !== undefined) {
-      this.PromptCallback(args !== 'cancel', this.Input);
-    }
   }
 
   /**
@@ -176,20 +182,15 @@ export class StatusService {
    * @param type Tipo de alerta (def: -1)
    */
   public ShowLoading(message = 'Cargando...', type = -1, progress = -1) {
+    this.Clear();
     this.CurrentProgress = progress;
     this.Icon = 'icon-loading animate-spin';
 
     this.Message = message;
     this.Type = type;
-    this.PromptCallback = undefined;
-
-    if (this.loadingTimeOut !== null) {
-      clearInterval( this.loadingTimeOut );
-      this.loadingTick = 0;
-    }
 
     this.loading = true;
-    this.loadingTimeOut = setInterval( () => {
+    this.timing = setInterval( () => {
       this.loadingTick++;
     }, 1000);
   }
