@@ -157,7 +157,7 @@ export class AppComponent implements OnInit {
     //  Obtenemos el usuario actual mediante login
     this.loadUser( success => {
       this.Loading = false;
-      this.S.ClearState();
+      this.S.Clear();
     });
   }
   public loadUser( callback: (success) => void = s => {} ) {

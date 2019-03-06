@@ -82,7 +82,7 @@ export class RadioGuideListComponent {
 
     // Cuando conteste
     (r): void => {
-      this.S.ClearState();
+      this.S.Clear();
       // Revisamos que nos diga 1
       if (r.status === 1) {
         this.Guides =

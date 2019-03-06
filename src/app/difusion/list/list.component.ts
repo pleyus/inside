@@ -72,7 +72,7 @@ export class ApplicantsListComponent {
     this.S.ShowLoading('Cargando lista de administradores');
     this.W.Web( "users", 'list-admins', '',
 		(r) :void => {
-			this.S.ClearState();
+			this.S.Clear();
 
 			//	Si se completa correctamente la platica
 			if (r.status === this.S.SUCCESS) {
@@ -101,7 +101,7 @@ export class ApplicantsListComponent {
       'aid=' + Applicant.id +
       '&uid=' + AdminItem.id,
 		(r) :void => {
-			this.S.ClearState();
+			this.S.Clear();
 
 			//	Si se completa correctamente la platica
 			if (r.status === this.S.SUCCESS) {
@@ -111,6 +111,18 @@ export class ApplicantsListComponent {
 		},
     (e)=> { this.S.ShowError("No hay conexión", 0); });
 
+  }
+  Discard(Applicant) {
+    this.S.ShowLoading((Applicant.excluded === 1 ? 'Retomando' : 'Excluyendo') + ' aspirante. Espera...');
+    this.W.Web('applicants', 'discard', 'id=' + Applicant.id + '&set=' + (Applicant.excluded === 1 ? 0 : 1), (r) => {
+      this.S.Clear();
+
+      if (r.status !== this.S.SUCCESS) {
+        this.S.ShowAlert(r.data, r.status);
+      } else {
+        Applicant.excluded = Applicant.excluded === 1 ? 0 : 1;
+      }
+    });
   }
   SelectAdmin(Applicant) {
     const admins = this.Admins.filter(A => A.capable && A.status === 0 && A.id !== Applicant.aid);
@@ -131,16 +143,26 @@ export class ApplicantsListComponent {
     this.L.TrackingApplicantId = Applicant.id;  //  Asignamos el tracking
 
     //  Pedimos la nota al usuario
-    this.S.ShowPrompt(message, (accept, input) => {
+    this.S.ShowPrompt(message, [
 
-      //  Si se da aceptar, guardamos la nota
-      if (accept) {
-        Applicant.new_note = input;
+      new Button('Guardar', (e) => {
+
+        Applicant.new_note = this.S.Input;
         this.SaveNote(Applicant);
-      }
+        this.L.TrackingApplicantId = 0;
+      }, 'primary'),
 
-      this.L.TrackingApplicantId = 0;  // reseteamos el tracking
-    }, '', 'Escribe una nueva nota de seguimiento');
+      new Button(
+        Applicant.excluded === 1 ? 'Retomar' : 'Descartar', (e) => {
+        this.Discard(Applicant);
+        this.L.TrackingApplicantId = 0;
+      }),
+
+      new Button('Cancelar', (e) => {
+        this.S.Clear();
+        this.L.TrackingApplicantId = 0;
+      })
+    ], '', 'Escribe una nueva nota de seguimiento', Applicant.excluded === 1 ? 0 : -1);
   }
   IsTracking(Applicant) {
     const by = this.TrackingBy(Applicant);
@@ -191,7 +213,7 @@ export class ApplicantsListComponent {
 
 		(r) :void =>
 		{
-			this.S.ClearState();
+			this.S.Clear();
 
 			//	Si se completa correctamente la platica
 			if(r.status == this.S.SUCCESS)

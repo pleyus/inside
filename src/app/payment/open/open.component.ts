@@ -114,7 +114,7 @@ export class PaymentOpenComponent {
 
       // Obtenemos el pago
       this.W.Web('payment', 'get', 'id=' + this.Id, (r) => {
-        this.S.ClearState();
+        this.S.Clear();
 
         // Si el status == OK
         if (r.status === this.S.SUCCESS) {
@@ -248,7 +248,7 @@ export class PaymentOpenComponent {
 
       // Hablamos con la api para que guarde data
       this.W.Web('payment', 'list', 'id=' + this.Pay.uid + '&last=' + this.Last, (r) => {
-        this.S.ClearState();
+        this.S.Clear();
 
         if (r.status === this.S.SUCCESS) {
             this.Pays =

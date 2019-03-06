@@ -255,7 +255,7 @@ export class UsersListComponent {
 
       // Cuando conteste
       (r): void => {
-        this.S.ClearState();
+        this.S.Clear();
 
         // Revisamos que nos diga 1
         if (r.status === 1) {
@@ -299,7 +299,7 @@ export class UsersListComponent {
         this.COURSES = [];
       }
 
-      this.S.ClearState();
+      this.S.Clear();
       callback();
     },
     (e) => { this.S.ShowError('Se perdió la conexión', 0); });

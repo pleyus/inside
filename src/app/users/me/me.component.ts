@@ -64,7 +64,7 @@ export class UsersMeComponent {
       // Platica
       this.W.Web('users', 'stats', 'id=' + this.$.Me.uid, (s) => {
         // Listo!
-        this.S.ClearState();
+        this.S.Clear();
 
         // Todo bien?
         if (s.status === this.S.SUCCESS ) {
@@ -94,7 +94,7 @@ export class UsersMeComponent {
     'id=' + this.$.Me.uid,
     (u) => {
       // Listo
-      this.S.ClearState();
+      this.S.Clear();
 
       // Todo bien?
       if (u.status === this.S.SUCCESS) {

@@ -187,7 +187,7 @@ export class ApplicantsStatsComponent {
 
     this.W.Web('applicants', 'stats', 'since=' + this.DATE_SINCE + '&until=' + this.DATE_UNTIL,
       (r) => {
-        this.S.ClearState();
+        this.S.Clear();
 
         if (r.status === this.S.SUCCESS) {
           this.ProcessData(r.data);

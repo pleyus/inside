@@ -85,14 +85,14 @@ export class LinkerComponent {
       this.SelectThis(this.Items[0]);
       this.search_string = '';
       this.Items = [];
-      this.S.ClearState();
+      this.S.Clear();
       return;
     }
 
     if (this.search_string.length === 0 || e.keyCode === 27) {
       this.search_string = '';
       this.Items = [];
-      this.S.ClearState();
+      this.S.Clear();
     } else {
       this.isLoading = true;
       this.Timer = setTimeout(() => {

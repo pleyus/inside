@@ -87,7 +87,7 @@ export class FeedbackListComponent {
       }
 
       // Listo
-      this.S.ClearState();
+      this.S.Clear();
 
       // Revisamos que nos diga 1
       if (r.status === this.S.SUCCESS) {
@@ -121,7 +121,7 @@ export class FeedbackListComponent {
 
     // Cuando conteste
     (r): void => {
-      this.S.ClearState();
+      this.S.Clear();
 
       // Revisamos que nos diga 1
       if (r.status === this.S.SUCCESS) {

@@ -151,7 +151,7 @@ export class CategoriesOpenComponent {
 		//	Cuando conteste
 		(r) :void =>
 		{
-			this.S.ClearState();
+			this.S.Clear();
 
 			//	Revisamos que nos diga 1
 			if(r.status == this.S.SUCCESS)

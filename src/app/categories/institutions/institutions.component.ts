@@ -118,7 +118,7 @@ export class CategoryInstitutionsComponent {
 		this.S.ShowLoading("Cargando información de " + Item.name);
 		this.W.Web('categories', 'get', 'id='+Item.id + '&type=institution', (r)=>
 		{
-			this.S.ClearState();
+			this.S.Clear();
 			if(r.status == this.S.SUCCESS)
 				this.Institution = r.data;
 			else
@@ -163,7 +163,7 @@ export class CategoryInstitutionsComponent {
 		//	Cuando conteste
 		(r) :void =>
 		{
-			this.S.ClearState();
+			this.S.Clear();
 
 			//	Revisamos que nos diga 1
 			if(r.status == this.S.SUCCESS)

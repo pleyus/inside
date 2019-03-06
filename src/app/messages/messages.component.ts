@@ -58,7 +58,7 @@ export class MessagesComponent implements OnInit {
 			// Cuando conteste
 			(r): void =>
 			{
-				this.S.ClearState();
+				this.S.Clear();
 
 				// Revisamos que nos diga 1
 				if (r.status === 1)
@@ -134,7 +134,7 @@ export class MessagesComponent implements OnInit {
 			this.SelectMessage(this.Messages[0]);
 			this.search_string = '';
 			this.Messages = [];
-			this.S.ClearState();
+			this.S.Clear();
 			return;
 		}
 

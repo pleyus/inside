@@ -57,7 +57,7 @@ export class RadioGuideEditorComponent {
 
       // Cuando conteste
       (r): void => {
-        this.S.ClearState();
+        this.S.Clear();
         // Revisamos que nos diga 1
         if (r.status === 1) {
           this.Guide = r.data;
@@ -129,7 +129,7 @@ export class RadioGuideEditorComponent {
 
     // Cuando conteste
     (r): void => {
-      this.S.ClearState();
+      this.S.Clear();
       this.S.ShowAlert(r.data, r.status);
       if ( !(this.Id > 0) && r.status === 1 ) {
         setTimeout(() => { this.R.navigate(['/radio/guide']); }, 2000);
@@ -153,7 +153,7 @@ export class RadioGuideEditorComponent {
 
       // Cuando conteste
       (r): void => {
-        this.S.ClearState();
+        this.S.Clear();
         this.S.ShowAlert(r.data, r.status);
         if (r.status === 1) {
           setTimeout(() => { this.R.navigate(['/radio/guide']); }, 2000);
@@ -236,7 +236,7 @@ export class RadioGuideEditorComponent {
           '&exclude=' + exclude,
         (r) => {
           // Limpiamos el mensaje de cargando...
-          this.S.ClearState();
+          this.S.Clear();
           this.announcers_searching = false;
 
           // Dependiendo de la respuesta, do.

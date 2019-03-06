@@ -155,7 +155,7 @@ export class UsersOpenComponent
 			(u)=>
 			{
 				//	Listo
-				this.S.ClearState();
+				this.S.Clear();
 
 				//	Todo bien?
 				if(u.status == this.S.SUCCESS)
@@ -209,7 +209,7 @@ export class UsersOpenComponent
 				this.W.Web('users', 'stats', 'id=' + this.User.uid, (s) =>
 				{
 					//	Listo!
-					this.S.ClearState();
+					this.S.Clear();
 
 					//	Todo bien?
 					if( s.status == this.S.SUCCESS )
@@ -242,7 +242,7 @@ export class UsersOpenComponent
 				else
 					this.COURSES = [];
 
-				this.S.ClearState();
+				this.S.Clear();
 			},
 			(e)=> { this.S.ShowError("Se perdió la conexión", 0);});
 		}
@@ -262,7 +262,7 @@ export class UsersOpenComponent
 			(u)=>
 			{
 				//	Listo
-				this.S.ClearState();
+				this.S.Clear();
 
 				//	Todo bien?
 				if(u.status == this.S.SUCCESS)
@@ -292,7 +292,7 @@ export class UsersOpenComponent
 			(u)=>
 			{
 				//	Listo
-				this.S.ClearState();
+				this.S.Clear();
 
 				//	Todo bien?
 				if(u.status == this.S.SUCCESS)
@@ -369,7 +369,7 @@ export class UsersOpenComponent
 					{
 						this.User.pid = Pic.id;
 						this.User.picture = Pic;
-            this.S.ClearState();
+            this.S.Clear();
             this.$.loadUser();
 					}
 					else

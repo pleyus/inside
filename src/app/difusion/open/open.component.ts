@@ -130,7 +130,7 @@ export class ApplicantsOpenComponent {
 
     this.W.Web('applicants', 'get', 'id=' + this.Id,
       (a) => {
-        this.S.ClearState();
+        this.S.Clear();
         if (a.status === this.S.SUCCESS) {
           this.Applicant = a.data;
           // Obtenemos el usuario
@@ -285,7 +285,7 @@ export class ApplicantsOpenComponent {
 
         // Limpiamos si es que no es silenciosa
         if (!quiet) {
-          this.S.ClearState();
+          this.S.Clear();
         }
 
         // Si sale todo bien

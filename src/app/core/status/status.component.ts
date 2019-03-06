@@ -12,6 +12,6 @@ export class StatusComponent {
 
   ButtonClick(callback: () => void) {
     callback();
-    this.S.ClearState();
+    this.S.Clear();
   }
 }
