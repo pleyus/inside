@@ -95,21 +95,21 @@ export class ApplicantsListComponent {
 		(e)=> { this.S.ShowError("No hay conexión", 0); });
   }
   AssignTo(Applicant, AdminItem) {
-    this.S.ShowLoading('Asignando aspirante a ' + AdminItem.firstname + '...');
+    this.S.ShowLoading(AdminItem === null ? 'Desasignando aspirante, espere...' : 'Asignando aspirante a ' + AdminItem.firstname + '...');
 
-    this.W.Web( "applicants", 'assign-to',
+    this.W.Web( 'applicants', 'assign-to',
       'aid=' + Applicant.id +
-      '&uid=' + AdminItem.id,
-		(r) :void => {
-			this.S.Clear();
+      '&uid=' + ( AdminItem === null ? 0 : AdminItem.id),
+      (r) => {
+      this.S.Clear();
 
-			//	Si se completa correctamente la platica
-			if (r.status === this.S.SUCCESS) {
+      //  Si se completa correctamente la platica
+      if (r.status === this.S.SUCCESS) {
         Applicant.assigned = AdminItem;
-        Applicant.aid = AdminItem.id;
+        Applicant.aid = AdminItem === null ? null : AdminItem.id;
       }
-		},
-    (e)=> { this.S.ShowError("No hay conexión", 0); });
+    },
+    (e) => { this.S.ShowError('No hay conexión', 0); });
 
   }
   Discard(Applicant) {
@@ -126,10 +126,16 @@ export class ApplicantsListComponent {
   }
   SelectAdmin(Applicant) {
     const admins = this.Admins.filter(A => A.capable && A.status === 0 && A.id !== Applicant.aid);
-    let buttons = admins.map(e => {
-        return new Button(e.firstname, () => { this.AssignTo(Applicant, e) });
+    const buttons = admins.map(e => {
+        return new Button(e.firstname, () => { this.AssignTo(Applicant, e); });
     });
+
+    if ( Applicant.aid > 0) {
+      buttons.push(new Button('Desasignar', () => { this.AssignTo(Applicant, null); }));
+    }
+
     buttons.push(new Button('Cancelar', () => {}, 'primary'));
+
     this.S.ShowDialog('Seleccione un usuario para asignar a ' + Applicant.firstname + '.', buttons)
   }
   QuickTracking(Applicant) {
