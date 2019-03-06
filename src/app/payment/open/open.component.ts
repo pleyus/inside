@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponent } from './../../app.component';
 import { Tools, Configuration } from './../../app.service';
 import { WebService } from '../../services/web-service';
-import { StatusService, InsideListenerService } from '../../services/status.service';
+import { StatusService } from '../../services/status.service';
 
 @Component({
   selector: 'app-open',
@@ -157,7 +157,7 @@ export class PaymentOpenComponent {
         // Si contesta con 1
         if (r.status === this.S.SUCCESS) {
           // Mostramos el mensaje de guardado
-          this.S.ShowSuccess('Datos guardados' + (this.Id < 1 ? '... Espera un momento' : ''), 2000);
+          this.S.ShowSuccess('Datos guardados' + (this.Id < 1 ? '... Espera un momento' : ''));
 
           // Esperamos un rato para redirigir
           setTimeout(() => {

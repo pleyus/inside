@@ -55,7 +55,6 @@ export class StatusService {
    * @param time Tiempo en milisegundos que durará la alerta hasta eliminarse por si sola
    */
   private alertTiming(time) {
-    this.Clear();
     this.making = 'alert';
 
     //  Si hay un tiempo establecido para quitar la alerta, entonces lo asignamos
@@ -70,6 +69,7 @@ export class StatusService {
    * @param time Duración de la alerta en ms (def: 3000)
    */
   public ShowWarning(message, time = 2500) {
+    this.Clear();
     this.Icon = 'icon-attention';
     this.Message = message;
     this.Type = this.WARNING;
@@ -82,6 +82,7 @@ export class StatusService {
    * @param time Duración de la alerta en ms (def: 3000)
    */
   public ShowError(message, time = 2500) {
+    this.Clear();
     this.Icon = 'icon-close';
     this.Message = message;
     this.Type = this.ERROR;
@@ -94,6 +95,7 @@ export class StatusService {
    * @param time Duración de la alerta en ms (def: 3000)
    */
   public ShowSuccess(message, time = 2500) {
+    this.Clear();
     this.Icon = 'icon-ok';
     this.Message = message;
     this.Type = this.SUCCESS;
@@ -108,6 +110,8 @@ export class StatusService {
    * @param time Tiempo de la alerta en ms (def: 3000ms)
    */
   public ShowAlert(message, type = this.SUCCESS, time = 2500) {
+    this.Clear();
+
     this.Type = type;
 
     if (this.Type === this.SUCCESS) {
@@ -154,7 +158,7 @@ export class StatusService {
     if (typeof actions === 'object' ) {
       this.PromptCallback = null;
       this.Buttons = actions;
-    } else{
+    } else {
       this.PromptCallback = actions;
       this.Buttons = [];
     }
@@ -232,8 +236,7 @@ export class InsideListenerService {
         'lmt=' + this.C.GetOption('lmt', 'radio', 0) +
         '&lfs=' + this.C.GetOption('lfs', 'feedback', 0) +
         '&lpt=' + this.C.GetOption('lpt', 'payment', 0) +
-        '&tai=' + this.TrackingApplicantId
-        ,
+        '&tai=' + this.TrackingApplicantId,
 
         (r) => {
           if (r.status === this.S.SUCCESS) {
