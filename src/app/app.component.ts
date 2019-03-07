@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
     announcerOf: 0,
     status : 0,
     birthday: 0,
-    pid: 0,
+    fid: 0,
     firstname: '',
     lastname: '',
     email: '',

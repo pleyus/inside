@@ -8,30 +8,30 @@
 				<input type="checkbox" id="checked-all" (click)="CheckAll()">
 			</label>
 		</th>
-		<th title="Ordenar por numero de control" class="col-2 order" (click)="Order('u.idnumber')"> 
+		<th title="Ordenar por numero de control" class="col-2 order" (click)="Order('u.idnumber')">
 			No. Control
-			<span *ngIf="order_by == 'u.idnumber'" class="icon-{{order == 'ASC' ? 'down' : 'up'}}-open"></span> 
+			<span *ngIf="order_by == 'u.idnumber'" class="icon-{{order == 'ASC' ? 'down' : 'up'}}-open"></span>
 		</th>
 		<th title="Ordenar por nombre o apellido" class="col-4">
 			<div class="order" (click)="Order('u.firstname')">
 				Nombre
-				<span *ngIf="order_by == 'u.firstname'" class="icon-{{order == 'ASC' ? 'down' : 'up'}}-open"></span> 
+				<span *ngIf="order_by == 'u.firstname'" class="icon-{{order == 'ASC' ? 'down' : 'up'}}-open"></span>
 			</div>
 			/
 			<div class="order" (click)="Order('u.lastname')">
 				Apellido
-				<span *ngIf="order_by == 'u.lastname'" class="icon-{{order == 'ASC' ? 'down' : 'up'}}-open"></span> 
+				<span *ngIf="order_by == 'u.lastname'" class="icon-{{order == 'ASC' ? 'down' : 'up'}}-open"></span>
 			</div>
 		</th>
 		<th title="Ordenar por area/especialidad" class="col-3-5 order" (click)="Order('c.name')">
 			Area
-			<span *ngIf="order_by == 'c.name'" class="icon-{{order == 'ASC' ? 'down' : 'up'}}-open"></span> 
+			<span *ngIf="order_by == 'c.name'" class="icon-{{order == 'ASC' ? 'down' : 'up'}}-open"></span>
 		</th>
 		<th class="col-2"></th>
 	</thead>
 
 	<tbody>
-		<tr *ngFor="let U of Users; let i = index" class="row {{U.checked ? 'checked' : ''}}"> 
+		<tr *ngFor="let U of Users; let i = index" class="row {{U.checked ? 'checked' : ''}}">
 			<th class="col-0-5">
 				<label class="checkbox" for="checked-{{U.id}}">
 					<div class="mark {{U.checked ? 'checked' : ''}}" (click)="CheckSingle(i)">
@@ -52,7 +52,7 @@
 					<span title="{{ U.status == $.IS_APPLICANT ? 'Candidato a ingreso' : 'Alumno ' + StatusString[U.status]}}" *ngIf="U.type == $.T_STUDENT"
 					class="icon-applicant color-{{ StatusClass[U.status] }}"></span>
 
-					<span title="{{U.pid > 0 ? 'Ya se cuenta con imagen del usuario' : 'Aun no hay foto del usuario'}}" class="icon-pictures color-{{ U.pid > 0 ? 'active' : 'inactive'}}"></span>
+					<span title="{{U.fid > 0 ? 'Ya se cuenta con imagen del usuario' : 'Aun no hay foto del usuario'}}" class="icon-pictures color-{{ U.fid > 0 ? 'active' : 'inactive'}}"></span>
 					<span title="{{U.located > 0 ? 'Ubicación obtenida' : 'Aún sin ubicación'}}" class="icon-location color-{{ U.located > 0 ? 'active' : 'inactive'}}"></span>
 					<span title="{{U.personal_phone.length > 0 ? 'Telefono de contacto conseguido' : 'Numero de contacto pendiente'}}"
 						class="icon-phone color-{{ U.personal_phone.length ? 'active' : 'inactive' }}"></span>

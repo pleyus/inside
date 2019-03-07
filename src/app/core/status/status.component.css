@@ -7,6 +7,8 @@ section
 	color: #333;
 }
 
+.button { border: none; }
+
 section > div {
   margin: 0 auto;
   background-color: #FFF;

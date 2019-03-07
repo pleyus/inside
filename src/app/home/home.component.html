@@ -21,7 +21,7 @@
         <div class="month">{{ B.at * 1000 | date: 'MMM'}}</div>
       </div>
       <div class="img"
-        [ngStyle]="{'background-image':'url(' + T.CreateUrl(B.filename, 'users') + ')'}"></div>
+        [ngStyle]="{'background-image':'url(' + B.url + ')'}"></div>
 
       <div class="data">
         <a  *ngIf="$.isAdmin()" [routerLink]="['/users/' + B.id]">{{B.firstname + ' ' + B.lastname}}</a>

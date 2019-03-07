@@ -14,7 +14,7 @@
 
 		<ul>
 			<li *ngFor="let Item of Items" (click)="SelectThis(Item)">
-				<div *ngIf="ShowImage" class="img" [ngStyle]="{'background-image':'url(' + T.CreateUrl(Item.link_imgurl, (iusing !== '' ? iusing : Using) ) + ')'}"></div>
+				<div *ngIf="ShowImage" class="img" [ngStyle]="{'background-image':'url(' + Item.link_imgurl + ')'}"></div>
 				<div class="info">
 					<h1>{{Item.link_title}}</h1>
 					<h2>{{Item.link_subtitle}}</h2>
@@ -33,7 +33,7 @@
 </section>
 
 <section class="face" *ngIf="object_value !== null">
-	<div *ngIf="ShowImage" class="img" [ngStyle]="{'background-image':'url(' + T.CreateUrl(object_value.link_imgurl, Using) + ')'}"></div>
+	<div *ngIf="ShowImage" class="img" [ngStyle]="{'background-image':'url(' + object_value.link_imgurl + ')'}"></div>
 	<div class="info">
 		<h1 class="{{link != '' ? 'link' : ''}}" (click)="Link(object_value.id)" title="{{ link != '' ? 'Detalles de ' + object_value.link_title : '' }}">
 			{{object_value.link_title}}

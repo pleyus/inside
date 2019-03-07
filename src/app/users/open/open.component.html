@@ -100,17 +100,17 @@
 					<span class="picture clearfix">
 						<span
 							class="img"
-							title="Imagen actual de {{User.firstname}} {{User.pid > 0 ? '' : '(Sin imagen)'}}"
-							[ngStyle]="User.pid > 0 ? {'background-image':'url(https://unitam.edu.mx/uploads/users/' + User.picture.filename + ')'} : {}">
-							<span *ngIf="User.pid > 0" class="icon-close pull-right" title="Eliminar imagen actual" (click)="SetPicture(User.picture, 'delete')"></span>
+							title="Imagen actual de {{User.firstname}} {{User.fid > 0 ? '' : '(Sin imagen)'}}"
+							[ngStyle]="User.fid > 0 ? {'background-image':'url(' + User.picture.url + ')'} : {}">
+							<span *ngIf="User.fid > 0" class="icon-close pull-right" title="Eliminar imagen actual" (click)="SetPicture(User.picture, 'delete')"></span>
 						</span>
 						<ng-container *ngFor="let P of Pictures">
 							<span
-								*ngIf="P.id != User.pid"
+								*ngIf="P.id != User.fid"
 								class="img prev"
 								title="Doble clic para usar como imagen de usuario (Subida: el {{(P.at*1000 | date:'dd/MM/yyyy hh:mm:ss')}})"
 								(dblclick)="SetPicture(P)"
-								[ngStyle]="{'background-image': 'url(https://unitam.edu.mx/uploads/users/' + P.filename + ')'}">
+								[ngStyle]="{'background-image': 'url(' + P.url + ')'}">
 								<span
 									class="icon-close pull-right"
 									title="{{'Eliminar imagen alterna (Subida el ' + (P.at*1000 | date:'dd/MM/yyyy hh:mm:ss') + ')'}}"
@@ -308,7 +308,7 @@
 <section id="printable-cards">
 	<div class="card" *ngIf="User.id > 0">
 			<img [src]="'assets/card-base.jpg'" class="base">
-			<img class="photo" *ngIf="T.CreateUrl(User.picture !== null ? User.picture.filename : null, 'users') != ''" [src]="T.CreateUrl(User.picture.filename, 'users')">
+			<img class="photo" *ngIf="User.fid > 0" [src]="User.picture.url">
 			<div class="name">
 				<div class="firstname">
 					{{User.firstname}}

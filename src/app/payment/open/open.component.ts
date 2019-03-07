@@ -83,7 +83,7 @@ export class PaymentOpenComponent {
             r.data.link_title = r.data.firstname + ' ' + r.data.lastname;
             r.data.link_subtitle = (r.data.cid > 0 ? r.data.course.name + ' ' + this.T.Romanize(r.data.level) : r.data.personal_phone );
             r.data.link_body = '';
-            r.data.link_imgurl = r.data.picture.filename !== undefined ? r.data.picture.filename : r.data.image;
+            r.data.link_imgurl = r.data.picture.url !== undefined ? r.data.picture.url : r.data.image;
 
             this.Pay.user = r.data;
             this.Pay.uid = this.UID;
@@ -124,7 +124,7 @@ export class PaymentOpenComponent {
             r.data.user.course.name + ' ' + this.T.Romanize(r.data.user.level)
             : r.data.user.personal_phone);
           r.data.user.link_body = '';
-          r.data.user.link_imgurl = r.data.user.picture.filename !== undefined ? r.data.user.picture.filename : r.data.user.image;
+          r.data.user.link_imgurl = r.data.user.picture.url !== undefined ? r.data.user.picture.url : r.data.user.image;
 
           // Asignamos lo que viene en data
           this.Pay = r.data;

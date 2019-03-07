@@ -324,7 +324,7 @@
 		<div *ngIf="canPrint(C)"
 			class="card">
 				<img [src]="'assets/card-base.jpg'" class="base">
-				<img class="photo" *ngIf="T.CreateUrl(C.filename, 'users') != ''" [src]="T.CreateUrl(C.filename, 'users')">
+				<img class="photo" *ngIf="C.fid > 0" [src]="C.url">
 				<div class="name">
 					<div class="firstname">
 						{{C.firstname}}

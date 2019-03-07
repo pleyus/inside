@@ -22,7 +22,7 @@
 	<tbody>
 		<a *ngFor="let U of Users; let i = index" class="row" [routerLink]="[U.id]">
 			<td class="col-1">
-				<div class="img {{U.status != 0 ? 'disabled' : ''}}" [ngStyle]="{'background-image':'url(' + T.CreateUrl(U.filename, 'users') + ')'}"></div>
+				<div class="img {{U.status != 0 ? 'disabled' : ''}}" [ngStyle]="{'background-image':'url(' + U.url + ')'}"></div>
 			</td>
 			<td class="col-3">{{ U.firstname + ' ' + U.lastname }}</td>
 			<td class="col-2" title="{{U.personal_phone}}">{{ U.personal_phone && U.personal_phone.length < 5 ? '- - - - - - - - - -' : U.personal_phone }}</td>

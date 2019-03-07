@@ -38,7 +38,7 @@ export class UsersOpenComponent
 			birthday: 0,
 			type: 2,
 
-			pid: 0,
+			fid: 0,
 			picture: null,
 
 			eid: 0,
@@ -356,7 +356,7 @@ export class UsersOpenComponent
 	{
 		if(Action == 'set')
 		{
-			if(Pic != this.User.pid)
+			if(Pic != this.User.fid)
 			{
 				this.S.ShowLoading('Cambiando imagen de ' + this.User.firstname + '...');
 				this.W.Web('users', 'set-picture',
@@ -367,7 +367,7 @@ export class UsersOpenComponent
 				{
 					if(r.status == this.S.SUCCESS)
 					{
-						this.User.pid = Pic.id;
+						this.User.fid = Pic.id;
 						this.User.picture = Pic;
             this.S.Clear();
             this.$.loadUser();
@@ -399,9 +399,9 @@ export class UsersOpenComponent
 									break;
 								}
 
-							if(this.User.pid == Pic.id)
+							if(this.User.fid == Pic.id)
 							{
-								this.User.pid = this.Pictures[0].id;
+								this.User.fid = this.Pictures[0].id;
 								this.User.picture = this.Pictures[0];
 							}
 						}
@@ -409,7 +409,7 @@ export class UsersOpenComponent
 						{
 							this.Pictures = [];
 							this.User.picture = null;
-							this.User.pid = 0;
+							this.User.fid = 0;
 						}
 						this.S.ShowSuccess(r.data);
 					}
@@ -455,7 +455,7 @@ export class UsersOpenComponent
 						{
 							this.S.ShowSuccess( 'Se ha subido la imagen', 2000 );
 							this.User.picture = r.data;
-							this.User.pid = r.data.id;
+							this.User.fid = r.data.id;
 							this.GetPictures(() => {
 								this.S.ShowSuccess("Se ha subido la imagen correctamente...");
 							 });

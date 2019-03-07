@@ -2,8 +2,8 @@
 <div class="col-3 info-head">
 	<div
 		class="img"
-		title="Imagen actual de {{$.Me.firstname}} {{$.Me.pid > 0 ? '' : '(Sin imagen)'}}"
-		[ngStyle]="$.Me.pid > 0 ? {'background-image':'url(https://unitam.edu.mx/uploads/users/' + $.Me.picture.filename + ')'} : {}">
+		title="Imagen actual de {{$.Me.firstname}} {{$.Me.fid > 0 ? '' : '(Sin imagen)'}}"
+		[ngStyle]="$.Me.fid > 0 ? {'background-image':'url(' + $.Me.picture.url + ')'} : {}">
 		<span
 			class="genere icon-{{$.Me.sex > 0 ? ($.Me.sex == 1 ? 'female' : 'male') : 'sex-undefined'}}"
 			title="{{ $.Me.sex > 0 ? 'Genero ' + ($.Me.sex == 1 ? 'femenino' : 'masculino') : '(Sin genero definido)' }}" >

@@ -504,7 +504,7 @@ export class UsersListComponent {
     }
 
     if ( !this.CardOptions.WithOutPhoto ) {
-      if ( !(User.pid > 0) ) { return false; }
+      if ( !(User.fid > 0) ) { return false; }
     }
 
     return true;

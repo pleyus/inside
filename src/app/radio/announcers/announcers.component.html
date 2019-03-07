@@ -36,30 +36,10 @@
             <input type="text" id="search" (keyup)="Search()" placeholder="Nombre, apodo, carrera..." [(ngModel)]="search_string">
           </div>
         </div>
-        <!-- <div class="col-2">
-          <label for="search">Mostrar</label>
-          <div class="dropdown">
-            <button class="dropbtn" title="Filtrar resultados">
-              <span class="button-text">{{ FilterText()}}</span>
-              <span class="icon-down-open"></span>
-            </button>
-
-            <div class="dropdown-content" (click)="Search()">
-              <a (click)="setFilter('')" title="Muestra todos los locutores">
-                <span class="icon-{{isFilter('') ? 'ok' : 'noicon'}}"></span>
-                Todos
-              </a>
-              <a (click)="setFilter('unsetted')" title="Locutores sin programa asignado">
-                <span class="icon-{{isFilter('unsetted') ? 'ok' : 'noicon'}}"></span>
-                Libres
-              </a>
-            </div>
-          </div>
-        </div> -->
       </div>
 			<ul class="announcers tile">
 				<li *ngFor="let H of Announcers">
-					<div class="img" [ngStyle]="{ 'background-image': 'url(' + ( H.filename != '' ? 'https://unitam.edu.mx/uploads/users/' + H.filename : '') + ')' }"></div>
+					<div class="img" [ngStyle]="{ 'background-image': 'url(' + H.url + ')' }"></div>
 					<h1><a [routerLink]="['/users/', H.uid]">{{H.alias}}</a></h1>
 					<h2>{{H.firstname}}</h2>
 					<a class="remove" (click)="RemoveAnnouncer(H)">Eliminar</a>
