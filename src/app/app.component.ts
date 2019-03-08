@@ -1,7 +1,7 @@
 // ng build --base-href=/inside/ --prod --build-optimizer
 
 import { Component, OnInit } from '@angular/core';
-import { Tools, Configuration } from './app.service';
+import { Configuration } from './app.service';
 import { WebService } from './services/web-service';
 import { Router } from '@angular/router';
 import { StatusService, InsideListenerService } from './services/status.service';
@@ -51,7 +51,7 @@ export class AppComponent implements OnInit {
       user: 0
     }
   };
-  public VERSION = '3.9.0';
+  public VERSION = '3.9.1';
 
   /**
    * Define las urls dinamicas que pueden ser utilizadas con las SelectedTabs dentro de los componentes
