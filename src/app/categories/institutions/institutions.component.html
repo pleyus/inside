@@ -6,14 +6,14 @@
 <div class="row" *ngIf="Institution.id > -1">
 	<div class="row">
 		<div class="group col-6">
-				
+
 			<h1>{{ Institution.name == '' ? '«Nuevo elemento»' : Institution.name}}</h1>
 
 			<p class="row">
 				<label>Nombre</label>
 				<input class="required col-12" maxlength="100" type="text" [(ngModel)]="Institution.name" placeholder="Ej. Universidad Tama...">
 			</p>
-			
+
 			<p class="row">
 				<label>Teléfonos</label>
 				<input class="col-12" maxlength="10" type="text" [(ngModel)]="Institution.phone1" placeholder="10 digitos">
@@ -24,16 +24,16 @@
 				<label>Director</label>
 				<input class="col-12" type="text" [(ngModel)]="Institution.director" placeholder="Nombre completo">
 			</p>
-			
+
 		</div>
 		<div class="group col-6">
-				
+
 			<h1>Ubicación</h1>
 			<p class="row">
 				<label>Localidad</label>
 				<linker-box
 					[(object)]="Institution.location"
-					(pickedup)="SetLocation($event)" 
+					(pickedup)="SetLocation($event)"
 					[placeholder]="'Ciudad, Codigo postal, localidad...'"
 					[using]="'sepomex'"
 					[make]="'get'"
@@ -44,7 +44,7 @@
 				<label>Dirección</label>
 				<textarea class="col-12" [(ngModel)]="Institution.address" placeholder="Calle, numero, referencias..."></textarea>
 			</p>
-			
+
 		</div>
 	</div>
 
@@ -60,13 +60,13 @@
 		<label for="sbox">Busqueda</label>
 		<div class="sbox">
 			<span class="icon-search"></span>
-			<input id="sbox" type="text" (keyup)="search()" [(ngModel)]="search_string" 
+			<input id="sbox" type="text" (keyup)="search()" [(ngModel)]="search_string"
 				placeholder="Nombre, director, telefono, ubicación...">
 		</div>
 	</div>
-	<div class="col-6">
-		<a title="Registrar una nueva institución" 
-		class="button pull-right" 
+	<div class="col-6 not-labeled">
+		<a title="Registrar una nueva institución"
+		class="button pull-right"
 		(click)="Institution.id = 0">
 			Registrar escuela
 		</a>
@@ -99,6 +99,6 @@
 			</a>
 		</tbody>
 	</table>
-		
+
 </div>
 <a *ngIf="LoadMore && List.length > 0 && Institution.id < 0" (click)="GetInstitutions( 'more' )" class="link box center"> Mostrar más </a>
