@@ -70,7 +70,7 @@
     <a (click)="MenuClick(false)" class="userinfo" routerLink="/me" *ngIf="L.News.LoggedIn">
       <span
         title="Imagen actual de {{$.Me.firstname}} {{$.Me.fid > 0 ? '' : '(Sin imagen)'}}"
-        [ngStyle]="{'background-image':'url(' + $.Me.picture.url + ')'}"></span>
+        [ngStyle]="$.Me.fid > 0 ? {'background-image':'url(' + $.Me.picture.url + ')'} : {}"></span>
       {{ $.Me.firstname + ' ' + $.Me.lastname }}
     </a>
 
