@@ -1,13 +1,12 @@
 <section *ngIf="Show">
   <link href="https://fonts.googleapis.com/css?family=Wendy+One" rel="stylesheet" type="text/css">
 
-  <span class="ico"
-    (click)="ShowThis()"
-    title="¡Felicidades!"
-    id="cake-icon"
-    style="background-image: url('https://media.giphy.com/media/3ov9jF86s9BZ3deR1K/source.gif');"></span>
+  <div class="trigger" (click)="ShowThis()" title="¡Felicidades!" id="cake-icon">
+    <span class="icon-birthday"></span>
+    ¡Felicidades!
+  </div>
 
-  <section class="canvas-container {{ShowingCanvas ? '' : 'hide'}}">
+  <section class="canvas-container {{ ShowingCanvas ? '' : 'hide' }}">
     <span (click)="HideThis()" class="icon-close pull-right"></span>
 
     <div class="container">
@@ -25,6 +24,7 @@
     <input type="hidden" [(ngModel)]="UserObject.firstname" id="my-name">
   </section>
 
+  <app-script-hack type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></app-script-hack>
   <app-script-hack type="text/javascript" src="https://s3.amazonaws.com/codecademy-content/courses/hour-of-code/js/bubbles.js"></app-script-hack>
   <app-script-hack type="text/javascript" src="https://s3.amazonaws.com/codecademy-content/courses/hour-of-code/js/alphabet.js"></app-script-hack>
   <app-script-hack type="text/javascript" src="https://unitam.edu.mx/inside/assets/hbd.js"></app-script-hack>

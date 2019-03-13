@@ -1,5 +1,5 @@
 section {
-  margin: 1rem;
+  padding: 1rem;
 }
 /* If you can't see it just hit space in here*/
 .canvas-container {
@@ -294,13 +294,19 @@ section {
   color: rgb(255, 230, 123);
 }
 
-.ico {
-  background-size: cover;
-  height: 28px;
-  width: 28px;
+.trigger {
   display: block;
   margin-top: 8px;
   cursor: pointer;
+  background-color: #F1F1F1;
+  border: solid 1px #DDD;
+  border-radius: 40px;
+  padding: 10px;
+}
+.trigger > span {
+  background-color: #a4255b;
+  border-radius: 100%;
+  color: #FFF;
 }
 
 .message {
