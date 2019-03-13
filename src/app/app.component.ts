@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
     tutor_phone: '',
     address: '',
     sex: 0,
-    picture: { filename: '' },
+    picture: { url: '' },
     image: '',
     radio: [],
     platform: null,
