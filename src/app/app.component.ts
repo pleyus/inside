@@ -49,7 +49,8 @@ export class AppComponent implements OnInit {
       radio: 0,
       docs: 1,
       user: 0
-    }
+    },
+    sesskey: ''
   };
   public VERSION = '3.9.1';
 
@@ -240,5 +241,32 @@ export class AppComponent implements OnInit {
   TodayIs(Day: number, Month: number): boolean {
     const now = new Date();
     return ( now.getMonth() === Day && now.getDate() === Day );
+  }
+
+  //  Cierra la sesión del usuario actual
+  Logout() {
+
+    //  Si tenemos una clave de sesión
+    if (this.Me.sesskey !== '') {
+
+      this.S.ShowLoading('Cerrando tu sesión, espera...');
+
+      //  Platicamos con la api
+      this.W.Post('https://unitam.edu.mx/plataforma/login/logout.php?sesskey=' + this.Me.sesskey, '',
+      (r) => {
+        this.Me.id = 0;
+        this.Me.uid = 0;
+        this.L.News.LoggedIn = false;
+        this.S.Clear();
+      },
+      (r) => {
+        this.Me.id = 0;
+        this.Me.uid = 0;
+        this.L.News.LoggedIn = false;
+        this.S.Clear();
+      });
+    } else {
+      this.S.ShowError('Parece que no hay ninguna sesión iniciada, actualiza la página', 0);
+    }
   }
 }

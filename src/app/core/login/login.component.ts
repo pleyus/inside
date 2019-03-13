@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Tools } from '../../app.service';
 import { WebService } from '../../services/web-service';
 import { AppComponent } from '../../app.component';
-import { Router } from '@angular/router';
 import { InsideListenerService } from 'src/app/services/status.service';
 
 @Component({
@@ -14,6 +13,8 @@ export class LoginComponent {
   public Username = '';
   public Password = '';
   public ShowPass = false;
+
+  public LOGIN_TEXT = 'Ingresa tus credenciales para entrar al modulo';
 
   public Placeholder = '';
   private placeholders = ['4831234567', 'elaguila94', 'correo@ejemplo.com', '5551234567', 'miusuario'];
@@ -31,6 +32,10 @@ export class LoginComponent {
     private T: Tools,
     private L: InsideListenerService
   ) {
+    this.LOGIN_TEXT = this.Expired()
+      ? 'Tu sesión expiró, vuelve a iniciarla para continuar'
+      : 'Ingresa tus credenciales para entrar al modulo';
+
     this.init();
   }
   private setPlaceholder() {
@@ -99,7 +104,9 @@ export class LoginComponent {
           loginMessage: 'Sesión iniciada, espera...'
         };
 
-        setTimeout(() => this.L.UpdateNews(true), 1000);
+        setTimeout(() =>  {
+          this.L.UpdateNews(true);
+        }, 1000);
       } else {
 
         this.ResponseMessage = {
@@ -110,5 +117,7 @@ export class LoginComponent {
       }
     });
   }
-
+  public Expired(): boolean {
+    return this.$.Me.id > 0 && !this.L.News.LoggedIn;
+  }
 }
