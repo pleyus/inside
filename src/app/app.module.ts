@@ -50,6 +50,8 @@ import { HolidaysComponent } from './core/holidays/holidays.component';
 import { FileManagerComponent } from './core/file-manager/file-manager.component';
 import { StatusComponent } from './core/status/status.component';
 import { StatusService, InsideListenerService } from './services/status.service';
+import { PollComponent } from './poll/poll.component';
+import { PollOpenComponent } from './poll/open/open.component';
 
 const appRoutes: Routes = [
   {
@@ -72,6 +74,9 @@ const appRoutes: Routes = [
       { path: 'checkin', component: CheckinComponent }
     ]
   },
+
+  { path: 'poll', component: PollComponent },
+  { path: 'poll/:id', component: PollOpenComponent },
 
   { path: 'payment', component: PaymentListComponent },
   { path: 'payment/:id', component: PaymentOpenComponent },
@@ -150,7 +155,9 @@ const appRoutes: Routes = [
     ViasComponent,
     HolidaysComponent,
     FileManagerComponent,
-    StatusComponent
+    StatusComponent,
+    PollComponent,
+    PollOpenComponent
   ],
 
   imports: [

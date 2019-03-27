@@ -1,0 +1,137 @@
+<div class="row">
+  <div class="filter">
+    <div class="col-4">
+      <label for="sbox">Busqueda</label>
+      <div class="sbox">
+        <span class="icon icon-search"></span>
+        <input id="sbox" type="text" (keyup)="search()" [(ngModel)]="search_string" placeholder="Búsqueda...">
+      </div>
+    </div>
+
+    <div class="col-8 not-labeled">
+      <div class="warning">
+        Este modulo aun se encuentra en etapa de pruebas, en caso de presentar algun fallo, favor de notificarlo.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="table">
+	<table *ngIf="$.isAdmin()">
+		<thead>
+			<th class="col-1 order" title="Ordenar por id de materia" (click)="Order('c.id')">
+				Id
+				<span *ngIf="_OrderBy == 'c.id'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
+			</th>
+			<th class="col-2-5 order" title="Ordenar por fecha de creación" (click)="Order('cr.name')">
+				Area
+				<span *ngIf="_OrderBy == 'cr.name'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
+			</th>
+			<th class="col-2-5 order" title="Ordenar por concepto de pago" (click)="Order('cg.name')">
+				Nivel
+				<span *ngIf="_OrderBy == 'cg.name'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
+      </th>
+      <th class="col-3 order" title="Ordenar por clave de referencia" (click)="Order('c.fullname')">
+				Materia
+				<span *ngIf="_OrderBy == 'c.fullname'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
+			</th>
+			<th class="col-3" title="Ordenar por nombre">
+				<div class="order" (click)="Order('t.firstname')">
+					Docente
+					<span *ngIf="_OrderBy == 't.firstname'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
+				</div>
+				/
+				<div class="order" (click)="Order('t.lastname')">
+					Apellido
+					<span *ngIf="_OrderBy == 't.lastname'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
+				</div>
+			</th>
+		</thead>
+
+		<tbody>
+			<tr *ngFor="let P of Polls" class="row">
+				<a routerLink="{{P.id}}">
+					<td class="col-1">{{ P.id }}</td>
+					<td class="col-2-5">{{ P.area }}</td>
+					<td class="col-2-5">{{P.level }}</td>
+					<td class="col-3">{{P.name }}</td>
+					<td class="col-3">{{P.firstname + ' ' + P.lastname}}</td>
+				</a>
+			</tr>
+			<div class="empty" *ngIf="Polls.length < 1">No hay encuestas para disponibles</div>
+		</tbody>
+  </table>
+
+  <table *ngIf="$.isTeacher()">
+		<thead>
+			<th class="col-1 order" title="Ordenar por id de materia" (click)="Order('c.id')">
+				Id
+				<span *ngIf="_OrderBy == 'c.id'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
+			</th>
+			<th class="col-3 order" title="Ordenar por fecha de creación" (click)="Order('cr.name')">
+				Area
+				<span *ngIf="_OrderBy == 'cr.name'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
+			</th>
+			<th class="col-3 order" title="Ordenar por concepto de pago" (click)="Order('cg.name')">
+				Nivel
+				<span *ngIf="_OrderBy == 'cg.name'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
+      </th>
+      <th class="col-5 order" title="Ordenar por clave de referencia" (click)="Order('c.fullname')">
+				Materia
+				<span *ngIf="_OrderBy == 'c.fullname'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
+			</th>
+		</thead>
+
+		<tbody>
+			<tr *ngFor="let P of Polls" class="row">
+				<a routerLink="{{P.id}}">
+					<td class="col-1">{{ P.id }}</td>
+					<td class="col-3">{{ P.area }}</td>
+					<td class="col-3">{{P.level }}</td>
+					<td class="col-5">{{P.name }}</td>
+				</a>
+			</tr>
+			<div class="empty" *ngIf="Polls.length < 1">No hay encuestas para disponibles</div>
+		</tbody>
+  </table>
+
+  <table *ngIf="$.isStudent()">
+		<thead>
+			<th class="col-2 order" title="Ordenar por id de materia" (click)="Order('c.id')">
+				Id
+				<span *ngIf="_OrderBy == 'c.id'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
+			</th>
+      <th class="col-5 order" title="Ordenar por clave de referencia" (click)="Order('c.fullname')">
+				Materia
+				<span *ngIf="_OrderBy == 'c.fullname'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
+      </th>
+      <th class="col-5" title="Ordenar por nombre">
+        <div class="order" (click)="Order('t.firstname')">
+          Docente
+          <span *ngIf="_OrderBy == 't.firstname'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
+        </div>
+        /
+        <div class="order" (click)="Order('t.lastname')">
+          Apellido
+          <span *ngIf="_OrderBy == 't.lastname'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
+        </div>
+      </th>
+		</thead>
+
+		<tbody>
+      <ng-container *ngFor="let P of Polls">
+        <tr *ngIf="P.status === 0" class="row">
+          <a routerLink="{{P.id}}">
+            <td class="col-2">{{ P.id }}</td>
+            <td class="col-5">{{ P.name }}</td>
+            <td class="col-5">{{ P.firstname + ' ' + P.lastname }}</td>
+          </a>
+        </tr>
+      </ng-container>
+			<div class="empty" *ngIf="Polls.length < 1">No hay encuestas para disponibles</div>
+		</tbody>
+	</table>
+
+
+</div>
+<div *ngIf="LoadMore" (click)="GetPolls( 'more' )" class="link box center">Mostrar más</div>

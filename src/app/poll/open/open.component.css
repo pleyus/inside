@@ -1,0 +1,128 @@
+section {
+  float: none;
+  display: block;
+  margin: 0 auto;
+  clear: both;
+}
+section > p {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: solid 1px #DDD;
+}
+
+.eval > p {
+  font-style: italic;
+}
+
+.eval .rating-group {
+  display: inline-flex;
+}
+.eval .rating__icon {
+  pointer-events: none;
+}
+.eval .rating__input {
+  position: absolute !important;
+  left: -9999px !important;
+}
+.eval .rating__input--none {
+  display: none;
+}
+.eval .rating__label {
+  cursor: pointer;
+  padding: 0 0.1em;
+  font-size: 2rem;
+}
+.eval .icon-star, .icon-star.active, .icon-star:hover {
+  color: #1F7BB1;
+}
+.eval .rating__input:checked ~ .rating__label .icon-star, .icon-star {
+  color: #ddd;
+}
+.eval .rating-group:hover .rating__label .icon-star {
+  color: #1F7BB1;
+}
+.eval .rating__input:hover ~ .rating__label .icon-star {
+  color: #ddd;
+}
+
+.question {
+  border: solid 1px #DDD;
+  padding: 1rem;
+  background-color: #FAFAFA;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+.question > p {
+  margin: 0 0 1rem;
+}
+
+header {
+  padding: 1rem;
+}
+header .img {
+  height: 5rem;
+  width: 5rem;
+  border-radius: 100%;
+  background-size: cover;
+  box-shadow: 3px 3px 7px #CCC;
+  float: left;
+  overflow: hidden;
+  margin-right: 1rem;
+}
+header .info {
+  float: left;
+  overflow: hidden;
+}
+header .info > h1 {
+  font-size: 2rem;
+  margin: 0;
+  line-height: 2rem;
+}
+header .info > h2 {
+  margin: 1rem 0 0 0;
+  color: #888;
+  font-weight: normal;
+}
+header .info > h3 {
+  font-size: 1rem;
+  margin: .5rem 0 0;
+}
+header::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.alert {
+  text-align: center;
+  padding: 10px;
+  color: #1f7bb1;
+  font-size: .9rem;
+  font-style: italic;
+  background-color: #FFF;
+  border: dotted 1px #ddd;
+}
+
+
+.progress-bar {
+  text-align: left;
+}
+.progress-bar .back {
+  height: 2rem;
+  background-color: #FFF;
+  border: solid 1px #DDD;
+}
+.progress-bar .current {
+  height: 2rem;
+  background-color: #1F7BB1;
+}
+
+div.icon-star {
+  font-size: 5rem;
+  cursor: pointer;
+}
+
+.ghost {
+  opacity: .4;
+}
+

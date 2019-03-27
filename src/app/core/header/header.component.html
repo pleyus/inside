@@ -56,6 +56,13 @@
       Categorias
     </a>
 
+    <a (click)="MenuClick(false)"
+      *ngIf="L.News.Config.enable_polls"
+      [class.active]="$.isActive(['/poll'])"
+      [routerLink]="['/poll']">
+      Encuesta 2019
+    </a>
+
     <a
       *ngIf="false"
       [class.active]="$.isActive(['/feedback'])"

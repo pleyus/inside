@@ -1,0 +1,97 @@
+<section class="col-8">
+
+    <header>
+      <div class="img" [ngStyle]="Poll.turl ? {'background-image': 'url(' + Poll.turl + ')'} : {}"></div>
+      <div class="info">
+        <h1>{{Poll.tfirstname + ' ' + Poll.tlastname}}</h1>
+        <h2>{{Poll.name}}</h2>
+        <h3>{{Poll.area + ' » ' + Poll.level}}</h3>
+      </div>
+    </header>
+
+    <ng-container *ngIf="$.isStudent()">
+      <p>
+        Responde la encuesta de acuerdo a la frecuencia de las siguientes afirmaciones, siendo 1 estrella para <i>Nunca</i> y 4 para <i>Siempre</i><br>
+        <br><i><small>Tu información personal no se mostrará.</small></i>
+      </p>
+
+      <div class="question" *ngFor="let S of DataSet; let i = index;">
+        <p> {{Questions[i]}} </p>
+        <div class="eval">
+          <div class="rating-group">
+
+            <ng-container *ngFor="let A of Answers; let ii = index;">
+              <input *ngIf="ii === 0" disabled [checked]="S.answer === 0" class="rating__input rating__input--none" id="rating3-none" value="0" type="radio">
+
+              <label *ngIf="ii > 0" (click)="S.answer = ii" class="rating__label" for="star-{{i}}-{{ii}}"> <span class="icon-star"></span> </label>
+              <input *ngIf="ii > 0" [checked]="S.answer === ii" class="rating__input" id="star-{{i}}-{{ii}}" value="{{ii}}" type="radio">
+            </ng-container>
+
+          </div>
+          <p>{{Answers[S.answer]}}</p>
+        </div>
+      </div>
+
+      <div class="question">
+        <p>¿Consideras que {{Poll.tfirstname}} fue el mejor docente del curso?</p>
+        <div (click)="Poll.gid = Poll.gid === Poll.tid ? 0 : Poll.tid" class="icon-star {{Poll.gid === Poll.tid ? 'active' : ''}}"></div>
+        <p class="empty" *ngIf="Poll.gid > 0 && Poll.gid !== Poll.tid">
+          Ya has calificado a {{Poll.gfirstname + ' ' + Poll.glastname}} como el mejor docente del {{Poll.level}}
+          En caso de querer cambiarlo por {{Poll.tfirstname}}, marca la estrella.
+        </p>
+      </div>
+
+      <div class="question">
+        <p>¿Tienes algun comentario que agregar?</p>
+        <textarea placeholder="Ingresa tu comentario" [(ngModel)]="Note"></textarea>
+      </div>
+
+      <div class="button success center {{!canSave ? 'ghost' : ''}}" (click)="Save()">Finalizar encuesta</div>
+    </ng-container>
+
+    <ng-container *ngIf="$.isTeacher() || $.isAdmin()">
+      <p *ngIf="Poll.dataset.length === 0" class="alert">Aun no hay resultados para la evaluación</p>
+
+      <ng-container *ngIf="Poll.dataset.length > 0">
+        <p>
+          Los siguientes resultados se basan en una muestra de <b>{{MaxStudents}}</b> alumnos
+          que contestaron la encuesta del curso de <b>{{Poll.name}}</b>.
+        </p>
+
+        <div class="question" *ngFor="let D of DataSet; let i = index;">
+          <p>
+            <span>{{i+1}}.-</span>
+            {{Questions[i]}}
+          </p>
+          <div class="eval">
+
+            <div class="result">
+              <ng-container *ngFor="let a of Answers; let ii = index">
+                <span *ngIf="ii > 0" class="icon-star {{Round(Stats[i].average) >= ii ? 'active' : ''}}"></span>
+              </ng-container>
+            </div>
+            <p>{{Answers[ Round(Stats[i].average) ]}} <small>{{Round(Stats[i].average) + '/' + (Answers.length-1)}}</small></p>
+
+            <div class="progress-bar">
+              <p>Porcentaje de puntos <b>{{Round(Stats[i].percent)}}%</b> <small>{{Stats[i].points + '/' + ( (Answers.length-1) * MaxStudents)}}</small></p>
+              <div class="back">
+                <div [ngStyle]="{ 'width' : Stats[i].percent + '%' }" class="current"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="question">
+          <p>Marcado como buen docente por:</p>
+          <div class="note" *ngFor="let g of Poll.greats">{{g.firstname}}</div>
+        </div>
+
+        <div class="question">
+          <p>Notas sobre el docente</p>
+          <div class="note" *ngFor="let n of Poll.notes">{{n.note}}</div>
+        </div>
+      </ng-container>
+
+    </ng-container>
+  </section>
