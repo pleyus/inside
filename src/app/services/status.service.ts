@@ -39,11 +39,11 @@ export class StatusService {
 
   public KeyEvent(e) {
     if (e.keyCode === 27) {
-      if (this.PromptCallback !== undefined ) {
+      if (this.PromptCallback !== null ) {
         this.PromptCallback(false, this.Input);
       }
     } else if (e.keyCode === 13) {
-      if (this.PromptCallback !== undefined ) {
+      if (this.PromptCallback !== null ) {
         this.PromptCallback(true, this.Input);
       }
       this.Clear();
@@ -155,7 +155,7 @@ export class StatusService {
     this.Icon = icon;
     this.PromptPlaceholder = placeholder;
 
-    if (typeof actions === 'object' ) {
+    if ( actions[0] instanceof Button ) {
       this.PromptCallback = null;
       this.Buttons = actions;
     } else {
@@ -167,7 +167,11 @@ export class StatusService {
   /**
    * Limpia las alertas mostradas
    */
-  public Clear(args = '') {
+  public Clear(PostAction = false) {
+    if (PostAction) {
+      this.PromptCallback(true, this.Input);
+    }
+
     //  Del prompt
     this.Input = '';
     this.PromptCallback = null;
@@ -249,6 +253,11 @@ export class InsideListenerService {
               this.News.RadioMessages = r.data.RadioMessages;
               this.News.LoggedIn = r.data.LoggedIn;
               this.News.ApplicantsTracking = r.data.ApplicantsTracking;
+              this.News.Config = r.data.Config;
+
+              if (this.News.Polls.length !== r.data.Polls.length) {
+                this.News.Polls = r.data.Polls;
+              }
 
               if (this.News.Birthdays.length !== r.data.Birthdays.length) {
                 this.News.Birthdays = r.data.Birthdays;

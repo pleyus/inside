@@ -38,8 +38,8 @@
           (click)="ButtonClick( B.Action )">{{B.Text}}</div>
 
         <ng-container *ngIf="S.Buttons.length < 1">
-          <div class="button {{S.PromptCallback !== undefined ? 'primary' : ''}}" (click)="S.Clear()">Aceptar</div>
-          <div *ngIf="S.PromptCallback !== undefined" class="button" (click)="S.Clear('cancel')">Cancelar</div>
+          <div *ngIf="S.PromptCallback !== null" class="button {{S.PromptCallback !== null ? 'primary' : ''}}" (click)="S.Clear(true)">Aceptar</div>
+          <div *ngIf="S.PromptCallback === null" class="button" (click)="S.Clear()">Cancelar</div>
         </ng-container>
       </div>
 
