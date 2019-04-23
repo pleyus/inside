@@ -100,7 +100,7 @@ header::after {
   font-size: .9rem;
   font-style: italic;
   background-color: #FFF;
-  border: dotted 1px #ddd;
+  border: dashed 2px #DDE !important;
 }
 
 

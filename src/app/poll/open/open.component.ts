@@ -3,6 +3,7 @@ import { AppComponent } from './../../app.component';
 import { WebService } from './../../services/web-service';
 import { Component } from '@angular/core';
 import { StatusService } from 'src/app/services/status.service';
+import { Button } from 'src/app/core/class/button';
 
 @Component({
   selector: 'app-open',
@@ -192,6 +193,33 @@ export class PollOpenComponent {
       this.S.ShowError('Lo siento, no puedes enviar esta encuesta ' +
       'ya que no estas considerado dentro de la plantilla de alumnos. ' +
       '<b>Por favor reporta este error en rectoria.</b>', 0);
+    }
+  }
+
+  SetGreat() {
+    if (this.Poll.gid !== this.Poll.tid && this.Poll.gid > 0) {
+      this.S.ShowDialog(
+        'Estas a punto de poner a ' + this.Poll.tfirstname +
+        ' como mejor docente del ' + this.Poll.level +
+        '. Anteriormente habias marcado a ' + this.Poll.gfirstname +
+        '. ¿Deseas cambiarlo?',
+        [
+          new Button('Cambiar', () => {
+            this.Poll.gid = this.Poll.tid;
+          }, 'primary'),
+          new Button('Cancelar', () => {})
+        ]);
+    }
+    if (this.Poll.gid === this.Poll.tid) {
+      this.S.ShowDialog(
+        'Estas a punto de quitar como mejor docente a ' + this.Poll.tfirstname +
+        '. ¿Deseas continuar?',
+        [
+          new Button('Si', () => {
+            this.Poll.gid = 0;
+          }, 'primary'),
+          new Button('No', () => {})
+        ]);
     }
   }
 

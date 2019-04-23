@@ -19,22 +19,26 @@
 <div class="table">
 	<table *ngIf="$.isAdmin()">
 		<thead>
-			<th class="col-1 order" title="Ordenar por id de materia" (click)="Order('c.id')">
+			<th class="col-1 order" title="Ordenar por Identificador" (click)="Order('c.id')">
 				Id
 				<span *ngIf="_OrderBy == 'c.id'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
-			</th>
-			<th class="col-2-5 order" title="Ordenar por fecha de creación" (click)="Order('cr.name')">
+      </th>
+      <th class="col-3 order" title="Ordenar por materia" (click)="Order('c.fullname')">
+        Materia
+        <span *ngIf="_OrderBy == 'c.fullname'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
+      </th>
+      <th class="col-1 order" title="Ordenar por matricula" (click)="Order('cg.idnumber')">
+        Matricula
+        <span *ngIf="_OrderBy == 'cg.idnumber'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
+      </th>
+			<th class="col-2 order" title="Ordenar por especialidad" (click)="Order('cr.name')">
 				Area
 				<span *ngIf="_OrderBy == 'cr.name'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
 			</th>
-			<th class="col-2-5 order" title="Ordenar por concepto de pago" (click)="Order('cg.name')">
+			<th class="col-2 order" title="Ordenar por nivel" (click)="Order('cg.name')">
 				Nivel
 				<span *ngIf="_OrderBy == 'cg.name'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
       </th>
-      <th class="col-3 order" title="Ordenar por clave de referencia" (click)="Order('c.fullname')">
-				Materia
-				<span *ngIf="_OrderBy == 'c.fullname'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
-			</th>
 			<th class="col-3" title="Ordenar por nombre">
 				<div class="order" (click)="Order('t.firstname')">
 					Docente
@@ -51,10 +55,11 @@
 		<tbody>
 			<tr *ngFor="let P of Polls" class="row">
 				<a routerLink="{{P.id}}">
-					<td class="col-1">{{ P.id }}</td>
-					<td class="col-2-5">{{ P.area }}</td>
-					<td class="col-2-5">{{P.level }}</td>
-					<td class="col-3">{{P.name }}</td>
+          <td class="col-1">{{ P.id }}</td>
+          <td class="col-3">{{P.name }}</td>
+          <td class="col-1">{{P.idnumber}}</td>
+					<td class="col-2">{{ P.area }}</td>
+					<td class="col-2">{{P.level }}</td>
 					<td class="col-3">{{P.firstname + ' ' + P.lastname}}</td>
 				</a>
 			</tr>
@@ -64,31 +69,37 @@
 
   <table *ngIf="$.isTeacher()">
 		<thead>
-			<th class="col-1 order" title="Ordenar por id de materia" (click)="Order('c.id')">
+			<th class="col-1 order" title="Ordenar por Identidicador" (click)="Order('c.id')">
 				Id
 				<span *ngIf="_OrderBy == 'c.id'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
-			</th>
-			<th class="col-3 order" title="Ordenar por fecha de creación" (click)="Order('cr.name')">
+      </th>
+      <th class="col-5 order" title="Ordenar por materia" (click)="Order('c.fullname')">
+        Materia
+        <span *ngIf="_OrderBy == 'c.fullname'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
+      </th>
+      <th class="col-1 order" title="Ordenar por matricula" (click)="Order('cg.idnumber')">
+        Matricula
+        <span *ngIf="_OrderBy == 'cg.idnumber'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
+      </th>
+			<th class="col-2-5 order" title="Especialidad" (click)="Order('cr.name')">
 				Area
 				<span *ngIf="_OrderBy == 'cr.name'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
 			</th>
-			<th class="col-3 order" title="Ordenar por concepto de pago" (click)="Order('cg.name')">
+			<th class="col-2-5 order" title="Ordenar por nivel" (click)="Order('cg.name')">
 				Nivel
 				<span *ngIf="_OrderBy == 'cg.name'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
       </th>
-      <th class="col-5 order" title="Ordenar por clave de referencia" (click)="Order('c.fullname')">
-				Materia
-				<span *ngIf="_OrderBy == 'c.fullname'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
-			</th>
+
 		</thead>
 
 		<tbody>
 			<tr *ngFor="let P of Polls" class="row">
 				<a routerLink="{{P.id}}">
-					<td class="col-1">{{ P.id }}</td>
-					<td class="col-3">{{ P.area }}</td>
-					<td class="col-3">{{P.level }}</td>
-					<td class="col-5">{{P.name }}</td>
+          <td class="col-1">{{ P.id }}</td>
+          <td class="col-5">{{P.name }}</td>
+          <td class="col-1">{{P.idnumber}}</td>
+					<td class="col-2-5">{{ P.area }}</td>
+          <td class="col-2-5">{{P.level }}</td>
 				</a>
 			</tr>
 			<div class="empty" *ngIf="Polls.length < 1">No hay encuestas para disponibles</div>
@@ -97,15 +108,19 @@
 
   <table *ngIf="$.isStudent()">
 		<thead>
-			<th class="col-2 order" title="Ordenar por id de materia" (click)="Order('c.id')">
+			<th class="col-2 order" title="Ordenar por Identificador" (click)="Order('c.id')">
 				Id
 				<span *ngIf="_OrderBy == 'c.id'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
 			</th>
-      <th class="col-5 order" title="Ordenar por clave de referencia" (click)="Order('c.fullname')">
+      <th class="col-5 order" title="Ordenar por Materia" (click)="Order('c.fullname')">
 				Materia
 				<span *ngIf="_OrderBy == 'c.fullname'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
       </th>
-      <th class="col-5" title="Ordenar por nombre">
+      <th class="col-1 order" title="Ordenar por matricula" (click)="Order('cg.idnumber')">
+        Matricula
+        <span *ngIf="_OrderBy == 'cg.idnumber'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
+      </th>
+      <th class="col-4" title="Ordenar por nombre">
         <div class="order" (click)="Order('t.firstname')">
           Docente
           <span *ngIf="_OrderBy == 't.firstname'" class="icon-{{_Order == 'ASC' ? 'down' : 'up'}}-open"></span>
@@ -124,7 +139,8 @@
           <a routerLink="{{P.id}}">
             <td class="col-2">{{ P.id }}</td>
             <td class="col-5">{{ P.name }}</td>
-            <td class="col-5">{{ P.firstname + ' ' + P.lastname }}</td>
+            <td class="col-1">{{P.idnumber}}</td>
+            <td class="col-4">{{ P.firstname + ' ' + P.lastname }}</td>
           </a>
         </tr>
       </ng-container>

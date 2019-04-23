@@ -33,8 +33,10 @@
       </div>
 
       <div class="question">
-        <p>¿Consideras que {{Poll.tfirstname}} fue el mejor docente del curso?</p>
-        <div (click)="Poll.gid = Poll.gid === Poll.tid ? 0 : Poll.tid" class="icon-star {{Poll.gid === Poll.tid ? 'active' : ''}}"></div>
+        <p>¿Consideras que {{Poll.tfirstname}} fue el mejor docente de {{Poll.level}}?</p>
+
+        <div (click)="SetGreat()" class="icon-star {{Poll.gid === Poll.tid ? 'active' : ''}}"></div>
+
         <p class="empty" *ngIf="Poll.gid > 0 && Poll.gid !== Poll.tid">
           Ya has calificado a {{Poll.gfirstname + ' ' + Poll.glastname}} como el mejor docente del {{Poll.level}}
           En caso de querer cambiarlo por {{Poll.tfirstname}}, marca la estrella.
@@ -49,7 +51,7 @@
       <div class="button success center {{!canSave ? 'ghost' : ''}}" (click)="Save()">Finalizar encuesta</div>
     </ng-container>
 
-    <ng-container *ngIf="$.isTeacher() || $.isAdmin()">
+    <ng-container *ngIf="$.isTeacher() || $.isAdmin()  || true">
       <p *ngIf="Poll.dataset.length === 0" class="alert">Aun no hay resultados para la evaluación</p>
 
       <ng-container *ngIf="Poll.dataset.length > 0">
@@ -85,11 +87,13 @@
         <div class="question">
           <p>Marcado como buen docente por:</p>
           <div class="note" *ngFor="let g of Poll.greats">{{g.firstname}}</div>
+          <p class="alert" *ngIf="Poll.greats.length === 0">Nadie</p>
         </div>
 
         <div class="question">
           <p>Notas sobre el docente</p>
           <div class="note" *ngFor="let n of Poll.notes">{{n.note}}</div>
+          <p class="alert" *ngIf="Poll.notes.length === 0">Ninguna</p>
         </div>
       </ng-container>
 
