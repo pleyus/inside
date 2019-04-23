@@ -1,0 +1,271 @@
+.select-file {
+  padding: 10px 20px;
+  border: solid 1px #DDD;
+  background-color: #F1F1F1;
+  margin: 1rem auto 0;
+  display: block;
+  cursor: pointer;
+  border-radius: 3px;
+}
+.select-file:hover {
+  background-color: #EEE;
+}
+
+section {
+  position: fixed;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background-color: rgba(0, 0, 0, .3);
+  z-index: 1;
+}
+
+.container {
+  background-color: #FFF;
+  border: solid 1px #DDD;
+  position: fixed;
+  top: 1rem;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  display: block;
+  overflow: hidden;
+  min-width: 330px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  padding: 1rem;
+  width: 100%;
+  border-top: solid 1px #DDD;
+}
+.footer .button:not(:last-of-type) {
+  margin-right: 1rem;
+}
+
+.container h1 {
+  font-size: 1.5rem;
+  margin: 0;
+  padding: 1rem;
+  font-weight: normal;
+  border-bottom: solid 1px #DDD;
+  background-color: #F1F1F1;
+}
+.container h1 span {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  cursor: pointer;
+}
+.container h1 span:hover {
+  color: #1F7BB1;
+}
+
+
+.view {
+  padding: 1rem;
+  position: absolute;
+  top: 3.5rem;
+  bottom: 4.5rem;
+  overflow: hidden;
+  left: 0;
+  right: 0;
+}
+
+.view > .files {
+  position: absolute;
+  top: 1rem;
+  bottom: 0;
+  right: 26%;
+  left: 1rem;
+}
+
+.more {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 1rem;
+}
+.view > .files > .list {
+  overflow: auto;
+  position: absolute;
+  bottom: 3rem;
+  top: 4rem;
+}
+
+.view > .files > .list > .file {
+  width: 12rem;
+  height: 12rem;
+  float: left;
+  cursor: pointer;
+  margin: .5rem 1rem;
+
+  border: solid 1rem #FFF;
+  border-radius: 5px;
+  transition: 200ms border-color ease-in-out;
+}
+.view > .files > .list > .image {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 0 0 1px #DDD;
+}
+.view > .files > .list > .file:hover {
+  border: solid 1rem #1F7BB1;
+  transition: 200ms border-color ease-in-out;
+}
+.view > .files > .list > .file.selected {
+  border: solid 1rem rgb(154, 218, 255);
+  transition: 200ms border-color ease-in-out;
+}
+
+.view > .info {
+  overflow: auto;
+  position: absolute;
+  top: 1px;
+  bottom: 0;
+  right: 0;
+  left: 75%;
+  background-color: #FAFAFA;
+  border-left: solid 1px #DDD;
+}
+
+#file-upload {
+  display: none;
+}
+.multi h1 {
+  background-color: inherit;
+  font-size: 1rem;
+  font-weight: normal;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+.multi > .files {
+  position: absolute;
+  top: 3.6rem;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+  overflow: auto;
+}
+.multi > .files > .file {
+  margin-bottom: 1rem;
+  position: relative;
+}
+.multi > .files > .file::after {
+  content: '';
+  clear: both;
+  display: block;
+}
+.multi > .files > .file > .ico {
+  float: left;
+  height: 3rem;
+  width: 3rem;
+  margin-right: .4rem;
+}
+.multi > .files > .file > .ico.image {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.multi > .files > .file > span {
+  position: absolute;
+  right: 0;
+  top: .3rem;
+  display: none;
+  cursor: pointer;
+}
+.multi > .files > .file > span:hover {
+  color: #1F7BB1;
+}
+.multi > .files > .file:hover > span {
+  display: block;
+}
+.multi > .files > .file > .name {
+  float: left;
+  font-size: .8rem;
+  overflow: hidden;
+  max-width: 12rem;
+  max-height: 3rem;
+  line-height: 1rem;
+}
+
+.single {
+  padding: 1rem;
+}
+.single > .file {
+  width: 100%;
+  height: 15rem;
+  transition: 300ms width ease, 300ms height ease;
+}
+.single > .file.image {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.single > small {
+  display: block;
+  font-size: .9rem;
+  margin-bottom: 0.5rem;
+}
+
+.filter .button {
+  text-transform: none;
+  margin: 0;
+  padding: .2rem 1rem;
+}
+
+.button.disabled {
+  opacity: .3;
+}
+.i800 { display: none; text-transform: none; margin: 0; }
+.small { font-size:.8rem }
+@media only screen and (max-width: 800px) {
+  .o800 { display:none; }
+  .i800 { display: inline-block; }
+
+  .view > .files { right: 35%}
+  .view > .info { left: 65%}
+
+  .single > .file {
+    width: 10rem;
+    height: 10rem;
+    margin: 0;
+    transition: 300ms width ease, 300ms height ease;
+  }
+}
+@media only screen and (max-width: 620px) {
+
+  .view > .info {
+    display: none;
+  }
+  .view > .files {
+    right: 0;
+  }
+}
+
+@media only screen and (max-width: 380px) {
+
+  .container {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  .view > .files > .list > .file {
+    width: 7rem;
+    height: 7rem;
+  }
+  .view > .files > .list {
+    bottom: 7.9rem;
+  }
+  .more {
+    bottom: 5.7rem;
+  }
+  .footer > * {
+    display: block;
+    margin: 5px 0 !important;
+    width: 100%;
+  }
+}

@@ -1,5 +1,91 @@
-<section>
-  <div class="container">
+<button class="select-file" (click)="ShowDialog()">
+  {{ButtonText}}
+</button>
 
+<section *ngIf="Showing">
+  <div class="container">
+    <h1>
+      {{Title}} <i class="small i800">{{Files.length}}
+          archivo{{Files.length > 1 ? 's' : ''}}
+          seleccionado{{Files.length > 1 ? 's' : ''}}</i>
+      <span (click)="Cancel()" class="icon-close"></span>
+    </h1>
+
+    <div class="view">
+      <div class="files">
+
+        <div class="filter">
+          <div class="block col-5">
+            <input type="text" (keyup)="search()" [(ngModel)]="search_string"
+              placeholder="Buscar archivo dentro de la base de datos">
+          </div>
+
+          <div class="col-7 o800">
+            <label for="file-upload" class="button success pull-right separe-left">Subir archivo</label>
+            <input id="file-upload" (change)="onSelectedFile($event)" [(ngModel)]="files_model" type="file"
+              [multiple]="MultiSelect">
+          </div>
+        </div>
+
+        <div class="list">
+          <div class="file type-{{F.mimetype.split('/')[1]}}"
+            [class.image]=" isImage(F.mimetype)" [class.selected]="Added(F)" (click)="SelectThis(F)"
+            [ngStyle]="isImage(F.mimetype) ? {'background-image' : 'url(' + F.url + ')'} : {}"
+            *ngFor="let F of ServedFiles">{{isImage(F.mimetype) ? '' : F.mimetype.split('/')[1]}}</div>
+        </div>
+
+        <a class="more" *ngIf="LoadMore && ServedFiles.length > 0" (click)="GetFiles( 'more' )">
+          Mostrar más
+        </a>
+
+      </div>
+
+      <div class="info">
+        <div class="single" *ngIf="!MultiSelect || Files.length === 1">
+          <div class="file type-{{Files[0].mimetype.split('/')[1]}}" [class.image]="isImage(Files[0].mimetype)"
+            [ngStyle]="isImage(Files[0].mimetype) ? {'background-image' : 'url(' + Files[0].url + ')'} : {}"></div>
+
+          <p class="row">
+            <label>Sobre el archivo</label>
+            <input class="col-12" type="text" [(ngModel)]="Files[0].filename" placeholder="Nombre">
+          </p>
+
+          <p class="row">
+            <textarea class="col-12" [(ngModel)]="Files[0].description" placeholder="Descipción..."></textarea>
+          </p>
+
+          <small><b>Tipo:</b> {{ Files[0].mimetype }}</small>
+          <small><b>Subido:</b> {{ Files[0].at*1000 | date: 'EEE, dd/MMM/yyyy HH:mm' }}</small>
+
+          <div class="row">
+            <div (click)="SaveInfo()" class="button success">Guardar</div>
+          </div>
+
+        </div>
+
+        <div class="multi" *ngIf="MultiSelect && Files.length > 1">
+          <h1>
+            {{Files.length}}
+            archivo{{Files.length > 1 ? 's' : ''}}
+            seleccionado{{Files.length > 1 ? 's' : ''}}
+          </h1>
+          <div class="files">
+            <div class="file" *ngFor="let F of Files">
+              <div class="ico type-{{F.mimetype.split('/')[1]}}"
+                [class.image]=" isImage(F.mimetype)"
+                [ngStyle]="isImage(F.mimetype) ? {'background-image' : 'url(' + F.url + ')'} : {}"></div>
+              <div class="name">{{F.filename}}</div>
+              <span (click)="SelectThis(F)" class="icon-close pull-right"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div (click)="SetFiles()" class="button primary {{Files.length < 1 ? 'disabled' : ''}}">{{ButtonText}}</div>
+      <label for="file-upload" class="button success i800">Subir archivo</label>
+      <div class="o800 button" (click)="Cancel()">Cancelar</div>
+    </div>
   </div>
 </section>
