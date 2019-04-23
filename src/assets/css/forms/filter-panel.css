@@ -1,0 +1,20 @@
+/* Filters */
+.filter {
+  display: block;
+  max-height: 600px;
+  -webkit-transition: max-height 500ms ease-in-out;
+  transition: max-height 500ms ease-in-out;
+}
+.filter::after { display: block; content:''; clear: both; }
+.sub.filter { overflow: hidden; }
+
+.filter [class^="col-"] { float: none; display: inline-block; }
+.filter > .not-labeled { padding: 2.1rem 0 0 0; }
+
+
+.filter > div > label {
+  display: block;
+  font-weight: 600;
+  font-size: .9rem;
+  padding: 0 0 5px;
+}

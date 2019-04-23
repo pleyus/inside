@@ -1,3 +1,7 @@
+@import url(forms/tab-group.css);
+@import url(forms/filter-panel.css);
+@import url(forms/text-inputs.css);
+
 /* Estilos base de los forms con grupos dentro */
 textarea, input:not(.button), select { padding: 10px; width: fit-content; width: stretch; margin-bottom: 10px; border-radius: 2px; border: solid 1px #DDD; background-color: #FFF; }
 textarea { height: 100px; }
@@ -57,30 +61,6 @@ input[type="text"], textarea { border-left: 7px solid #AAA; outline: none; }
 	cursor: pointer;
 }
 
-/* Tabs css */
-  .tabs { display: block; padding: 0 0 1rem 0; min-width: 320px; }
-  .tabs > header::after, .tabs::after {
-    display: block;
-    content: '';
-    clear: both;
-  }
-  .tabs > header > .item { float: left; padding: 1rem; text-decoration: none; cursor: pointer; border-top-left-radius: .2rem; border-top-right-radius: .2rem; font-weight: 600; color: #333; }
-  .tabs > header > .item:hover { color: #1f7bb1; background-color: #F1F1F1; }
-  .tabs > header > .item.active { color: #FFF; background-color: #1f7bb1; }
-  .tabs > header > .item span.bullet { margin-left: .5rem; }
-  .tab-body { display: block; border: solid 1px #F1F1F1; min-height: 12rem; padding: 1rem; }
-  .tab-body::after { display: block; content: ''; clear: both; }
-
-  .tab-body > .content { margin-bottom: 1rem; }
-  .tab-body > .content > h1 { margin: 0; }
-  .tab-body > .content > p { font-size: .9rem; }
-  .tab-body > .content > a.box { cursor: pointer; margin: 5px 0; text-align: center; }
-  .tab-body > .content > a.box:hover { color: #1F7BB1; }
-
-  .tabs.left > header > .item { float: none; display: block; border-top-right-radius: 0; border-bottom-left-radius: .2rem; }
-  .tabs.left > header { float: left; width: 20%; }
-  .tabs.left > .tab-body { float: left; width: 80%; }
-
 /* Listy, para listas linkeadas */
 ul.listy {
 	display: block;
@@ -127,26 +107,7 @@ ul.listy > li > [class^="icon-"]:hover {
 }
 
 
-/* Filters */
-	.filter {
-		display: block;
-		max-height: 600px;
-		-webkit-transition: max-height 500ms ease-in-out;
-		transition: max-height 500ms ease-in-out;
-	}
-	.filter::after { display: block; content:''; clear: both; }
-	.sub.filter { overflow: hidden; }
 
-	.filter [class^="col-"] { float: none; display: inline-block; }
-	.filter > .not-labeled { padding: 2.1rem 0 0 0; }
-
-
-	.filter > div > label {
-		display: block;
-		font-weight: 600;
-		font-size: .9rem;
-		padding: 0 0 5px;
-	}
 
 .acordeon {
   display: block;
@@ -159,9 +120,3 @@ ul.listy > li > [class^="icon-"]:hover {
 .acordeon .body > .content > label { display: block; margin: 0 0 5px; font-size: .9rem; }
 .acordeon .body > .content:not(:first-child) > label { margin-top: 20px; }
 .acordeon .body.close { max-height: 0; transition: max-height 300ms; }
-
-@media only screen and (max-width: 600px) {
-  .tabs.left > header > .item { border-radius: 0; float: left; border-top-left-radius: .2rem; border-top-right-radius: .2rem; }
-  .tabs.left > header { float: none; width: 100%; }
-  .tabs.left > .tab-body { float: none; width: 100%; }
-}
