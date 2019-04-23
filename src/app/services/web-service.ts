@@ -88,7 +88,7 @@ export class WebService {
     FileData.append('the-file', file, file.name);  //  Acuerdate prro!! Se llama the-file el archivo
 
     //  Retornamos un Observable para llevar el control del la carga
-    return this.http.post(this.Url + 'using=general&make=debug&' + params, FileData, {
+    return this.http.post(this.Url + 'using=files&make=upload&' + params, FileData, {
         reportProgress: true,
         observe: 'events',
         withCredentials: true
