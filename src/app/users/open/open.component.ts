@@ -157,27 +157,36 @@ export class UsersOpenComponent
 				//	Listo
 				this.S.Clear();
 
-				//	Todo bien?
-				if(u.status == this.S.SUCCESS)
-				{
-					//	Cargamos el usuario en datos
-					this.User = u.data;
+        //  Todo bien? Todo correcto?
+        if(u.status == this.S.SUCCESS) {
+          //  Y yo que me alegro
 
-					//	Sacamos la fecha de nacimiento
-					let birthday = new Date(this.User.birthday*1000),
-						y = birthday.getFullYear(),
-						m = (birthday.getMonth()+1),
-						d = birthday.getDate();
-					this.HUMAN_BIRTHDAY = y + "-" + ( m > 9 ? m : '0' + m) + "-" + ( d > 9 ? d : '0' + d);
+          if(u.data.error !== undefined) {
+            this.S.ShowError('No se puede cargar este usuario...');
+            setTimeout( () => {
+              this.R.navigate(['/users']);
+            }, 2000);
 
-					this.GetPictures(() => {
-						this.GetPlatformInfo(() => {
-							this.GetStats();
-							/*() => {
-								this.GetLocation();
-							});*/
-						});
-					});
+          } else {
+            //  Cargamos el usuario en datos
+            this.User = u.data;
+
+            //  Sacamos la fecha de nacimiento
+            let birthday = new Date(this.User.birthday*1000),
+              y = birthday.getFullYear(),
+              m = (birthday.getMonth()+1),
+              d = birthday.getDate();
+            this.HUMAN_BIRTHDAY = y + "-" + ( m > 9 ? m : '0' + m) + "-" + ( d > 9 ? d : '0' + d);
+
+            this.GetPictures(() => {
+              this.GetPlatformInfo(() => {
+                this.GetStats();
+                /*() => {
+                  this.GetLocation();
+                });*/
+              });
+            });
+          }
 				}
 				else
 					this.S.ShowError('Error al obtener información:<br> –' + u.data)
