@@ -1,6 +1,5 @@
 @import url(forms/tab-group.css);
 @import url(forms/filter-panel.css);
-@import url(forms/text-inputs.css);
 
 /* Estilos base de los forms con grupos dentro */
 textarea, input:not(.button), select { padding: 10px; width: fit-content; width: stretch; margin-bottom: 10px; border-radius: 2px; border: solid 1px #DDD; background-color: #FFF; }
