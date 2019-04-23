@@ -6,7 +6,7 @@
 	}
 	#printer.print-user > .card > * { position: absolute; }
 	#printer.print-user > .card img.base { height: 5.5cm; width: 17cm; top: 0; left: 0; z-index: -1; border: solid 1px #DDD; }
-	#printer.print-user > .card img.photo { width: 2.5cm; height: 3cm; top: 1.22cm; left: 0.955cm; }
+	#printer.print-user > .card img.photo { width: 2.5cm; height: 3cm; top: 1.22cm; left: 0.955cm; border-radius: 0; }
 	#printer.print-user > .card .name { top: 2cm; left: 3.70cm; width: 170px; height: 85px; display: table; }
 	#printer.print-user > .card .firstname { color: #006b9b; font-size: 16pt; font-weight: 600; vertical-align: bottom; display: table-cell; }
 	#printer.print-user > .card .lastname { font-size: 10.5pt; font-weight: 600; color: #333; }
