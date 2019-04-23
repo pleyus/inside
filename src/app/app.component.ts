@@ -52,7 +52,7 @@ export class AppComponent implements OnInit {
     },
     sesskey: ''
   };
-  public VERSION = '3.9.1';
+  public VERSION = '3.9.3';
 
   /**
    * Define las urls dinamicas que pueden ser utilizadas con las SelectedTabs dentro de los componentes
