@@ -20,17 +20,6 @@ h1 > .feed { border-radius: 30px; float: right; background-color: #1f7bb1; color
 h1 > .feed:hover { background-color: darkred; }
 
 label.button { text-transform: initial !important; padding-left: .3rem; display: inline-block; }
-.picture { margin-bottom: 1rem; height: 151px; overflow: hidden; display: block; }
-.picture .img { width: 3.333cm; height: 4cm; background-repeat: no-repeat; background-size: cover; background-position: center; float: left; margin-right: .4rem; background-color: #EEE; border: solid 1px #DDD; }
-.picture .img.prev { width: 1.6665cm; height: 2cm; cursor: pointer; filter: blur(2px); background-size: 150%; transition: 100ms background-size; }
-.picture .img.prev:hover { filter: blur(0px); background-size: 100%; }
-.picture .img span {
-	display: none;
-    color: #333;
-    font-size: 1rem;
-	cursor: pointer;
-}
-.picture .img:hover span { display: block; }
 
 .tab-body { display: none; }
 .tab-body.active { display: block; }
@@ -53,3 +42,13 @@ label.button { text-transform: initial !important; padding-left: .3rem; display:
 }
 .alert a { color: inherit; }
 .alert a:hover { color: #000; }
+
+.photo {
+  height: 200px;
+  width: 200px;
+  background-size: cover;
+  background-position: center;
+  margin: 0 auto;
+  display: block;
+  border-radius: 200px;
+}

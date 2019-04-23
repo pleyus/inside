@@ -542,6 +542,11 @@ export class UsersOpenComponent
 	// 	for(let i = 0; i < TheArray.length; i++)
 	// 		if(TheArray[i][At] == With)
 	// 			return TheArray[i][Return];
-	// }
+  // }
+
+  SelectImage( Images ) {
+    this.User.picture = Images[0];
+    this.User.fid = Images[0].id;
+  }
 
 }

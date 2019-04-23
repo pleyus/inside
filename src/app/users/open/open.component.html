@@ -97,32 +97,18 @@
 			<div class="group col-4">
 				<h1>Imagen de usuario</h1>
 				<p *ngIf="Id > 0">
-					<span class="picture clearfix">
-						<span
-							class="img"
-							title="Imagen actual de {{User.firstname}} {{User.fid > 0 ? '' : '(Sin imagen)'}}"
-							[ngStyle]="User.fid > 0 ? {'background-image':'url(' + User.picture.url + ')'} : {}">
-							<span *ngIf="User.fid > 0" class="icon-close pull-right" title="Eliminar imagen actual" (click)="SetPicture(User.picture, 'delete')"></span>
-						</span>
-						<ng-container *ngFor="let P of Pictures">
-							<span
-								*ngIf="P.id != User.fid"
-								class="img prev"
-								title="Doble clic para usar como imagen de usuario (Subida: el {{(P.at*1000 | date:'dd/MM/yyyy hh:mm:ss')}})"
-								(dblclick)="SetPicture(P)"
-								[ngStyle]="{'background-image': 'url(' + P.url + ')'}">
-								<span
-									class="icon-close pull-right"
-									title="{{'Eliminar imagen alterna (Subida el ' + (P.at*1000 | date:'dd/MM/yyyy hh:mm:ss') + ')'}}"
-									(click)="SetPicture(P, 'delete')"></span>
-							</span>
-						</ng-container>
-					</span>
+          <span
+            class="photo"
+            [ngStyle]="User.fid > 0 ? {'background-image':'url(' + User.picture.url + ')'} : {}"
+          ></span>
+          <app-file-manager *ngIf="Id > 0"
+			[ButtonText]="'Seleccionar foto'"
+			[Title]="'Foto para ' + User.firstname"
+            [XId]="User.id"
+            [Files]="[User.picture]"
+            [Module]="'users'"
+            (Select)="SelectImage($event)"></app-file-manager>
 
-					<label class="button primary" for="pic-upload">
-						<span class="icon-upload-cloud"></span> Subir imagen
-					</label>
-					<input class="file-upload-field" id="pic-upload" type="file" (change)="UploadPicture($event)" placeholder="Subir imagen..." accept=".jpg, .jpeg, .png">
 				</p>
 				<p class="empty" *ngIf="Id < 1">Guarde primero el usuario para asignar alguna imagen</p>
 			</div>
