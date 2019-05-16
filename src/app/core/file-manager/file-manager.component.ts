@@ -249,12 +249,12 @@ export class FileManagerComponent {
 
     const ind = [];
     this.Files.forEach((v, i) => {
-      if (v === null){
+      if (!v.url){
         ind.push(i);
       }
     });
 
-    ind.reverse().forEach(v => this.Files.splice(v) );
+    ind.reverse().forEach(v => this.Files.splice(v, 1) );
   }
 
   /**

@@ -41,7 +41,7 @@
       </div>
 
       <div class="info">
-        <div class="single" *ngIf="!MultiSelect || Files.length === 1">
+        <div class="single" *ngIf="!MultiSelect && Files.length === 1">
           <div class="file type-{{Files[0].mimetype.split('/')[1]}}" [class.image]="isImage(Files[0].mimetype)"
             [ngStyle]="isImage(Files[0].mimetype) ? {'background-image' : 'url(' + Files[0].url + ')'} : {}"></div>
 
