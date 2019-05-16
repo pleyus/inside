@@ -308,7 +308,11 @@
 				$.isTeacher(User) ? 'Docente' : 'Usuario web'))
 			}}</div>
 			<div class="course">{{User.cid > 0 ? getCourse() : ''}}</div>
-			<div *ngIf="User.idnumber.length > 10" class="barcode-error">[INCOMPLETO]</div>
+
+			<ng-container *ngIf="User.idnumber">
+				<div *ngIf="User.idnumber.length > 10" class="barcode-error">[INCOMPLETO]</div>
+			</ng-container>
+
 			<div class="barcode">*{{User.idnumber}}*</div>
 			<div class="idnumber">{{User.idnumber}}</div>
 	</div>
