@@ -192,18 +192,6 @@ export class AppComponent implements OnInit {
     this.C.RequireOption('feedback', 'last', 0);
     this.C.RequireOption('feedback', 'pre', '');
 
-    this.C.RequireOption('users', 'search', '');
-    this.C.RequireOption('users', 'last', 0);
-    this.C.RequireOption('users', 'sids', ''); // 3.5.2
-    this.C.RequireOption('users', 'goto', '');
-    this.C.RequireOption('users', 'listview', 'normal');
-    this.C.RequireOption('users', 'order', 'desc');
-    this.C.RequireOption('users', 'order_by', 'u.idnumber');
-    this.C.RequireOption('users', 'selected_tab', 'personal');
-    this.C.RequireOption('users', 'card.only-active', true);
-    this.C.RequireOption('users', 'card.card.without-photo', false);
-    this.C.DisposeOption('users', 'filter');
-
     this.C.RequireOption('applicants', 'search', '');
     this.C.RequireOption('applicants', 'last', 0);
     this.C.RequireOption('applicants', 'filter_type', '');

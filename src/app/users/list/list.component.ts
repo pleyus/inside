@@ -93,13 +93,12 @@ export class UsersListComponent {
     //#endregion
   //#endregion
 
-
-
   //  Define la ordenación de los usuarios en la lista
   _Order = 'DESC';
   _OrderBy = 'idnumber';
 
-
+  //  Ultimo id mostrado en la lista
+  Last = 0;
 
   //  Variables para busqueda
 
@@ -122,7 +121,9 @@ export class UsersListComponent {
     this.Users = [];
 
     //  Se reinicia el last de la ultima consulta
-    this.SetOption('last', 0);
+    this.Last = 0;
+
+    this.InitOptions();
 
     //  Revisamos permisos...
     if ($.isAdmin() && $.CanDo('user')) {
@@ -131,6 +132,29 @@ export class UsersListComponent {
       S.ShowError('No tienes autorización para entrar al modulo de usuarios', 0);
       R.navigate(['/home']);
     }
+  }
+
+  private InitOptions() {
+    //  Ultima busqueda del usuario
+    this.C.RequireOption('users', 'search', '');
+
+    //  Ids guardados
+    this.C.RequireOption('users', 'sids', ''); // 3.5.2
+
+    //  Vista de la lista - 'normal', 'contacts'
+    this.C.RequireOption('users', 'listview', 'normal');
+
+    //  Orden de la Lista
+    this.C.RequireOption('users', 'order', 'desc');
+    this.C.RequireOption('users', 'order_by', 'u.idnumber');
+
+    this.C.DisposeOption('users', 'last');  //  v3.9.3 - Se quita el last en opciones... no es necesario
+    this.C.DisposeOption('users', 'filter');  //  ? se usa
+
+    //  Opciones de la impresión de credenciales
+    this.C.RequireOption('users', 'card.only-active', true);
+    this.C.RequireOption('users', 'card.without-photo', false);
+    
   }
 
 
@@ -217,12 +241,12 @@ export class UsersListComponent {
    * @param making Define la acción a realizar con el metodo.
    * get: Solo carga la lista con los filtros existentes |
    * search: forza al realizar una busqueda (depende de this.search_string) |
-   * more: indica que se cargara la siguiente parte de la lista (usa this.GetOption('last'))
+   * more: indica que se cargara la siguiente parte de la lista (usa this.Last))
    */
   public GetUsers(making = 'get'): void {
     const search = this.search_string;
     if (making !== 'more') {
-      this.SetOption('last', 0);
+      this.Last = 0;
     }
 
     this.S.ShowLoading
@@ -237,7 +261,7 @@ export class UsersListComponent {
     this.W.Web('users', 'list',
 
       // Mandamos el ultimo que tenemos
-      'last=' + this.GetOption('last') +
+      'last=' + this.Last +
 
       //  Lanzamos el orden
       '&order=' + this._Order +
@@ -278,7 +302,7 @@ export class UsersListComponent {
           this.S.ShowError(r.data, 0);
         }
 
-        this.SetOption('last', this.Users.length);
+        this.Last = this.Users.length;
 
       });
   }
@@ -428,7 +452,7 @@ export class UsersListComponent {
 
     } else {
       this.search_string = '';
-      this.SetOption('last', 0);
+      this.Last = 0;
       this.GetUsers('load-ids');
 
     }

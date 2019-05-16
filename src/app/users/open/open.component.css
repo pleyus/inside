@@ -37,8 +37,9 @@ label.button { text-transform: initial !important; padding-left: .3rem; display:
 
 .alert {
   color: #1F7BB1 !important;
-  border-color: #cfd8de;
+  border: solid 1px #DDD;
   background-color: #fafafb;
+  padding: 10px;
 }
 .alert a { color: inherit; }
 .alert a:hover { color: #000; }
@@ -51,4 +52,5 @@ label.button { text-transform: initial !important; padding-left: .3rem; display:
   margin: 0 auto;
   display: block;
   border-radius: 200px;
+  box-shadow: 5px 5px 15px -5px #888;
 }
