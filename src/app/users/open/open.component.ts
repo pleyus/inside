@@ -110,6 +110,13 @@ export class UsersOpenComponent
 
 		})
 	}
+
+	private InitOptions() {
+		
+		this.C.RequireOption('users', 'goto', '');
+		this.C.RequireOption('users', 'selected_tab', 'personal');
+		
+	}
   CardOptions = { Valid: 'Diciembre 2018' };
 
 	init()
